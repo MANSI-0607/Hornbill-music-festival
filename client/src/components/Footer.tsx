@@ -1,8 +1,13 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Heart, Music, Mail, Phone, MapPin, Calendar, ExternalLink } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 const Footer = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
   return (
     <footer className="bg-background/95 backdrop-blur-md border-t border-border/50 mt-auto">
       <div className="mobile-container py-12">
