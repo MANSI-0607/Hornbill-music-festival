@@ -8,11 +8,11 @@ export default function AdminLogin() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/admin/login", {
+      const res = await fetch(`${API_BASE_URL}/admin/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +39,9 @@ export default function AdminLogin() {
         onSubmit={handleLogin}
         className="space-y-4 p-6 bg-white rounded shadow w-96"
       >
-        <h1 className="text-2xl font-bold text-center text-primary">Admin Login</h1>
+        <h1 className="text-2xl font-bold text-center text-primary">
+          Admin Login
+        </h1>
         <Input
           placeholder="Email"
           value={email}

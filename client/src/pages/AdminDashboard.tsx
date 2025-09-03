@@ -28,6 +28,8 @@ import {
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
+
 interface BandRegistration {
   _id: string;
   bandName: string;
@@ -60,7 +62,7 @@ export default function AdminDashboard() {
     try {
       const token = localStorage.getItem("adminToken");
       const res = await fetch(
-        "http://localhost:5000/api/admin/dashboard/bands",
+        `${API_BASE_URL}/api/admin/dashboard/bands`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -84,7 +86,7 @@ export default function AdminDashboard() {
     try {
       const token = localStorage.getItem("adminToken");
       const res = await fetch(
-        `http://localhost:5000/api/admin/dashboard/bands/${id}/status`,
+        `${API_BASE_URL}/api/admin/dashboard/bands/${id}/status`,
         {
           method: "PATCH",
           headers: {
