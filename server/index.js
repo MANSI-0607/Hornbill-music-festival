@@ -7,19 +7,38 @@ import connectDB from './config/db.js';
 import routes from './routes/auditionRoute.js';
 import adminRoutes from './routes/adminRoutes.js';
 import adminDashboardRoutes from './routes/adminDashboard_route.js';
+
 dotenv.config();
 connectDB();
 
 const app = express();
 
 app.use(express.json());
-app.use(cors());
 app.use(helmet());
 app.use(morgan("dev"));
+
+// CORS setup
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : ["http://localhost:5173"]; // Default for local dev
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = `The CORS policy for this site does not allow access from the specified Origin: ${origin}`;
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+}));
+
 app.use('/api', routes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/admin/dashboard', adminDashboardRoutes);
-  
+
 app.get("/", (req, res) => {
   res.json({ message: "Hornbill Music Festival API running" });
 });
