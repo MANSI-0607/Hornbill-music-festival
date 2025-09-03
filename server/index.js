@@ -20,7 +20,7 @@ app.use(morgan("dev"));
 // CORS setup
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
-  : ["http://localhost:5173"]; // Default for local dev
+  : ["http://localhost:8080"]; // Default for local dev
 
 app.use(cors({
   origin: function (origin, callback) {
