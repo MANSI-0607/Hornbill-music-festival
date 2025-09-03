@@ -54,7 +54,7 @@ export function Navigation() {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 z-50 relative">
               {/* <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center"> */}
-                <img src="/src/assets/logo/tafma-logo.png" alt="TaFMA Logo" className="w-14 h-12" />
+                <img src="/src/assets/logo/tafmalogo.png" alt="TaFMA Logo" className="w-14 h-12" />
               {/* </div> */}
               <span className="text-xl font-righteous text-white">TaFMA</span>
             </Link>
