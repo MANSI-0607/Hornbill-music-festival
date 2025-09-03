@@ -62,7 +62,7 @@ export default function AdminDashboard() {
     try {
       const token = localStorage.getItem("adminToken");
       const res = await fetch(
-        `${API_BASE_URL}/api/admin/dashboard/bands`,
+        `${API_BASE_URL}/admin/dashboard/bands`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -86,7 +86,7 @@ export default function AdminDashboard() {
     try {
       const token = localStorage.getItem("adminToken");
       const res = await fetch(
-        `${API_BASE_URL}/api/admin/dashboard/bands/${id}/status`,
+        `${API_BASE_URL}/admin/dashboard/bands/${id}/status`,
         {
           method: "PATCH",
           headers: {
