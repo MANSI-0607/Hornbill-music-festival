@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image } from 'lucide-react';
@@ -53,10 +52,11 @@ export function Navigation() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 z-50 relative">
-              {/* <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center"> */}
-                <img src="./tafmalogo.png" alt="TaFMA Logo" className="w-14 h-12" />
-              {/* </div> */}
-              <span className="text-xl font-righteous text-white">TaFMA</span>
+              {/* Hornbill logo */}
+              <img src="./hmflogo.png" alt="Hornbill Logo" className="w-20 h-16" />
+              {/* TaFMA logo */}
+              <img src="./tafmalogo.png" alt="TaFMA Logo" className="w-20 h-16" />
+              <span className="text-2xl font-righteous text-white">TaFMA</span>
             </Link>
 
             {/* Desktop Navigation */}
