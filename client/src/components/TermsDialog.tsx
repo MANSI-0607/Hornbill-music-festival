@@ -8,7 +8,7 @@ export default function TermsDialog() {
           Terms & Privacy
         </span>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl bg-black text-white">
+      <DialogContent className="max-w-3xl bg-[#002147] text-white">
         <DialogHeader>
           <DialogTitle className="text-pink-400">Ticket to Hornbill – Battle of the Bands 2025</DialogTitle>
           <DialogDescription className="text-white">

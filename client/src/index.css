@@ -1,5 +1,7 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Righteous&family=Quicksand:wght@400;500;600;700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Righteous&display=swap');
+/* Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -20,68 +22,49 @@
     --muted-foreground: 240 5% 64.9%;
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 320 100% 50%;
     --radius: 0.75rem;
-    
-    /* Festival theme colors */
-    --neon-pink: 320 100% 50%;
-    --neon-purple: 280 100% 60%;
-    --electric-orange: 25 100% 55%;
-    --cyber-teal: 180 100% 50%;
-    --tribal-gold: 45 100% 60%;
-  }
-}
 
-@layer base {
+    /* Festival brand colors (used in tailwind.config.js too) */
+    --color-vivid-pink: #ff4ecb;
+    --color-bright-pink: #ff6f91;
+    --color-bright-yellow: #ffd54f;
+    --color-green-cyan: #00e5c0;
+    --color-cyan: #4fc3f7;
+  }
+
   * {
     @apply border-border;
   }
-  
+
   body {
-    @apply bg-background text-foreground font-inter;
+    @apply bg-background text-foreground font-inter antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  /* Mobile-first responsive design */
   html {
     @apply text-base;
   }
-  
-  /* Safe area support for mobile devices */
-  .safe-area-inset-bottom {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  .safe-area-inset-top {
-    padding-top: env(safe-area-inset-top);
-  }
 
-  /* Mobile touch improvements */
-  button, a {
+  button,
+  a {
     @apply touch-manipulation;
   }
-  
-  /* Prevent zoom on input focus on iOS */
-  input, select, textarea {
-    font-size: 16px;
-  }
-  
-  @media (max-width: 768px) {
-    input, select, textarea {
-      font-size: 16px;
-    }
+
+  input,
+  select,
+  textarea {
+    font-size: 16px; /* Prevents iOS zoom */
   }
 }
 
 @layer components {
-  /* Enhanced button styles for mobile */
+  /* Festival Gradient Button */
   .btn-festival {
     @apply bg-gradient-to-r from-pink-500 via-purple-600 to-pink-500 
-           text-white font-semibold px-8 py-3 rounded-full 
+           text-white font-semibold px-6 py-3 rounded-full 
            shadow-lg hover:shadow-xl transform hover:scale-105 
            transition-all duration-300 border-0 
            active:scale-95;
@@ -89,93 +72,81 @@
     animation: gradient-shift 3s ease infinite;
   }
 
-  /* Mobile-optimized card styles */
+  /* Mobile-optimized card */
   .mobile-card {
     @apply bg-card/50 backdrop-blur-md border border-gray-700/50 
            rounded-2xl p-6 shadow-lg 
            active:scale-[0.98] transition-transform duration-150;
   }
 
-  /* Native-like mobile interactions */
-  .mobile-touch {
-    @apply active:scale-95 transition-transform duration-150 touch-manipulation;
-  }
-
-  /* Mobile navigation styles */
+  /* Mobile nav item */
   .mobile-nav-item {
     @apply flex flex-col items-center justify-center py-2 px-3 
            rounded-lg min-w-[60px] transition-all duration-200 
-           active:scale-95 touch-manipulation;
+           active:scale-95;
   }
 }
 
 @layer utilities {
-  /* Mobile-specific spacing */
+  /* Mobile container + spacing */
   .mobile-container {
     @apply px-4 mx-auto max-w-7xl;
   }
-  
+
   .mobile-section {
     @apply py-8 px-4;
   }
-  
-  /* Mobile typography */
+
   .mobile-heading {
     @apply text-2xl md:text-4xl font-bold leading-tight;
   }
-  
+
   .mobile-subheading {
     @apply text-lg md:text-xl text-muted-foreground leading-relaxed;
   }
-  
-  /* Hide scrollbar but keep functionality */
+
+  /* Hide scrollbar */
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
 
-  /* Safe area utilities */
-  .h-safe-area-inset-bottom {
-    height: env(safe-area-inset-bottom);
-  }
-  
+  /* Safe area support */
   .pb-safe-area-inset-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
+  .pt-safe-area-inset-top {
+    padding-top: env(safe-area-inset-top);
+  }
 
-  /* Scroll animation utilities */
+  /* Scroll reveal helpers */
   .scroll-fade-in {
     @apply transition-all duration-700 opacity-0 translate-y-8;
   }
-  
   .scroll-fade-in.visible {
     @apply opacity-100 translate-y-0;
   }
-  
+
   .scroll-slide-left {
     @apply transition-all duration-1000 opacity-0 -translate-x-8;
   }
-  
   .scroll-slide-left.visible {
     @apply opacity-100 translate-x-0;
   }
-  
+
   .scroll-slide-right {
     @apply transition-all duration-1000 opacity-0 translate-x-8;
   }
-  
   .scroll-slide-right.visible {
     @apply opacity-100 translate-x-0;
   }
-  
+
   .scroll-scale {
     @apply transition-all duration-700 opacity-0 scale-95;
   }
-  
   .scroll-scale.visible {
     @apply opacity-100 scale-100;
   }
@@ -183,28 +154,14 @@
 
 /* Custom animations */
 @keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
-@keyframes festival-pulse {
-  0%, 100% {
-    box-shadow: 0 0 20px hsl(320 100% 50% / 0.5);
-  }
-  50% {
-    box-shadow: 0 0 40px hsl(320 100% 50% / 0.8), 0 0 60px hsl(280 100% 60% / 0.6);
-  }
-}
-
-/* Enhanced scroll animations */
-@keyframes scroll-reveal {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -212,52 +169,200 @@
   }
 }
 
-@keyframes stagger-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
 }
 
-/* Mobile-specific animations */
-@keyframes mobile-slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* For staggered animations */
+.animate-stagger-fade-in:nth-child(1) { animation-delay: 0.1s; }
+.animate-stagger-fade-in:nth-child(2) { animation-delay: 0.2s; }
+.animate-stagger-fade-in:nth-child(3) { animation-delay: 0.3s; }
+.animate-stagger-fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+/* Custom Fonts (if you have them, e.g., Righteous) */
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.font-righteous {
+  font-family: 'Righteous', cursive;
 }
 
-.animate-mobile-slide-up {
-  animation: mobile-slide-up 0.3s ease-out;
+/* Golden Title Effect */
+.festival-title-golden {
+  background: linear-gradient(180deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 0 5px rgba(255, 215, 0, 0.7),
+    0 0 10px rgba(255, 165, 0, 0.5),
+    0 0 20px rgba(255, 215, 0, 0.3);
 }
 
-.animate-scroll-reveal {
-  animation: scroll-reveal 0.8s ease-out;
+/* Neon Text Golden (for a brighter, more defined golden glow) */
+.neon-text-golden {
+  color: #fff; /* Fallback for browsers that don't support text-shadow */
+  text-shadow:
+    0 0 7px #ffe100,
+    0 0 10px #ffc107,
+    0 0 21px #ff8c00,
+    0 0 42px #ff4500,
+    0 0 82px #ff0000;
 }
 
-.animate-stagger-fade-in {
-  animation: stagger-fade-in 0.6s ease-out;
+
+/* Colorful Stroke for Subtitle */
+.text-stroke-colorful {
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #ff007b; /* Pink */
+  text-shadow:
+    2px 2px 0 #8a2be2, /* Blue-violet */
+    -2px -2px 0 #00ffff, /* Cyan */
+    2px -2px 0 #ffff00, /* Yellow */
+    -2px 2px 0 #ff4500; /* Orange-red */
+  /* You can adjust colors and pixel values for desired effect */
 }
 
-/* Ensure proper spacing for mobile with fixed navigation */
-.mobile-page-content {
-  @apply pt-16 pb-20 md:pb-8;
+
+/* Custom Button Styling - You already have .btn-festival, adjust as needed */
+.btn-festival {
+  background: linear-gradient(45deg, #ff007b, #8a2be2); /* Pink to Blue-violet */
+  border: none;
+  color: white;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 0 15px rgba(255, 0, 123, 0.5); /* Pink shadow */
 }
 
-/* Mobile-optimized grid layouts */
-.mobile-grid {
-  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6;
+.btn-festival:hover {
+  background: linear-gradient(45deg, #8a2be2, #ff007b); /* Reverse gradient on hover */
+  box-shadow: 0 0 25px rgba(138, 43, 226, 0.7); /* Purple shadow */
+  transform: translateY(-2px) scale(1.02);
 }
 
-/* Touch-friendly interactive elements */
-.touch-target {
-  @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+/* Glow on Hover Effect */
+.glow-on-hover {
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease-in-out;
+}
+.glow-on-hover:hover {
+  box-shadow:
+    0 0 10px #fff,
+    0 0 20px #ff007b,
+    0 0 30px #8a2be2,
+    0 0 40px #00ffff,
+    0 0 50px #ffc107;
+  transform: scale(1.05);
+}
+
+
+/* News Broadcasting Strip Animation */
+@keyframes scrollLeft {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); } /* Scrolls half its width, then repeats */
+}
+
+.scrolling-text {
+  animation: scrollLeft 20s linear infinite; /* Adjust duration as needed */
+  display: flex; /* Ensures items are side-by-side */
+  width: max-content; /* Allows content to extend beyond container */
+}
+
+
+/* Cartoon Float/Bob Animations */
+@keyframes floatBob {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes floatBobAlt {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(10px) rotate(-3deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.9; }
+}
+
+.animate-float-bob {
+  animation: floatBob 6s ease-in-out infinite;
+}
+
+.animate-float-bob-alt {
+  animation: floatBobAlt 7s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 5s ease-in-out infinite;
+}
+
+
+/* Existing Festival Card and Text Colors - Ensure these are defined */
+.festival-card {
+  background-color: rgba(30, 30, 30, 0.8); /* Darker background for cards */
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.text-neon-pink { color: #FF007B; text-shadow: 0 0 8px #FF007B; }
+.text-neon-purple { color: #8A2BE2; text-shadow: 0 0 8px #8A2BE2; }
+.text-electric-orange { color: #FF4500; text-shadow: 0 0 8px #FF4500; }
+.text-cyber-teal { color: #00FFFF; text-shadow: 0 0 8px #00FFFF; }
+
+.text-golden-yellow { color: #FFD700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.7); }
+
+/* Animation for stats (if not already defined) */
+@keyframes scaleIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+/* Fade In animation for content */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+/* Golden Yellow Text for Heading */
+.text-golden-yellow {
+  color: #FFD700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+/* FAQ Card Animation */
+.faq-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.faq-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Add glow effect for sections (optional, but looks great) */
+.from-teal-500.to-cyan-500 {
+  box-shadow: 0 0 15px rgba(0, 128, 128, 0.6);
+}
+
+.from-pink-500.to-purple-500 {
+  box-shadow: 0 0 15px rgba(255, 0, 123, 0.6);
+}
+
+.from-yellow-500.to-orange-500 {
+  box-shadow: 0 0 15px rgba(255, 165, 0, 0.6);
+}
+
+.from-red-500.to-rose-500 {
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
 }

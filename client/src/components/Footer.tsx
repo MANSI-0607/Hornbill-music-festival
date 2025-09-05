@@ -1,64 +1,102 @@
+import React, { useEffect } from "react";
+import {
+  Heart,
+  Mail,
+  Phone,
+  MapPin,
+  Facebook,
+  Instagram,
+  Twitter,
+  Youtube,
+} from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import logo from "@/assets/logo/hmf-logo.png";
+import tafmalogo from "@/assets/logo/tafmalogo.png";
 
-import React, { useEffect } from 'react';
-import { Heart, Music, Mail, Phone, MapPin, Calendar, ExternalLink } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+
 const Footer = () => {
   const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
-  return (
-    <footer className="bg-background/95 backdrop-blur-md border-t border-border/50 mt-auto">
-      <div className="mobile-container py-12">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-          {/* Festival Info */}
-          <div className="text-left">
-            <div className="flex items-center gap-2 mb-4">
-              <Music className="h-6 w-6 text-neon-pink" />
-              <h3 className="text-lg font-semibold">Hornbill Music Festival</h3>
-            </div>
-            <p className="text-muted-foreground text-sm leading-relaxed mb-6">
-              Celebrating Nagaland's rich musical heritage and empowering local artists since the grand Hornbill Festival.
-            </p>
-            
-            {/* Festival Dates */}
-            <div className="mb-6">
-              <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-neon-pink" />
-                Festival Dates
-              </h4>
-              <p className="text-sm text-muted-foreground">December 3-8, 2024</p>
-              <p className="text-xs text-muted-foreground">Daily events: 2:00 PM - 11:00 PM</p>
-            </div>
 
-            {/* Book Tickets */}
-            <div className="bg-gradient-to-r from-neon-pink/10 to-neon-purple/10 p-4 rounded-lg border border-neon-pink/20">
-              <h4 className="font-semibold mb-2">Ready to Experience the Festival?</h4>
-              <p className="text-sm text-muted-foreground mb-3">Book your tickets now and secure your spot at Nagaland's premier music celebration.</p>
-              <a 
-                href="https://ahibi.in" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-neon-pink hover:text-neon-purple transition-colors text-sm font-medium"
+  return (
+  <footer className="bg-[#00ff7f] border-t border-green-700 text-white">
+
+
+
+      <div className="max-w-7xl mx-auto px-2 lg:px-12 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        {/* Festival Info */}
+          <div>
+            <div className="flex items-center space-x-3 mb-2"> {/* Adjusted margin-bottom */}
+              <img
+                src={logo}
+                alt="Hornbill Music Festival"
+                className="w-16 h-16 rounded-full"
+              />
+              <img
+                src={tafmalogo}
+                alt="Hornbill Music Festival"
+                className="w-16 h-16 rounded-full"
+              />
+            </div>
+            {/* Hornbill Music Festival and Managed by TaFMA are now below the logos */}
+             <span className="text-2xl font-funky text-white drop-shadow-lg whitespace-nowrap">
+                  Hornbill Music Festival
+                </span>
+                <br></br>
+                <span className="text-sm text-yellow-200 font-semibold uppercase">
+                  Managed by TaFMA
+                </span>
+
+            <p className="text-base text-[#003300] mb-4"> {/* Increased font size for description */}
+              Celebrating Nagaland’s vibrant culture & music.
+            </p>
+            <p className="text-base font-semibold text-white mb-3"> {/* Increased font size for follow us */}
+              Follow us:
+            </p>
+            <div className="flex space-x-3">
+              <a
+                href="#"
+                className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#ffea00] text-white hover:bg-[#ffea00] hover:text-[#003300] transition" // Funky borders and hover
               >
-                Book Tickets <ExternalLink className="h-4 w-4" />
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#ffea00] text-white hover:bg-[#ffea00] hover:text-[#003300] transition"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+              <a
+                href="https://www.youtube.com/@TaFMANagaland"
+                className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#ffea00] text-white hover:bg-[#ffea00] hover:text-[#003300] transition"
+              >
+                <Youtube className="w-5 h-5" />
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-[#ffea00] text-white hover:bg-[#ffea00] hover:text-[#003300] transition"
+              >
+                <Twitter className="w-5 h-5" />
               </a>
             </div>
           </div>
 
           {/* Contact Information */}
           <div className="text-left">
-            <h3 className="text-lg font-semibold mb-4">Get in Touch</h3>
+            <h3 className="text-lg font-semibold text-blue-900 mb-4">Get in Touch</h3>
             <p className="text-muted-foreground text-sm mb-6">
-              Have questions about the festival or want to collaborate with TaFMA? We'd love to hear from you.
+              Have questions about the festival or want to collaborate with
+              TaFMA? We'd love to hear from you.
             </p>
 
             {/* Email */}
             <div className="mb-4">
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Mail className="h-4 w-4 text-neon-pink" />
+                <Mail className="h-4 w-4 text-[#ffea00]" />
                 Email
               </h4>
               <div className="space-y-1 text-sm text-muted-foreground">
@@ -70,7 +108,7 @@ const Footer = () => {
             {/* Phone */}
             <div className="mb-4">
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Phone className="h-4 w-4 text-neon-pink" />
+                <Phone className="h-4 w-4 text-[#ffea00]" />
                 Phone
               </h4>
               <div className="space-y-1 text-sm text-muted-foreground">
@@ -82,7 +120,7 @@ const Footer = () => {
             {/* Location */}
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-neon-pink" />
+                <MapPin className="h-4 w-4 text-[#ffea00]" />
                 Location
               </h4>
               <div className="text-sm text-muted-foreground">
@@ -94,45 +132,66 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="text-left">
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-            <div className="space-y-2">
-  <Link to="/events" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    Events
-  </Link>
-  <Link to="/artists" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    Artists
-  </Link>
-  <Link to="/auditions" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    Auditions
-  </Link>
-  <Link to="/about" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    About
-  </Link>
-  <Link to="/schedule" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    Schedule
-  </Link>
-</div>
+          <div>
+            <h3 className="text-lg font-semibold text-blue-900 mb-4">
+              Quick Links
+            </h3>
+            <div className="grid grid-cols-2 gap-3 text-sm text-gray-800">
+              <Link to="/festive" className="hover:text-yellow-600">
+                Gallery
+              </Link>
+              <Link to="/explore" className="hover:text-yellow-600">
+                Terms & Conditions
+              </Link>
+              <Link to="/festive" className="hover:text-yellow-600">
+                Schedule
+              </Link>
+              <Link to="/explore" className="hover:text-yellow-600">
+                Privacy Policy
+              </Link>
+              <Link to="/festive" className="hover:text-yellow-600">
+                Artists
+              </Link>
+              <Link to="/sponsors" className="hover:text-yellow-600">
+                Sponsors
+              </Link>
+              <Link to="/audition" className="hover:text-yellow-600">
+                Audition
+              </Link>
+              <Link to="/explore" className="hover:text-yellow-600">
+                Visitors Guide
+              </Link>
+              <Link to="/about" className="hover:text-yellow-600">
+                About
+              </Link>
+              <Link to="/faq" className="hover:text-yellow-600">
+                FAQ
+              </Link>
+            </div>
+            <div className="mt-5">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.6764849333663!2d94.1144034!3d25.6164264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3746215b6f4ab711%3A0x202995c7ce5b7e31!2sNaga%20Heritage%20Village%2C%20Kisama%2C%20Nagaland%20797001%2C%20India!5e0!3m2!1sen!2sin!4v1693520881234!5m2!1sen!2sin"
+               
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-border/30 pt-6">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <span>Made with</span>
-              <Heart className="h-4 w-4 text-neon-pink" />
-              <span>by KAKI TECH</span>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Hornbill Music Festival. All rights reserved.
-            </div>
-          </div>
+        <div className="border-t border-white-900 pt-6 mt-10 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+          <p className="flex items-center gap-1">
+            Made with <Heart className="w-4 h-4 text-yellow-600" /> by KAKI TECH
+          </p>
+          <p>
+            © {new Date().getFullYear()} Hornbill Music Festival. All rights
+            reserved.
+          </p>
         </div>
       </div>
-
-      {/* Mobile Safe Area */}
-      <div className="h-safe-area-inset-bottom md:hidden"></div>
     </footer>
   );
 };

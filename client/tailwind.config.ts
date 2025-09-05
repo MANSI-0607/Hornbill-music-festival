@@ -1,128 +1,111 @@
-
 import type { Config } from "tailwindcss";
 
-export default {
-	darkMode: ["class"],
-	content: [
-		"./pages/**/*.{ts,tsx}",
-		"./components/**/*.{ts,tsx}",
-		"./app/**/*.{ts,tsx}",
-		"./src/**/*.{ts,tsx}",
-	],
-	prefix: "",
-	theme: {
-		container: {
-			center: true,
-			padding: '2rem',
-			screens: {
-				'2xl': '1400px'
-			}
-		},
-		extend: {
-			colors: {
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
-				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
-				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
-				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
-				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
-				},
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
-				},
-				// Festival-specific colors
-				'neon-pink': 'hsl(var(--neon-pink))',
-				'neon-purple': 'hsl(var(--neon-purple))',
-				'electric-orange': 'hsl(var(--electric-orange))',
-				'cyber-teal': 'hsl(var(--cyber-teal))',
-				'tribal-gold': 'hsl(var(--tribal-gold))',
-			},
-			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
-			},
-			fontFamily: {
-				'righteous': ['Righteous', 'cursive'],
-				'inter': ['Inter', 'sans-serif'],
-			},
-			keyframes: {
-				'accordion-down': {
-					from: {
-						height: '0'
-					},
-					to: {
-						height: 'var(--radix-accordion-content-height)'
-					}
-				},
-				'accordion-up': {
-					from: {
-						height: 'var(--radix-accordion-content-height)'
-					},
-					to: {
-						height: '0'
-					}
-				},
-				'fade-in': {
-					'0%': {
-						opacity: '0',
-						transform: 'translateY(20px)'
-					},
-					'100%': {
-						opacity: '1',
-						transform: 'translateY(0)'
-					}
-				},
-				'scale-in': {
-					'0%': {
-						transform: 'scale(0.95)',
-						opacity: '0'
-					},
-					'100%': {
-						transform: 'scale(1)',
-						opacity: '1'
-					}
-				},
-				'festival-pulse': {
-					'0%, 100%': {
-						boxShadow: '0 0 20px hsl(320 100% 50% / 0.5)'
-					},
-					'50%': {
-						boxShadow: '0 0 40px hsl(320 100% 50% / 0.8), 0 0 60px hsl(280 100% 60% / 0.6)'
-					}
-				}
-			},
-			animation: {
-				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.6s ease-out',
-				'scale-in': 'scale-in 0.4s ease-out',
-				'festival-pulse': 'festival-pulse 2s ease-in-out infinite'
-			}
-		}
-	},
-	plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+const config: Config = {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "#E6E6E6",
+        input: "#FFF4F2",
+        ring: "#FFD54F",
+        background: "#F9FAFB", // light neutral background
+        foreground: "#1E293B", // dark navy text
+
+        // Primary festival palette
+        primary: {
+          DEFAULT: "#FFD700", // golden yellow (Hornbill text)
+          foreground: "#1E293B", // dark readable text
+        },
+        secondary: {
+          DEFAULT: "#1E3A8A", // royal blue
+          foreground: "#FFFFFF", // white text on blue
+        },
+        accent: {
+          DEFAULT: "#00B8D9", // cyan accent
+          foreground: "#FFFFFF",
+        },
+        muted: {
+          DEFAULT: "#E5E7EB", // soft gray
+          foreground: "#374151", // gray text
+        },
+        card: {
+          DEFAULT: "#FFFFFF", // white card background
+          foreground: "#1E293B", // readable text
+        },
+
+        // Special festival tones (for CTA highlights, decorations, etc.)
+        "festival-gold": "#FFD700",
+        "festival-blue": "#0A2342",
+        "festival-cyan": "#00B8D9",
+        "festival-pink": "#E91E63",
+
+        // Remove old funky vars if not needed, but keeping here for safety
+        vividPink: "var(--color-vivid-pink)",
+        brightPink: "var(--color-bright-pink)",
+        brightYellow: "var(--color-bright-yellow)",
+        greenCyan: "var(--color-green-cyan)",
+        cyan: "var(--color-cyan)",
+      },
+      fontFamily: {
+        righteous: ["Righteous", "cursive"], // already present
+        headline: ["Monoton", "cursive"], // funky headline font
+        funky: ["Rubik Distressed", "cursive"], // festival graffiti-like
+        groovy: ["Fugaz One", "cursive"], // retro funky
+        body: ["Quicksand", "Poppins", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
+
+      animation: {
+        "festival-bounce": "bounce 1.5s infinite",
+        "festival-pulse": "pulse 2s ease-in-out infinite",
+        "gradient-shift": "gradient-shift 3s ease infinite",
+        "mobile-slide-up": "mobile-slide-up 0.3s ease-out",
+        "scroll-reveal": "scroll-reveal 0.8s ease-out",
+        "stagger-fade-in": "stagger-fade-in 0.6s ease-out",
+      },
+      keyframes: {
+        "gradient-shift": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+        },
+        "festival-pulse": {
+          "0%, 100%": {
+            boxShadow: "0 0 20px hsl(50 100% 50% / 0.5)", // golden glow
+          },
+          "50%": {
+            boxShadow:
+              "0 0 40px hsl(50 100% 50% / 0.8), 0 0 60px hsl(220 100% 60% / 0.6)", // gold + blue glow
+          },
+        },
+        "scroll-reveal": {
+          from: { opacity: "0", transform: "translateY(30px)" },
+          to: { opacity: "1", transform: "translateY(0)" },
+        },
+        "stagger-fade-in": {
+          from: { opacity: "0", transform: "translateY(20px) scale(0.95)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        "mobile-slide-up": {
+          from: { transform: "translateY(100%)", opacity: "0" },
+          to: { transform: "translateY(0)", opacity: "1" },
+        },
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+};
+
+export default config;

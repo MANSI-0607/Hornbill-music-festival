@@ -18,6 +18,9 @@ import Artists from "./pages/Artists";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import ProtectedRoute from "./components/ProtectedRoute";
+import HornbillFaq from "./pages/HornbillFaq";
+import Festivehub from "./pages/Festivehub";
+import Explore from "./pages/Explore";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +41,9 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/schedule" element={<Schedule />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/faq" element={<HornbillFaq/>} />
+              <Route path="/festive" element={<Festivehub/>} />
+              <Route path="/explore" element={<Explore/>} />
               <Route path="/hornbill-music-festival" element={<HornbillMusicFestival />} />
                {/* Admin Routes */}
   <Route path="/admin/login" element={<AdminLogin />} />

@@ -3,7 +3,7 @@ import React from 'react';
 import { Navigation } from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import FeaturedSection from '@/components/FeaturedSection';
-import AboutTaFMA from '@/components/AboutTaFMA';
+// import AboutTaFMA from '@/components/AboutTaFMA';
 import Sponsors from '@/components/Sponsors';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 // import FestivalExperience from '@/components/FestivalExperience';
@@ -45,7 +45,7 @@ const Index = () => {
           <FestivalGallery /> */}
         </section>
 
-        <section 
+        {/* <section 
           ref={aboutRef}
           className={`transition-all duration-1000 ${
             aboutVisible 
@@ -54,7 +54,7 @@ const Index = () => {
           }`}
         >
           <AboutTaFMA />
-        </section>
+        </section> */}
 
         <section 
           ref={sponsorsRef}

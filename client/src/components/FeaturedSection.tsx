@@ -1,9 +1,9 @@
+// src/components/FeaturedSection.tsx
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink } from 'lucide-react';
+import { Camera, ChevronLeft, ChevronRight, Eye, ExternalLink } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import GalleryModal from './GalleryModal';
 import comeTogetherThumbnail from '@/assets/comeTogether.png';
 import hornbillMusic1 from '@/assets/music/hornbill (1).jpg';
@@ -16,9 +16,6 @@ import hornbillMusic7 from '@/assets/music/hornbill (7).jpg';
 import hornbillMusic8 from '@/assets/music/hornbill (8).jpg';
 
 const FeaturedSection = () => {
-  const navigate = useNavigate();
-  const { elementRef: headerRef, isVisible: headerVisible } = useScrollAnimation<HTMLDivElement>();
-  const { elementRef: cardsRef, isVisible: cardsVisible } = useScrollAnimation<HTMLDivElement>();
   const { elementRef: documentaryRef, isVisible: documentaryVisible } = useScrollAnimation<HTMLDivElement>();
   const { elementRef: galleryRef, isVisible: galleryVisible } = useScrollAnimation<HTMLDivElement>();
 
@@ -26,87 +23,15 @@ const FeaturedSection = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = React.useState(0);
 
-  // Touch handling for mobile swipe
-  const [touchStart, setTouchStart] = React.useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = React.useState<number | null>(null);
-
-  // Minimum swipe distance (in px)
-  const minSwipeDistance = 50;
-
-  const featuredCards = [
-    {
-      title: '🎤 Pre-Ticket Auditions',
-      description: 'Submit your band for a chance to perform at Hornbill Music Festival',
-      cta: 'Apply Now',
-      variant: 'festival',
-      icon: Music,
-      gradient: 'from-pink-500/20 to-purple-600/20',
-      border: 'border-pink-500/30',
-      link: '/auditions'
-    },
-    {
-      title: '🦅 Hornbill Music Festival',
-      description: 'Explore event highlights, stages, and experiences waiting for you this December.',
-      cta: 'Explore Festival →',
-      variant: 'stage',
-      icon: Users,
-      gradient: 'from-orange-500/20 to-teal-500/20',
-      border: 'border-orange-500/30',
-      link: '/hornbill-music-festival'
-    },
-    {
-      title: '📅 Live Schedule',
-      description: 'Check out the complete festival lineup and plan your experience',
-      cta: 'View Schedule',
-      variant: 'tribal',
-      icon: Camera,
-      gradient: 'from-purple-600/20 to-yellow-500/20',
-      border: 'border-purple-500/30',
-      link: '/schedule'
-    }
-  ];
-
   const galleryImages = [
-    {
-      id: 1,    
-      category: 'Music',
-      imageUrl: hornbillMusic1
-    },
-    {
-      id: 2,
-      category: 'Music',
-      imageUrl: hornbillMusic2
-    },
-    {
-      id: 3,
-      category: 'Music',
-      imageUrl: hornbillMusic3
-    },
-    {
-      id: 4,
-      category: 'Music',
-      imageUrl: hornbillMusic4
-    },
-    {
-      id: 5,
-      category: 'Music',
-      imageUrl: hornbillMusic5
-    },
-    {
-      id: 6,
-      category: 'Music',
-      imageUrl: hornbillMusic6
-    },
-    {
-      id: 7,
-      category: 'Music',
-      imageUrl: hornbillMusic7
-    },
-    {
-      id: 8,
-      category: 'Music',
-      imageUrl: hornbillMusic8
-    }
+    { id: 1, category: 'Music', imageUrl: hornbillMusic1 },
+    { id: 2, category: 'Music', imageUrl: hornbillMusic2 },
+    { id: 3, category: 'Music', imageUrl: hornbillMusic3 },
+    { id: 4, category: 'Music', imageUrl: hornbillMusic4 },
+    { id: 5, category: 'Music', imageUrl: hornbillMusic5 },
+    { id: 6, category: 'Music', imageUrl: hornbillMusic6 },
+    { id: 7, category: 'Music', imageUrl: hornbillMusic7 },
+    { id: 8, category: 'Music', imageUrl: hornbillMusic8 }
   ];
 
   const scrollGallery = (direction: 'left' | 'right') => {
@@ -120,245 +45,139 @@ const FeaturedSection = () => {
     }
   };
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe) {
-      scrollGallery('right');
-    }
-    if (isRightSwipe) {
-      scrollGallery('left');
-    }
-  };
-
   const openModal = (index: number) => {
     setSelectedImageIndex(index);
     setIsModalOpen(true);
   };
 
   return (
-    <section className="py-20 px-4">
-      <div className="container mx-auto max-w-6xl">
-        <div 
-          ref={headerRef}
-          className={`text-center mb-16 transition-all duration-800 ${
-            headerVisible 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-10'
-          }`}
-        >
-          <h2 className="font-righteous text-4xl md:text-5xl mb-4">
-            <span className="festival-title">Festival Experience</span>
-          </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Immerse yourself in the sounds, culture, and spirit of Nagaland
-          </p>
-        </div>
-
-        <div 
-          ref={cardsRef}
-          className={`grid md:grid-cols-3 gap-8 mb-16 transition-all duration-1000 ${
-            cardsVisible 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-16'
-          }`}
-        >
-          {featuredCards.map((card, index) => (
-            <Card 
-              key={index} 
-              className={`festival-card ${card.gradient} ${card.border} group cursor-pointer transition-all duration-500 ${
-                cardsVisible ? 'animate-fade-in' : ''
-              }`}
-              style={{
-                animationDelay: cardsVisible ? `${index * 200}ms` : '0ms'
-              }}
-              onClick={() => navigate(card.link)}
-            >
-              <CardContent className="p-8">
-                <div className="flex items-center justify-between mb-6">
-                  <card.icon className="text-4xl text-pink-400" size={48} />
-                  <ArrowRight className="text-gray-400 group-hover:text-pink-400 group-hover:translate-x-2 transition-all duration-300" size={24} />
-                </div>
-                
-                <h3 className="font-righteous text-2xl mb-4 text-white">
-                  {card.title}
-                </h3>
-                
-                <p className="text-gray-400 mb-6 leading-relaxed">
-                  {card.description}
-                </p>
-                
-                <Button className={`btn-${card.variant} w-full`}>
-                  {card.cta}
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div 
+    <section className="py-10 px-2 bg-[#F9FAFB]">
+      <div className="container mx-auto max-w-8xl">
+        {/* OFFICIAL SONG SECTION */}
+        <div
           ref={documentaryRef}
-          className={`festival-card transition-all duration-800 ${
-            documentaryVisible 
-              ? 'opacity-100 translate-y-0 scale-100' 
-              : 'opacity-0 translate-y-12 scale-95'
+          className={`grid md:grid-cols-2 gap-10 items-center mb-20 transition-all duration-800 bg-[#b6d0f0] ${
+            documentaryVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-12'
           }`}
         >
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className={`transition-all duration-1000 delay-200 ${
-              documentaryVisible 
-                ? 'opacity-100 translate-x-0' 
-                : 'opacity-0 -translate-x-8'
-            }`}>
-              <h3 className="font-righteous text-3xl mb-4">
-                <span className="festival-title">Hornbill Festival Official Theme Song</span>
-              </h3>
-              <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-                Experience the spirit of unity and celebration with “Come Together”, 
-                the official song of the Hornbill Festival. Created by Trance Effect, 
-                this anthem captures the energy, culture, and heartbeat of Nagaland’s 
-                biggest celebration.
-              </p>
-              <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-                🎵 25 Years of Hornbill – One Song, One Spirit.
-              </p>  
-              <a href="https://youtu.be/8-1GZQ2w8kE?si=fJpAyHI2cRjLiF0L" target="_blank" rel="noopener noreferrer">
-                <Button className="btn-festival">
-                  <Camera className="mr-2" size={20} />
-                  Watch Official Music Video
-                </Button>
-              </a>
-            </div>
-            
-            <div className={`relative transition-all duration-1000 delay-400 ${
-              documentaryVisible 
-                ? 'opacity-100 translate-x-0 scale-100' 
-                : 'opacity-0 translate-x-8 scale-95'
-            }`}>
-              <div className="aspect-video rounded-2xl overflow-hidden neon-glow-purple">
-                <img
-                  src={comeTogetherThumbnail}
-                  alt="Hornbill"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
+          {/* Left: Video thumbnail */}
+          <div
+            className={`rounded-2xl overflow-hidden shadow-2xl transition-all duration-1000 ${
+              documentaryVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+            }`}
+          >
+            <img
+              src={comeTogetherThumbnail}
+              alt="Hornbill Festival Theme Song"
+              className="w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Right: Description */}
+          <div className="space-y-6">
+            <h3 className="text-3xl md:text-4xl font-extrabold text-[#0A2342]">
+              <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-600 text-transparent bg-clip-text">
+                Hornbill Festival Official Theme Song
+              </span>
+            </h3>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              Experience the spirit of unity and celebration with{' '}
+              <span className="font-semibold text-[#1E3A8A]">“Come Together”</span>, 
+              the official song of the Hornbill Festival. Created by{' '}
+              <span className="font-semibold">Trance Effect</span>, this anthem 
+              captures the energy, culture, and heartbeat of Nagaland’s biggest celebration.
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              🎵 25 Years of Hornbill – One Song, One Spirit.
+            </p>
+            <a
+              href="https://youtu.be/8-1GZQ2w8kE?si=fJpAyHI2cRjLiF0L"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button className="bg-[#FFD700] text-[#0A2342] font-bold hover:bg-[#e6c200] transition px-6 py-3 rounded-lg shadow-lg">
+                <Camera className="mr-2" size={20} />
+                Watch Official Music Video
+              </Button>
+            </a>
           </div>
         </div>
 
-        <div 
+        {/* IMAGE GALLERY */}
+        <div
           ref={galleryRef}
-          className={`mt-16 transition-all duration-800 ${
-            galleryVisible 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-16'
+          className={`transition-all duration-800 ${
+            galleryVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
           }`}
         >
           <div className="flex items-center justify-between mb-8">
-            <h3 className={`font-righteous text-2xl md:text-3xl transition-all duration-1000 delay-200 ${
-              galleryVisible 
-                ? 'opacity-100 translate-y-0' 
-                : 'opacity-0 translate-y-8'
-            }`}>
-              <span className="festival-title">Live from the Festival</span>
+            <h3 className="text-2xl md:text-3xl font-extrabold text-[#0A2342]">
+              <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-600 text-transparent bg-clip-text">
+                Live from the Festival
+              </span>
             </h3>
-            
             <div className="flex gap-2">
               <button
                 onClick={() => scrollGallery('left')}
-                className="p-2 bg-gray-800/50 border border-gray-700/50 rounded-full hover:bg-gray-700/50 hover:border-pink-500/50 transition-all duration-300"
+                className="p-2 bg-white border border-gray-300 rounded-full hover:bg-yellow-100 transition"
               >
-                <ChevronLeft className="text-gray-400 hover:text-pink-400" size={20} />
+                <ChevronLeft className="text-[#0A2342]" size={20} />
               </button>
               <button
                 onClick={() => scrollGallery('right')}
-                className="p-2 bg-gray-800/50 border border-gray-700/50 rounded-full hover:bg-gray-700/50 hover:border-pink-500/50 transition-all duration-300"
+                className="p-2 bg-white border border-gray-300 rounded-full hover:bg-yellow-100 transition"
               >
-                <ChevronRight className="text-gray-400 hover:text-pink-400" size={20} />
+                <ChevronRight className="text-[#0A2342]" size={20} />
               </button>
             </div>
           </div>
-          
+
+          {/* Horizontal gallery */}
           <div className="relative overflow-hidden -mx-4 px-4">
-            <div 
+            <div
               id="festival-gallery"
               className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory touch-pan-x"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-              onTouchStart={onTouchStart}
-              onTouchMove={onTouchMove}
-              onTouchEnd={onTouchEnd}
             >
               {galleryImages.map((image, index) => (
-                <div 
+                <div
                   key={image.id}
-                  className={`flex-shrink-0 w-72 sm:w-80 h-64 relative rounded-2xl overflow-hidden cursor-pointer group transition-all duration-500 hover:scale-105 snap-start select-none ${
-                    galleryVisible ? 'animate-scale-in' : 'opacity-0 scale-75'
-                  }`}
-                  style={{
-                    animationDelay: galleryVisible ? `${index * 100}ms` : '0ms'
-                  }}
+                  className="flex-shrink-0 w-72 sm:w-80 h-64 relative rounded-2xl overflow-hidden cursor-pointer group transition-all duration-500 hover:scale-105 snap-start select-none"
                   onClick={() => openModal(index)}
                 >
-                  {/* Background Image */}
-                  <img 
-                    src={image.imageUrl} 
-                    // alt={image.title}
+                  <img
+                    src={image.imageUrl}
+                    alt="Festival"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
-                  
-                  {/* Dark overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  
-                  <div className="absolute inset-0 flex flex-col justify-between p-4 md:p-6">
-                    <div className="flex justify-between items-start">
-                      <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white border border-white/30">
-                        {image.category}
-                      </span>
-                      <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-pink-500/50 transition-all duration-300">
-                        <Eye className="text-white" size={16} />
-                      </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                  <div className="absolute inset-0 flex justify-between items-start p-4">
+                    <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white border border-white/30">
+                      {image.category}
+                    </span>
+                    <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-yellow-400/50 transition-all duration-300">
+                      <Eye className="text-white" size={16} />
                     </div>
-                  {/*                     
-                    <div>
-                      <h4 className="font-righteous text-lg md:text-xl text-white mb-2 group-hover:text-pink-200 transition-colors duration-300">
-                        {image.title}
-                      </h4>
-                      <p className="text-gray-200 text-sm opacity-90 line-clamp-2">
-                        {image.description}
-                      </p>
-                    </div> */}
                   </div>
-                  
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-pink-400/50 rounded-2xl transition-all duration-300" />
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-yellow-400/50 rounded-2xl transition-all duration-300" />
                 </div>
               ))}
             </div>
           </div>
-          
+
+          {/* Gallery actions */}
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 mt-8">
-            <Button 
+            <Button
               onClick={() => setIsModalOpen(true)}
-              className="btn-festival w-full sm:w-auto"
+              className="bg-[#FFD700] text-[#0A2342] font-bold hover:bg-[#e6c200] transition px-6 py-3 rounded-lg shadow-lg w-full sm:w-auto"
             >
               <Camera className="mr-2" size={20} />
               Quick View Gallery
             </Button>
-            
             <Link to="/gallery" className="w-full sm:w-auto">
-              <Button className="btn-festival w-full">
+              <Button className="bg-[#FFD700] text-[#0A2342] font-bold hover:bg-[#e6c200] transition px-6 py-3 rounded-lg shadow-lg w-full">
                 <ExternalLink className="mr-2" size={20} />
                 Full Gallery Page
               </Button>
@@ -367,6 +186,7 @@ const FeaturedSection = () => {
         </div>
       </div>
 
+      {/* Gallery Modal */}
       <GalleryModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import { ChevronRight } from 'lucide-react';
 
 const Sponsors = () => {
   const { elementRef: sectionRef, isVisible: sectionVisible } = useScrollAnimation<HTMLElement>({ threshold: 0.2 });
@@ -42,16 +42,16 @@ const Sponsors = () => {
   return (
     <section 
       ref={sectionRef}
-      className={`py-16 bg-gradient-to-b from-gray-900/30 to-gray-800/50 transition-all duration-1000 ${
-        sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      className={`py-16 bg-gradient-to-br from-[#1E3A8A] to-[#0A2342] text-white transition-all duration-1000 ${
+        sectionVisible ? 'animate-fade-in-up visible' : 'animate-fade-in-up'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-righteous festival-title mb-4">
+          <h2 className="text-4xl md:text-5xl font-righteous text-[#FFD700] mb-4">
             Our Partners & Sponsors
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-[#B9E6FF] max-w-3xl mx-auto">
             Supporting the preservation and celebration of Nagaland's musical heritage
           </p>
         </div>
@@ -59,39 +59,42 @@ const Sponsors = () => {
         <div 
           ref={logosRef}
           className={`transition-all duration-1000 ${
-            logosVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            logosVisible ? 'animate-fade-in-up visible' : 'animate-fade-in-up'
           }`}
         >
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
             {sponsors.map((sponsor, index) => (
               <div 
                 key={sponsor.name}
-                className="group flex flex-col items-center text-center"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className={`group flex flex-col items-center text-center transform transition-all duration-700 ${
+                  logosVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: `${index * 150}ms` }}
               >
-                <div className="w-24 h-24 mb-3 rounded-full overflow-hidden bg-white/10 backdrop-blur-sm border border-gray-700/50 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="w-24 h-24 p-2 mb-3 rounded-full bg-[#1E40AF] border-2 border-[#1E3A8A] flex items-center justify-center overflow-hidden group-hover:scale-110 transition-transform duration-300 transform-gpu">
                   <img 
                     src={sponsor.logo}
                     alt={sponsor.name}
-                    className="w-16 h-16 object-cover rounded-full grayscale group-hover:grayscale-0 transition-all duration-300"
+                    className="w-full h-full object-cover rounded-full grayscale group-hover:grayscale-0 transition-all duration-500"
                   />
                 </div>
-                <h3 className="text-sm font-semibold text-white mb-1">{sponsor.name}</h3>
-                <p className="text-xs text-muted-foreground">{sponsor.tier}</p>
+                <h3 className="text-lg font-semibold text-white mb-1 drop-shadow-lg">{sponsor.name}</h3>
+                <p className="text-sm text-[#00B8D9] font-medium">{sponsor.tier}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div className="mt-12 text-center">
-          <p className="text-muted-foreground mb-4">
+          <p className="text-[#B9E6FF] mb-4">
             Interested in becoming a sponsor?
           </p>
           <a 
             href="mailto:sponsors@tafma.org" 
-            className="inline-flex items-center bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center bg-[#FFD700] hover:bg-[#E0B900] text-[#1E3A8A] font-bold px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl"
           >
             Partner with Us
+            <ChevronRight className="ml-2 w-5 h-5" />
           </a>
         </div>
       </div>
