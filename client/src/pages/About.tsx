@@ -5,6 +5,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import hero4 from "@/assets/hornbillMusic (4).jpg";
 import tafma from "@/assets/tafma.jpg";
 import hornbill from "@/assets/music/hornbill (18).png";
+import aboutTafmaBanner from "@/assets/banners/aboutTafmaBanner.png";
 
 const About = () => {
   // Animation refs
@@ -108,17 +109,24 @@ const About = () => {
 {/* About TaFMA */}
 <section
   ref={tafmaSectionRef}
-  className={`py-12 md:py-16 bg-[#77b5fe] text-white transition-all duration-1000 ${
+  className={`relative overflow-hidden py-12 md:py-16 text-white transition-all duration-1000 ${
     tafmaSectionVisible ? "scroll-fade-in visible" : "scroll-fade-in"
   }`}
 >
+  {/* Section-wide background banner and overlay */}
+  <div
+    className="absolute inset-0 -z-10 bg-cover bg-center opacity-80"
+    style={{ backgroundImage: `url("${aboutTafmaBanner}")` }}
+  />
+  <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#0A2342]/60 via-[#0A2342]/40 to-transparent" />
+
   <div className="mobile-container">
     {/* Title */}
     <div className="text-center mb-12 md:mb-16">
-      <h2 className="text-3xl md:text-4xl font-righteous text-[#FFD700] mb-4 md:mb-6 drop-shadow-lg">
+      <h2 className="text-4xl md:text-5xl font-righteous text-[#FFD700] mb-4 md:mb-6 drop-shadow-lg">
         About TaFMA
       </h2>
-      <p className="text-lg md:text-xl text-[#DBEAFE] max-w-3xl mx-auto px-2">
+      <p className="text-xl md:text-2xl text-[#f8f8ff] max-w-3xl mx-auto px-2">
         Task Force for Music & Arts
       </p>
     </div>
@@ -126,19 +134,19 @@ const About = () => {
     {/* Mission */}
     <div
       ref={missionRef}
-      className={`mb-12 md:mb-16 transition-all duration-800 ${
+      className={`mb-8 md:mb-12 transition-all duration-800 ${
         missionVisible ? "animate-fade-in-up visible" : "animate-fade-in-up"
       }`}
     >
-      <Card className="bg-[#1E40AF] border border-[#00B8D9] shadow-lg text-white">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-3 text-xl md:text-2xl text-[#FFD700]">
-            <Heart className="text-[#E91E63]" size={24} />
+      <Card className="bg-white/10 backdrop-blur-md border border-white/30 shadow-xl text-white rounded-2xl">
+        <CardHeader className="py-4 md:py-5">
+          <CardTitle className="flex items-center gap-3 text-lg md:text-xl text-[#FFD700]">
+            <Heart className="text-[#E91E63]" size={22} />
             Our Mission
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-[#DBEAFE] text-base md:text-lg leading-relaxed">
+        <CardContent className="pt-0 pb-5 md:pb-6">
+          <p className="text-white/90 text-sm md:text-base leading-relaxed">
             The Task Force for Music & Arts (TaFMA) is dedicated to nurturing
             and promoting the rich musical traditions of Nagaland while
             supporting contemporary artists in their creative journey.
@@ -150,54 +158,54 @@ const About = () => {
     {/* Impact Stats */}
     <div
       ref={statsRef}
-      className={`grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16 transition-all duration-1000 ${
+      className={`grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-14 transition-all duration-1000 ${
         statsVisible ? "scroll-fade-in visible" : "scroll-fade-in"
       }`}
     >
       <Card
-        className={`bg-[#1E40AF] border border-[#E91E63] text-center transition-all duration-700 shadow-lg text-white ${
+        className={`bg-white/10 backdrop-blur-md border border-white/30 text-center transition-all duration-700 shadow-xl text-white rounded-2xl ${
           statsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
         style={{ animationDelay: "0.1s" }}
       >
-        <CardContent className="pt-6 md:pt-8">
+        <CardContent className="pt-5 md:pt-6 pb-5">
           <Users className="mx-auto text-[#E91E63] mb-3 md:mb-4" size={32} />
-          <h3 className="text-2xl md:text-3xl font-righteous text-white mb-2">
+          <h3 className="text-xl md:text-2xl font-righteous text-white mb-1">
             200+
           </h3>
-          <p className="text-[#DBEAFE] text-sm md:text-base">
+          <p className="text-white/90 text-xs md:text-sm">
             Local Musicians Empowered
           </p>
         </CardContent>
       </Card>
       <Card
-        className={`bg-[#1E40AF] border border-[#00B8D9] text-center transition-all duration-700 shadow-lg text-white ${
+        className={`bg-white/10 backdrop-blur-md border border-white/30 text-center transition-all duration-700 shadow-xl text-white rounded-2xl ${
           statsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
         style={{ animationDelay: "0.2s" }}
       >
-        <CardContent className="pt-6 md:pt-8">
+        <CardContent className="pt-5 md:pt-6 pb-5">
           <Music className="mx-auto text-[#00B8D9] mb-3 md:mb-4" size={32} />
-          <h3 className="text-2xl md:text-3xl font-righteous text-white mb-2">
+          <h3 className="text-xl md:text-2xl font-righteous text-white mb-1">
             17
           </h3>
-          <p className="text-[#DBEAFE] text-sm md:text-base">
+          <p className="text-white/90 text-xs md:text-sm">
             Naga Tribes Documented
           </p>
         </CardContent>
       </Card>
       <Card
-        className={`bg-[#1E40AF] border border-[#FFD700] text-center transition-all duration-700 shadow-lg text-white ${
+        className={`bg-white/10 backdrop-blur-md border border-white/30 text-center transition-all duration-700 shadow-xl text-white rounded-2xl ${
           statsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
         style={{ animationDelay: "0.3s" }}
       >
-        <CardContent className="pt-6 md:pt-8">
+        <CardContent className="pt-5 md:pt-6 pb-5">
           <Award className="mx-auto text-[#FFD700] mb-3 md:mb-4" size={32} />
-          <h3 className="text-2xl md:text-3xl font-righteous text-white mb-2">
+          <h3 className="text-xl md:text-2xl font-righteous text-white mb-1">
             ∞
           </h3>
-          <p className="text-[#DBEAFE] text-sm md:text-base">
+          <p className="text-white/90 text-xs md:text-sm">
             Cultural Exchange Platforms
           </p>
         </CardContent>
@@ -207,25 +215,26 @@ const About = () => {
     {/* About TaFMA Description */}
     <div
       ref={descriptionRef}
-      className={`grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 md:mb-16 transition-all duration-1000 ${
+      className={`relative rounded-2xl overflow-hidden border border-white/30 bg-white/10 backdrop-blur-md p-6 md:p-8 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12 md:mb-16 transition-all duration-1000 ${
         descriptionVisible ? "animate-fade-in-up visible" : "animate-fade-in-up"
       }`}
     >
+
       <div className="order-2 lg:order-1">
-        <p className="text-[#DBEAFE] text-base md:text-lg leading-relaxed mb-4 md:mb-6">
+        <p className="text-white/90 text-base md:text-lg leading-relaxed mb-4 md:mb-6 drop-shadow-sm">
           TaFMA was established with the vision of creating a sustainable
           ecosystem for music and arts in Nagaland. We work closely with tribal
           elders to document and preserve traditional songs, while also providing
           modern recording facilities and training for young artists.
         </p>
-        <p className="text-[#DBEAFE] text-base md:text-lg leading-relaxed">
+        <p className="text-white/90 text-base md:text-lg leading-relaxed drop-shadow-sm">
           Through partnerships with institutions and festivals across India and
           internationally, we've helped Naga musicians share their unique sound
           with the world.
         </p>
       </div>
       <div className="relative order-1 lg:order-2">
-        <div className="aspect-video rounded-2xl overflow-hidden shadow-lg border-4 border-[#1E3A8A]">
+        <div className="aspect-video rounded-2xl overflow-hidden shadow-lg border-4 border-white/60">
           <img
             src={tafma}
             alt="TaFMA Recording Studio"
@@ -242,79 +251,79 @@ const About = () => {
         initiativesVisible ? "scroll-fade-in visible" : "scroll-fade-in"
       }`}
     >
-      <h3 className="text-2xl md:text-3xl font-righteous text-[#FFD700] mb-6 md:mb-8 text-center drop-shadow-lg">
+      <h3 className="text-2xl md:text-3xl font-righteous text-[#FFD700] mb-5 md:mb-6 text-center drop-shadow-lg">
         Our Initiatives
       </h3>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
         <Card
-          className={`bg-[#1E40AF] border-b-4 border-[#E91E63] transition-all duration-700 shadow-md hover:shadow-xl hover:scale-105 text-white ${
+          className={`bg-white/10 backdrop-blur-md border border-white/30 transition-all duration-700 shadow-xl hover:shadow-2xl hover:scale-[1.02] text-white rounded-2xl ${
             initiativesVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-8"
           }`}
           style={{ animationDelay: "0.1s" }}
         >
-          <CardContent className="pt-4 md:pt-6 text-center">
+          <CardContent className="pt-4 pb-4 md:pt-5 md:pb-5 text-center">
             <Mic className="text-[#E91E63] mb-3 md:mb-4 mx-auto" size={28} />
-            <h4 className="text-base md:text-lg font-semibold text-white mb-2">
+            <h4 className="text-sm md:text-base font-semibold text-white mb-1">
               Artist Residency Programs
             </h4>
-            <p className="text-[#DBEAFE] text-xs md:text-sm">
+            <p className="text-white/90 text-xs">
               Providing space and resources for artists to create and collaborate
             </p>
           </CardContent>
         </Card>
         <Card
-          className={`bg-[#1E40AF] border-b-4 border-[#00B8D9] transition-all duration-700 shadow-md hover:shadow-xl hover:scale-105 text-white ${
+          className={`bg-white/10 backdrop-blur-md border border-white/30 transition-all duration-700 shadow-xl hover:shadow-2xl hover:scale-[1.02] text-white rounded-2xl ${
             initiativesVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-8"
           }`}
           style={{ animationDelay: "0.2s" }}
         >
-          <CardContent className="pt-4 md:pt-6 text-center">
+          <CardContent className="pt-4 pb-4 md:pt-5 md:pb-5 text-center">
             <Music className="text-[#00B8D9] mb-3 md:mb-4 mx-auto" size={28} />
-            <h4 className="text-base md:text-lg font-semibold text-white mb-2">
+            <h4 className="text-sm md:text-base font-semibold text-white mb-1">
               Cultural Documentation
             </h4>
-            <p className="text-[#DBEAFE] text-xs md:text-sm">
+            <p className="text-white/90 text-xs">
               Preserving traditional songs and musical heritage for future
               generations
             </p>
           </CardContent>
         </Card>
         <Card
-          className={`bg-[#1E40AF] border-b-4 border-[#FFD700] transition-all duration-700 shadow-md hover:shadow-xl hover:scale-105 text-white ${
+          className={`bg-white/10 backdrop-blur-md border border-white/30 transition-all duration-700 shadow-xl hover:shadow-2xl hover:scale-[1.02] text-white rounded-2xl ${
             initiativesVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-8"
           }`}
           style={{ animationDelay: "0.3s" }}
         >
-          <CardContent className="pt-4 md:pt-6 text-center">
+          <CardContent className="pt-4 pb-4 md:pt-5 md:pb-5 text-center">
             <Award className="text-[#FFD700] mb-3 md:mb-4 mx-auto" size={28} />
-            <h4 className="text-base md:text-lg font-semibold text-white mb-2">
+            <h4 className="text-sm md:text-base font-semibold text-white mb-1">
               Production Workshops
             </h4>
-            <p className="text-[#DBEAFE] text-xs md:text-sm">
+            <p className="text-white/90 text-xs">
               Modern music production training and state-of-the-art facilities
             </p>
           </CardContent>
         </Card>
         <Card
-          className={`bg-[#1E40AF] border-b-4 border-[#1E3A8A] transition-all duration-700 shadow-md hover:shadow-xl hover:scale-105 text-white ${
+          className={`bg-white/10 backdrop-blur-md border border-white/30 transition-all duration-700 shadow-xl hover:shadow-2xl hover:scale-[1.02] text-white rounded-2xl ${
             initiativesVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 translate-y-8"
           }`}
           style={{ animationDelay: "0.4s" }}
         >
-          <CardContent className="pt-4 md:pt-6 text-center">
+          <CardContent className="pt-4 pb-4 md:pt-5 md:pb-5 text-center">
             <Heart className="text-[#f2003c] mb-3 md:mb-4 mx-auto" size={28} />
-            <h4 className="text-base md:text-lg font-semibold text-white mb-2">
+            <h4 className="text-sm md:text-base font-semibold text-white mb-1">
               Community Outreach
             </h4>
-            <p className="text-[#DBEAFE] text-xs md:text-sm">
+            <p className="text-white/90 text-xs">
               Bringing music education to remote villages across Nagaland
             </p>
           </CardContent>

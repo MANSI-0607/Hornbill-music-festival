@@ -51,12 +51,12 @@ const FeaturedSection = () => {
   };
 
   return (
-    <section className="py-10 px-2 bg-[#F9FAFB]">
+    <section className="relative py-16 px-2 bg-gradient-to-r from-[#FFD700]/15 via-pink-200/20 to-[#DBEAFE]/25">
       <div className="container mx-auto max-w-8xl">
         {/* OFFICIAL SONG SECTION */}
         <div
           ref={documentaryRef}
-          className={`grid md:grid-cols-2 gap-10 items-center mb-20 transition-all duration-800 bg-[#b6d0f0] ${
+          className={`grid md:grid-cols-2 gap-10 items-center mb-20 transition-all duration-700 rounded-2xl p-6 md:p-8 bg-white/70 backdrop-blur-md border border-white/40 shadow-xl ${
             documentaryVisible
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-12'
@@ -97,7 +97,10 @@ const FeaturedSection = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button className="bg-[#FFD700] text-[#0A2342] font-bold hover:bg-[#e6c200] transition px-6 py-3 rounded-lg shadow-lg">
+              <Button className="group relative overflow-hidden text-lg font-extrabold rounded-full px-8 py-4 text-[#0A2342]
+                bg-gradient-to-r from-yellow-400 to-amber-500 shadow-[0_10px_24px_rgba(234,179,8,0.45)]
+                hover:shadow-[0_12px_28px_rgba(234,179,8,0.6)] transition-transform duration-200 hover:scale-105
+                focus:outline-none focus:ring-4 focus:ring-[#FDE68A]">
                 <Camera className="mr-2" size={20} />
                 Watch Official Music Video
               </Button>
@@ -171,13 +174,20 @@ const FeaturedSection = () => {
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 mt-8">
             <Button
               onClick={() => setIsModalOpen(true)}
-              className="bg-[#FFD700] text-[#0A2342] font-bold hover:bg-[#e6c200] transition px-6 py-3 rounded-lg shadow-lg w-full sm:w-auto"
+              className="group relative overflow-hidden text-lg font-extrabold rounded-full px-8 py-4 text-[#0A2342] w-full sm:w-auto
+                bg-gradient-to-r from-yellow-400 to-amber-500 shadow-[0_10px_24px_rgba(234,179,8,0.45)]
+                hover:shadow-[0_12px_28px_rgba(234,179,8,0.6)] transition-transform duration-200 hover:scale-105
+                focus:outline-none focus:ring-4 focus:ring-[#FDE68A]"
             >
               <Camera className="mr-2" size={20} />
               Quick View Gallery
             </Button>
             <Link to="/gallery" className="w-full sm:w-auto">
-              <Button className="bg-[#FFD700] text-[#0A2342] font-bold hover:bg-[#e6c200] transition px-6 py-3 rounded-lg shadow-lg w-full">
+              <Button className="group relative overflow-hidden text-lg font-extrabold rounded-full px-8 py-4 text-[#0A2342] w-full
+                bg-gradient-to-r from-yellow-400 to-amber-500 shadow-[0_10px_24px_rgba(234,179,8,0.45)]
+                hover:shadow-[0_12px_28px_rgba(234,179,8,0.6)] transition-transform duration-200 hover:scale-105
+                focus:outline-none focus:ring-4 focus:ring-[#FDE68A]"
+              >
                 <ExternalLink className="mr-2" size={20} />
                 Full Gallery Page
               </Button>

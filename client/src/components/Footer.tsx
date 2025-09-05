@@ -137,7 +137,7 @@ const Footer = () => {
               Quick Links
             </h3>
             <div className="grid grid-cols-2 gap-3 text-sm text-gray-800">
-              <Link to="/festive" className="hover:text-yellow-600">
+              <Link to="/gallery" className="hover:text-yellow-600">
                 Gallery
               </Link>
               <Link to="/explore" className="hover:text-yellow-600">

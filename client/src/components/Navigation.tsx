@@ -52,7 +52,7 @@ export function Navigation() {
       <nav
         className="fixed top-0 w-full z-50 h-20 
   bg-gradient-to-r from-festival-gold via-festival-pink to-[#E91E63] 
-  backdrop-blur-md shadow-lg animate-gradient-shift  border-b-4 border-[#0A2F8F]"
+  backdrop-blur-md shadow-lg animate-gradient-shift"
   
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-2 h-full">

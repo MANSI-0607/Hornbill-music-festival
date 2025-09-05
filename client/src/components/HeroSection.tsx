@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import hero1 from "@/assets/hornbillMusic (1).jpg";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import herobanner from "../assets/banners/heroBanner.png";
 
 const HeroSection = () => {
   const festivalStartDate = new Date("2025-12-01T00:00:00");
@@ -23,69 +22,69 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="bg-[#F9FAFB] py-10 md:py-16 mt-14">
-      <div className="max-w-8xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-        
-        {/* LEFT CONTENT */}
+    <section className="relative overflow-hidden min-h-screen flex items-center pt-24 md:pt-28">
+      {/* Background image covering entire section */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center"
+        style={{ backgroundImage: `url("${hero1}")` }}
+      />
+      {/* Gradient shade overlay (keep the golden-to-navy tone) */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-r from-[#FFD700]/25 via-transparent to-[#0A2342]/50" />
+
+      <div className="relative z-20 max-w-6xl mx-auto px-6 md:px-10 w-full">
+        {/* LEFT CONTENT (centered) */}
         <motion.div
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
-          className="space-y-6 text-center md:text-left px-6 md:px-8"
+          className="space-y-8 text-center"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight drop-shadow">
             <span className="bg-gradient-to-r from-yellow-400 via-pink-500 to-blue-600 text-transparent bg-clip-text drop-shadow-lg">
               Hornbill Music Festival
             </span>
             <br />
-            <span className="text-[#0A2342] drop-shadow-sm">
+            <span className="text-white drop-shadow-sm">
               Where Culture Meets Sound
             </span>
           </h1>
 
-          <p className="text-lg text-[#1E293B] font-semibold tracking-wide">
+          <p className="text-2xl md:text-3xl text-white font-semibold tracking-wide">
             1st – 10th December, 2025 <br />
-            <span className="text-[#1E3A8A]">
+            <span className="text-[#FDE68A] font-bold">
               Venue: Naga Heritage Village Kisama, Nagaland
             </span>
           </p>
 
           {daysLeft !== null && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="text-3xl font-bold bg-gradient-to-r from-pink-500 to-yellow-400 text-transparent bg-clip-text"
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-pink-500 via-red-500 to-yellow-400 text-transparent bg-clip-text drop-shadow-lg"
             >
-              🎉 {daysLeft} Days Left!
+              {daysLeft} Days Left
             </motion.div>
           )}
 
-          <p className="text-md text-[#374151] font-medium">
+          <p className="text-xl md:text-2xl text-white/90 font-semibold text-center ">
             Auditions and Pre-Ticket sales are live
           </p>
 
           <Link to="/auditions">
-            <Button className="bg-[#FFD700] text-[#0A2342] font-bold px-8 py-4 rounded-lg shadow-lg hover:bg-[#e6c200] transition transform hover:scale-105">
-              Apply Now
+            <Button
+              className="group relative overflow-hidden text-2xl md:text-[26px] font-extrabold rounded-full px-12 py-6 text-[#0A2342]
+              bg-gradient-to-r from-yellow-400 to-amber-500 shadow-[0_14px_34px_rgba(234,179,8,0.55)]
+              hover:shadow-[0_18px_40px_rgba(234,179,8,0.7)] transition-transform duration-200 hover:scale-105
+              focus:outline-none focus:ring-4 focus:ring-[#FDE68A]"
+            >
+              <span className="relative z-10">Submit Audition</span>
+              <span
+                className="absolute inset-0 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                bg-gradient-to-r from-amber-500 to-yellow-400"
+              />
             </Button>
           </Link>
-        </motion.div>
-
-        {/* RIGHT BANNER */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="relative w-full h-80 md:h-[550px] overflow-hidden shadow-xl rounded-2xl mr-1"
-        >
-          <img
-            src={hero1}
-            alt="Hornbill Festival"
-            className="w-full h-full object-fill"
-          />
-          {/* Golden Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FFD700]/40 via-transparent to-[#0A2342]/60"></div>
         </motion.div>
       </div>
     </section>
