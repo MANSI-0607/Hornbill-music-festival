@@ -68,7 +68,7 @@ const HeroSection = () => {
           )}
 
           <p className="text-xl md:text-2xl text-white/90 font-semibold text-center ">
-            Auditions and Pre-Ticket sales are live
+            Auditions are live
           </p>
 
           <Link to="/auditions">
