@@ -43,7 +43,7 @@ const App = () => (
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/faq" element={<HornbillFaq/>} />
               <Route path="/festive" element={<Festivehub/>} />
-              <Route path="/explore" element={<Explore/>} />
+              <Route path="/explore" element={<Festivehub/>} />
               <Route path="/hornbill-music-festival" element={<HornbillMusicFestival />} />
                {/* Admin Routes */}
   <Route path="/admin/login" element={<AdminLogin />} />

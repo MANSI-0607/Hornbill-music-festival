@@ -22,7 +22,7 @@ const Footer = () => {
   }, [location]);
 
   return (
-  <footer className="bg-[#00ff7f] border-t border-green-700 text-white">
+  <footer className="bg-[#3DC44F] border-t border-green-700 text-white">
 
 
 
@@ -51,7 +51,7 @@ const Footer = () => {
                   Managed by TaFMA
                 </span>
 
-            <p className="text-base text-[#003300] mb-4"> {/* Increased font size for description */}
+            <p className="text-base text-white/90 mb-4"> {/* Increased font size for description */}
               Celebrating Nagaland’s vibrant culture & music.
             </p>
             <p className="text-base font-semibold text-white mb-3"> {/* Increased font size for follow us */}
@@ -85,89 +85,90 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Contact Information */}
-          <div className="text-left">
-            <h3 className="text-lg font-semibold text-blue-900 mb-4">Get in Touch</h3>
-            <p className="text-muted-foreground text-sm mb-6">
-              Have questions about the festival or want to collaborate with
-              TaFMA? We'd love to hear from you.
-            </p>
+        {/* Contact Information */}
+<div className="text-left">
+  <h3 className="text-lg font-semibold text-yellow-200 mb-4">Get in Touch</h3>
+  <p className="text-white/80 text-base mb-6">
+    Have questions about the festival or want to collaborate with
+    TaFMA? We'd love to hear from you.
+  </p>
 
-            {/* Email */}
-            <div className="mb-4">
-              <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Mail className="h-4 w-4 text-[#ffea00]" />
-                Email
-              </h4>
-              <div className="space-y-1 text-sm text-muted-foreground">
-                <p>info@hornbillmusicfestival.com</p>
-                <p>press@tafma.org</p>
-              </div>
-            </div>
+  {/* Email */}
+  <div className="mb-4">
+    <h4 className="font-semibold mb-2 flex items-center gap-2 text-white">
+      <Mail className="h-4 w-4 text-[#ffea00]" />
+      Email
+    </h4>
+    <div className="space-y-1 text-base text-white/80">
+      <p>info@hornbillmusicfestival.com</p>
+      <p>press@tafma.org</p>
+    </div>
+  </div>
 
-            {/* Phone */}
-            <div className="mb-4">
-              <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Phone className="h-4 w-4 text-[#ffea00]" />
-                Phone
-              </h4>
-              <div className="space-y-1 text-sm text-muted-foreground">
-                <p>+91 9876 543 210</p>
-                <p>+91 8765 432 109</p>
-              </div>
-            </div>
+  {/* Phone */}
+  <div className="mb-4">
+    <h4 className="font-semibold mb-2 flex items-center gap-2 text-white">
+      <Phone className="h-4 w-4 text-[#ffea00]" />
+      Phone
+    </h4>
+    <div className="space-y-1 text-base text-white/80">
+      <p>+91 9876 543 210</p>
+      <p>+91 8765 432 109</p>
+    </div>
+  </div>
 
-            {/* Location */}
-            <div>
-              <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-[#ffea00]" />
-                Location
-              </h4>
-              <div className="text-sm text-muted-foreground">
-                <p>Naga Heritage Village</p>
-                <p>Kisama, Nagaland 797001</p>
-                <p>India</p>
-              </div>
-            </div>
-          </div>
+  {/* Location */}
+  <div>
+    <h4 className="font-semibold mb-2 flex items-center gap-2 text-white">
+      <MapPin className="h-4 w-4 text-[#ffea00]" />
+      Location
+    </h4>
+    <div className="text-base text-white/80">
+      <p>Naga Heritage Village</p>
+      <p>Kisama, Nagaland 797001</p>
+      <p>India</p>
+    </div>
+  </div>
+</div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-lg font-semibold text-blue-900 mb-4">
-              Quick Links
-            </h3>
-            <div className="grid grid-cols-2 gap-3 text-sm text-gray-800">
-              <Link to="/gallery" className="hover:text-yellow-600">
-                Gallery
-              </Link>
-              <Link to="/explore" className="hover:text-yellow-600">
-                Terms & Conditions
-              </Link>
-              <Link to="/festive" className="hover:text-yellow-600">
-                Schedule
-              </Link>
-              <Link to="/explore" className="hover:text-yellow-600">
-                Privacy Policy
-              </Link>
-              <Link to="/festive" className="hover:text-yellow-600">
-                Artists
-              </Link>
-              <Link to="/sponsors" className="hover:text-yellow-600">
-                Sponsors
-              </Link>
-              <Link to="/audition" className="hover:text-yellow-600">
-                Audition
-              </Link>
-              <Link to="/explore" className="hover:text-yellow-600">
-                Visitors Guide
-              </Link>
-              <Link to="/about" className="hover:text-yellow-600">
-                About
-              </Link>
-              <Link to="/faq" className="hover:text-yellow-600">
-                FAQ
-              </Link>
-            </div>
+{/* Quick Links */}
+<div>
+  <h3 className="text-lg font-semibold text-yellow-200 mb-4">
+    Quick Links
+  </h3>
+  <div className="grid grid-cols-2 gap-3 text-base text-white/90">
+    <Link to="/gallery" className="hover:text-yellow-600">
+      Gallery
+    </Link>
+    <Link to="/explore" className="hover:text-yellow-600">
+      Terms & Conditions
+    </Link>
+    <Link to="/festive" className="hover:text-yellow-600">
+      Schedule
+    </Link>
+    <Link to="/explore" className="hover:text-yellow-600">
+      Privacy Policy
+    </Link>
+    <Link to="/festive" className="hover:text-yellow-600">
+      Artists
+    </Link>
+    <Link to="/sponsors" className="hover:text-yellow-600">
+      Sponsors
+    </Link>
+    <Link to="/audition" className="hover:text-yellow-600">
+      Audition
+    </Link>
+    <Link to="/explore" className="hover:text-yellow-600">
+      Visitors Guide
+    </Link>
+    <Link to="/about" className="hover:text-yellow-600">
+      About
+    </Link>
+    <Link to="/faq" className="hover:text-yellow-600">
+      FAQ
+    </Link>
+  </div>
+
             <div className="mt-5">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.6764849333663!2d94.1144034!3d25.6164264!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3746215b6f4ab711%3A0x202995c7ce5b7e31!2sNaga%20Heritage%20Village%2C%20Kisama%2C%20Nagaland%20797001%2C%20India!5e0!3m2!1sen!2sin!4v1693520881234!5m2!1sen!2sin"
@@ -182,7 +183,7 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-white-900 pt-6 mt-10 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
+        <div className="border-t border-white/40 pt-6 mt-10 flex flex-col md:flex-row justify-between items-center text-sm text-white/80">
           <p className="flex items-center gap-1">
             Made with <Heart className="w-4 h-4 text-yellow-600" /> by KAKI TECH
           </p>

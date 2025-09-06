@@ -4,6 +4,8 @@ import { ChevronDown, Calendar, ShoppingCart, Info, Compass } from "lucide-react
 import { AnimatePresence, motion } from "framer-motion";
 import faqbanner from "../assets/banners/faqbanner.png";
 import wooden from "../assets/wooden.png";
+import faqleft from "../assets/banners/faqleft.png";
+import faqright from "../assets/banners/faqright.png";
 
 const faqData = [
   {
@@ -163,7 +165,36 @@ const HornbillFaq = () => {
   };
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-[#c3af79]">
+    <section className="relative min-h-screen overflow-hidden bg-[#ffdb58] mt-8">
+      {/* Hero - full width like Auditions */}
+      <section className="relative mt-12 bg-[#201758] text-white overflow-hidden ">
+        <div className="grid grid-cols-12 items-stretch">
+          {/* Left image fills height */}
+          <div className="col-span-3 hidden md:block relative">
+            <img
+              src={faqleft}
+              alt="FAQ Left"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+
+          {/* Center content */}
+          <div className="col-span-12 md:col-span-6 flex flex-col justify-center items-center text-center py-16 px-6">
+            <h1 className="text-4xl md:text-5xl font-righteous mb-2 text-[#FFD700]">
+              Frequently Asked Questions
+            </h1>
+          </div>
+
+          {/* Right image fills height */}
+          <div className="col-span-3 hidden md:block relative">
+            <img
+              src={faqright}
+              alt="FAQ Right"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      </section>
       {/* Banner image */}
       {/* <img
         src={faqbanner}
@@ -173,20 +204,9 @@ const HornbillFaq = () => {
       /> */}
 
       {/* Content */}
-      <div className="relative z-20 pt-24 pb-16">
+      <div className="relative z-20 py-16 ">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            className="text-center mb-12"
-            initial={{ y: -40, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
-          >
-              <h1 className="text-5xl font-righteous mb-2 text-[#FFD700]">
-              Frequently Asked Questions
-            </h1>
-           
-          </motion.div>
+          
 
           <div className="space-y-6">
             {faqData.map((section, sectionIndex) => (

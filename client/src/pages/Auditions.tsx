@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import auditionBanner from "../assets/banners/auditionBanner.jpeg";
+import auditionleft from "../assets/banners/audition left.jpeg";
+import auditionright from "../assets/banners/Auditionright.jpeg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -49,14 +51,15 @@ const genres = [
   "Fusion", "Jazz", "Blues", "Country", "Metal", "Indie", "Alternative", "World Music",
 ];
 
-const steps = ["Band Info", "Contact Info", "Media Submission"];
+const steps = ["Terms & Conditions", "Band Info", "Contact Info", "Media Submission"];
 
 // Define which fields belong to each step (typed to form fields)
 type StepField = keyof AuditionFormData;
 const stepFields: Record<number, StepField[]> = {
-  0: ["bandName", "genre", "bandMembers", "bandBio"], // Band Info
-  1: ["contactPerson", "contactEmail", "contactPhone", "cityState"], // Contact Info
-  2: ["auditionVideoUrl"], // Media Submission (bandPhoto and termsAccepted handled separately)
+  0: ["termsAccepted"], // Terms & Conditions must be accepted first
+  1: ["bandName", "genre", "bandMembers", "bandBio"], // Band Info
+  2: ["contactPerson", "contactEmail", "contactPhone", "cityState"], // Contact Info
+  3: ["auditionVideoUrl"], // Media Submission (bandPhoto handled separately)
 };
 
 export default function Auditions() {
@@ -95,15 +98,10 @@ export default function Auditions() {
     // Trigger validation for current step fields
     const isValid = await form.trigger(currentStepFields);
     
-    // Additional validation for step 2 (Media Submission)
-    if (step === 2) {
+    // Additional validation for step 3 (Media Submission)
+    if (step === 3) {
       if (!bandPhotoFile) {
         setGlobalError("Please upload a band photo before proceeding.");
-        setShowError(true);
-        return false;
-      }
-      if (!form.getValues("termsAccepted")) {
-        setGlobalError("Please accept the terms and conditions before proceeding.");
         setShowError(true);
         return false;
       }
@@ -222,9 +220,9 @@ export default function Auditions() {
       return value && value.toString().trim() !== "";
     });
     
-    // Additional checks for step 2
-    if (step === 2) {
-      return hasAllRequiredValues && bandPhotoFile && form.getValues("termsAccepted");
+    // Additional checks for step 3 (Media Submission)
+    if (step === 3) {
+      return hasAllRequiredValues && bandPhotoFile;
     }
     
     return hasAllRequiredValues;
@@ -233,15 +231,38 @@ export default function Auditions() {
   return (
     <div className="min-h-screen bg-[#ffdb58] text-[#1E293B]">
       {/* Hero */}
-      <section className="text-center py-16 bg-[#0A2342] text-white mt-12">
-        <h1 className="text-5xl font-righteous mb-2 text-[#FFD700]">
-          Pre-Ticket to Hornbill
-        </h1>
-        <h2 className="text-2xl font-semibold">Band Auditions</h2>
-        <p className="max-w-2xl mx-auto mt-4 text-[#F9FAFB]">
-          Submit your band's audition for a chance to perform at the Hornbill
-          Music Festival.
-        </p>
+      <section className="relative mt-12 bg-[#201758] text-white overflow-hidden">
+        <div className="grid grid-cols-12 items-stretch">
+            {/* Left image fills height */}
+            <div className="col-span-3 hidden md:block relative">
+              <img
+                src={auditionleft}
+                alt="Audition Left"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Center content */}
+            <div className="col-span-12 md:col-span-6 flex flex-col justify-center items-center text-center py-16 px-6">
+              <h1 className="text-4xl md:text-5xl font-righteous mb-2 text-[#FFD700]">
+                Pre-Ticket to Hornbill
+              </h1>
+              <h2 className="text-xl md:text-2xl font-semibold">Band Auditions</h2>
+              <p className="max-w-2xl mx-auto mt-4 text-[#F9FAFB]">
+                Submit your band's audition for a chance to perform at the Hornbill
+                Music Festival.
+              </p>
+            </div>
+
+            {/* Right image fills height */}
+            <div className="col-span-3 hidden md:block relative">
+              <img
+                src={auditionright}
+                alt="Audition Right"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+        </div>
       </section>
 
       {/* Main */}
@@ -298,8 +319,54 @@ export default function Auditions() {
               className="space-y-6"
             >
               <AnimatePresence mode="wait">
-                {/* Band Info */}
+                {/* Terms & Conditions */}
                 {step === 0 && (
+                  <motion.div
+                    key="terms-privacy"
+                    initial={{ x: 50, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -50, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="space-y-6"
+                  >
+                    <div className="text-sm text-gray-700">
+                      Please review and accept the Terms & Conditions before proceeding.
+                    </div>
+                    <FormField
+                      name="termsAccepted"
+                      control={form.control}
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col items-start space-y-1">
+                          <div className="flex items-center space-x-3">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={(checked) => {
+                                  field.onChange(checked);
+                                  if (checked && globalError && globalError.includes("terms")) {
+                                    setGlobalError(null);
+                                    setShowError(false);
+                                  }
+                                }}
+                                className="border-2 border-yellow-400"
+                              />
+                            </FormControl>
+                            <FormLabel className="text-sm font-normal">
+                              I confirm I have the rights to submit this
+                              material and agree to the <TermsDialog />.
+                            </FormLabel>
+                          </div>
+                          {!form.getValues("termsAccepted") && showValidationErrors && (
+                            <FormMessage>Accepting the terms is required to proceed.</FormMessage>
+                          )}
+                        </FormItem>
+                      )}
+                    />
+                  </motion.div>
+                )}
+
+                {/* Band Info */}
+                {step === 1 && (
                   <motion.div
                     key="band-info"
                     initial={{ x: 50, opacity: 0 }}
@@ -397,7 +464,7 @@ export default function Auditions() {
                 )}
 
                 {/* Contact Info */}
-                {step === 1 && (
+                {step === 2 && (
                   <motion.div
                     key="contact-info"
                     initial={{ x: 50, opacity: 0 }}
@@ -479,7 +546,7 @@ export default function Auditions() {
                 )}
 
                 {/* Media Submission */}
-                {step === 2 && (
+                {step === 3 && (
                   <motion.div
                     key="media-submission"
                     initial={{ x: 50, opacity: 0 }}
@@ -526,38 +593,7 @@ export default function Auditions() {
                       )}
                     />
 
-                    <FormField
-                      name="termsAccepted"
-                      control={form.control}
-                      render={({ field }) => (
-                        <FormItem className="flex flex-col items-start space-y-1">
-                          <div className="flex items-center space-x-3">
-                            <FormControl>
-                              <Checkbox
-                                checked={field.value}
-                                onCheckedChange={(checked) => {
-                                  field.onChange(checked);
-                                  // Clear terms-related errors when checked
-                                  if (checked && globalError && globalError.includes("terms")) {
-                                    setGlobalError(null);
-                                    setShowError(false);
-                                  }
-                                }}
-                                className="border-2 border-yellow-400"
-                              />
-                            </FormControl>
-                            <FormLabel className="text-sm font-normal">
-                              I confirm I have the rights to submit this
-                              material and agree to the <TermsDialog />. By
-                              submitting, I grant TaFMA/Hornbill Music Festival
-                              permission to review materials for audition
-                              purposes while retaining all rights to the
-                              content.
-                            </FormLabel>
-                          </div>
-                        </FormItem>
-                      )}
-                    />
+                    
                   </motion.div>
                 )}
               </AnimatePresence>
