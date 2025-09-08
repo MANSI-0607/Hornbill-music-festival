@@ -30,7 +30,7 @@ const AboutTaFMA = () => {
         <div className="grid md:grid-cols-2 gap-8 items-center mb-12">
           <div>
             <h3 className="text-2xl font-semibold text-white mb-4">Our Mission</h3>
-            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
+            <p className="text-muted-foreground leading-relaxed mb-6">
               The Task Force for Music & Arts (TaFMA) is dedicated to preserving and promoting the rich musical traditions of Nagaland while supporting contemporary artists in their creative journey.
             </p>
             <p className="text-muted-foreground leading-relaxed mb-8">
