@@ -169,7 +169,7 @@ export default function Auditions() {
           <div className="mb-0">
             <div className="w-full" style={{ aspectRatio: '5 / 2' }}>
               <img
-                src="/Auditionbanner.jpg"
+                src="/AuditionBanner.jpeg"
                 alt="Ticket to Hornbill - Band Auditions"
                 className="w-full h-full block object-cover object-center"
                 width={1600}
@@ -179,7 +179,7 @@ export default function Auditions() {
             </div>
           </div>
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-            <h2 className="text-2xl md:text-3xl text-gray-400 mb-6">Band Auditions</h2>
+            <h2 className="text-2xl md:text-3xl font-righteous text-primary mb-6">Band Auditions</h2>
             <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
               Submit your band's audition for a chance to perform at the prestigious Hornbill Music Festival. 
               Showcase your talent to industry professionals and music lovers from around the world.
