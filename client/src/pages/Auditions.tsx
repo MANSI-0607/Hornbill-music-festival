@@ -35,6 +35,9 @@ const genres = [
 
 export default function Auditions() {
   const [bandPhotoFile, setBandPhotoFile] = useState<File | null>(null);
+  const [bandPhotoUrl, setBandPhotoUrl] = useState<string | null>(null);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const [photoError, setPhotoError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || '';
   const form = useForm<AuditionFormData>({
@@ -54,7 +57,7 @@ export default function Auditions() {
     },
   });
 
-  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       // Validate file size (5MB max)
@@ -68,12 +71,40 @@ export default function Auditions() {
         return;
       }
       setBandPhotoFile(file);
+      setPhotoError(null);
+      setIsUploadingPhoto(true);
+      setBandPhotoUrl(null);
+
+      try {
+        const formData = new FormData();
+        formData.append('bandPhoto', file);
+        const res = await fetch(`${API_BASE_URL}/auditions/upload-band-photo`, {
+          method: 'POST',
+          body: formData,
+        });
+        if (!res.ok) {
+          const t = await res.text();
+          throw new Error(t || 'Upload failed');
+        }
+        const data = await res.json();
+        setBandPhotoUrl(data.url);
+      } catch (err: any) {
+        console.error('Photo upload error:', err);
+        setPhotoError('Failed to upload photo. Please try again.');
+        setBandPhotoUrl(null);
+      } finally {
+        setIsUploadingPhoto(false);
+      }
     }
   };
 
   const onSubmit = async (data: AuditionFormData) => {
     if (!bandPhotoFile) {
-      alert('Please upload a band photo');
+      alert('Please select a band photo');
+      return;
+    }
+    if (!bandPhotoUrl) {
+      alert('Please wait for the band photo to finish uploading.');
       return;
     }
   
@@ -93,7 +124,8 @@ export default function Auditions() {
       formData.append('socialLinks', data.socialLinks);
       formData.append('auditionVideoUrl', data.auditionVideoUrl);
       formData.append('termsAccepted', String(data.termsAccepted));
-      formData.append('bandPhoto', bandPhotoFile); // file upload
+      // Use uploaded URL instead of uploading the file with the form
+      formData.append('bandPhotoUrl', bandPhotoUrl);
   
       // Send to backend
       const response = await fetch(`${API_BASE_URL}/auditions`, {
@@ -114,6 +146,7 @@ export default function Auditions() {
       // Reset form
       form.reset();
       setBandPhotoFile(null);
+      setBandPhotoUrl(null);
     } catch (error) {
       console.error('Submission error:', error);
       alert('Something went wrong while submitting your audition. Please try again.');
@@ -125,6 +158,7 @@ export default function Auditions() {
 
   const bandBioLength = form.watch('bandBio')?.length || 0;
   const bandMembersLength = form.watch('bandMembers')?.length || 0;
+  const termsAccepted = form.watch('termsAccepted') || false;
 
   return (
     <div className="min-h-screen bg-background">
@@ -134,19 +168,18 @@ export default function Auditions() {
         <div className="relative max-w-4xl mx-auto text-center">
           <div className="flex items-center justify-center mb-6">
             <Music className="h-12 w-12 text-primary mr-4" />
-            <Calendar className="h-8 w-8 text-accent" />
           </div>
           <h1 className="text-4xl md:text-6xl font-righteous festival-title mb-4">
-            Pre-Ticket to Hornbill
+            Ticket to Hornbill
           </h1>
-          <h2 className="text-2xl md:text-3xl text-secondary mb-6">Band Auditions</h2>
+          <h2 className="text-2xl md:text-3xl text-gray-400 mb-6">Band Auditions</h2>
           <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
             Submit your band's audition for a chance to perform at the prestigious Hornbill Music Festival. 
             Showcase your talent to industry professionals and music lovers from around the world.
           </p>
           
           {/* Deadline Notice */}
-          <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-lg p-4 max-w-2xl mx-auto">
+          {/*<div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-lg p-4 max-w-2xl mx-auto">
             <div className="flex items-center justify-center mb-2">
               <Clock className="h-5 w-5 text-red-400 mr-2" />
               <span className="text-red-400 font-bold">DEADLINE ALERT</span>
@@ -158,11 +191,12 @@ export default function Auditions() {
               Make sure to submit all required materials before the deadline.
             </p>
           </div>
+          */}
         </div>
       </section>
 
       {/* Form Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section className="py-2 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <Card className="festival-card">
             <CardHeader>
@@ -177,10 +211,36 @@ export default function Auditions() {
             <CardContent>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                  
+                  {/* Terms & Conditions must be accepted first */}
+                  <div className="space-y-3 p-4 rounded-lg border border-border bg-input/40">
+                    <p className="text-sm text-gray-300">
+                      Please review and accept the Terms & Conditions before proceeding.
+                    </p>
+                    <FormField
+                      control={form.control}
+                      name="termsAccepted"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                          <FormControl>
+                            <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+                          </FormControl>
+                          <div className="space-y-1 leading-none">
+                            <FormLabel className="text-white text-sm">
+                              I confirm I have the rights to submit this material and agree to the{' '}
+                              <TermsDialog />.
+                            </FormLabel>
+                            <FormMessage />
+                          </div>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* All fields below are enabled only after accepting terms */}
+                  <fieldset disabled={!termsAccepted} className={!termsAccepted ? 'opacity-50 pointer-events-none select-none' : ''}>
                   {/* Band Information Section */}
                   <div className="space-y-6">
-                    <h3 className="text-xl font-righteous text-secondary border-b border-secondary/20 pb-2">
+                    <h3 className="text-xl font-righteous text-primary border-b border-secondary/20 pb-2">
                       Band Information
                     </h3>
                     
@@ -201,6 +261,47 @@ export default function Auditions() {
                         </FormItem>
                       )}
                     />
+
+                    {/* Band photo upload moved here (right after band name) */}
+                    <div>
+                      <label className="text-white font-medium flex items-center mb-2">
+                        <Upload className="h-4 w-4 mr-1" />
+                        Band photo *
+                      </label>
+                      <div className="border-2 border-dashed border-border rounded-lg p-6 text-center bg-input/50">
+                        <input
+                          type="file"
+                          accept="image/jpeg,image/jpg,image/png"
+                          onChange={handlePhotoUpload}
+                          className="hidden"
+                          id="band-photo"
+                        />
+                        <label 
+                          htmlFor="band-photo" 
+                          className="cursor-pointer flex flex-col items-center"
+                        >
+                          <Upload className="h-8 w-8 text-gray-400 mb-2" />
+                          <span className="text-white mb-1">
+                            {bandPhotoFile ? bandPhotoFile.name : 'Click to upload band photo'}
+                          </span>
+                          <span className="text-gray-400 text-sm">
+                            JPG/PNG, max 5MB, min 1200×800px
+                          </span>
+                        </label>
+                        {/* Upload status */}
+                        <div className="mt-3 text-sm">
+                          {isUploadingPhoto && (
+                            <span className="text-yellow-300">Uploading photo… please wait</span>
+                          )}
+                          {!isUploadingPhoto && bandPhotoUrl && (
+                            <span className="text-green-400">Photo uploaded successfully ✔</span>
+                          )}
+                          {photoError && (
+                            <span className="text-red-400">{photoError}</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
 
                     <FormField
                       control={form.control}
@@ -268,11 +369,33 @@ export default function Auditions() {
                         </FormItem>
                       )}
                     />
+
+                    {/* Audition video link moved here (after short band bio) */}
+                    <FormField
+                      control={form.control}
+                      name="auditionVideoUrl"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-white">Audition video link (YouTube/Vimeo) *</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Paste full URL" 
+                              className="bg-input border-border" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormDescription className="text-gray-400">
+                            Share a performance video that best represents your band's talent and style.
+                          </FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
 
                   {/* Contact Information Section */}
                   <div className="space-y-6">
-                    <h3 className="text-xl font-righteous text-secondary border-b border-secondary/20 pb-2">
+                    <h3 className="text-xl font-righteous text-primary border-b border-secondary/20 pb-2">
                       Contact Information
                     </h3>
                     
@@ -380,92 +503,14 @@ export default function Auditions() {
                     />
                   </div>
 
-                  {/* Media Submission Section */}
-                  <div className="space-y-6">
-                    <h3 className="text-xl font-righteous text-secondary border-b border-secondary/20 pb-2">
-                      Media Submission
-                    </h3>
-                    
-                    <div>
-                      <label className="text-white font-medium flex items-center mb-2">
-                        <Upload className="h-4 w-4 mr-1" />
-                        Band photo *
-                      </label>
-                      <div className="border-2 border-dashed border-border rounded-lg p-6 text-center bg-input/50">
-                        <input
-                          type="file"
-                          accept="image/jpeg,image/jpg,image/png"
-                          onChange={handlePhotoUpload}
-                          className="hidden"
-                          id="band-photo"
-                        />
-                        <label 
-                          htmlFor="band-photo" 
-                          className="cursor-pointer flex flex-col items-center"
-                        >
-                          <Upload className="h-8 w-8 text-gray-400 mb-2" />
-                          <span className="text-white mb-1">
-                            {bandPhotoFile ? bandPhotoFile.name : 'Click to upload band photo'}
-                          </span>
-                          <span className="text-gray-400 text-sm">
-                            JPG/PNG, max 5MB, min 1200×800px
-                          </span>
-                        </label>
-                      </div>
-                    </div>
-
-                    <FormField
-                      control={form.control}
-                      name="auditionVideoUrl"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="text-white">Audition video link (YouTube/Vimeo) *</FormLabel>
-                          <FormControl>
-                            <Input 
-                              placeholder="Paste full URL" 
-                              className="bg-input border-border" 
-                              {...field} 
-                            />
-                          </FormControl>
-                          <FormDescription className="text-gray-400">
-                            Share a performance video that best represents your band's talent and style.
-                          </FormDescription>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Terms and Conditions */}
-                  <FormField
-  control={form.control}
-  name="termsAccepted"
-  render={({ field }) => (
-    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-      <FormControl>
-        <Checkbox
-          checked={field.value}
-          onCheckedChange={field.onChange}
-        />
-      </FormControl>
-      <div className="space-y-1 leading-none">
-        <FormLabel className="text-white text-sm">
-          I confirm I have the rights to submit this material and agree to the{" "}
-          <TermsDialog />. By submitting, I grant TaFMA/Hornbill Music Festival 
-          permission to review materials for audition purposes while retaining all rights 
-          to the content.
-        </FormLabel>
-        <FormMessage />
-      </div>
-    </FormItem>
-  )}
-/>
+                  {/* Media Submission Section removed; fields repositioned above */}
+                  </fieldset>
 
                   {/* Submit Button */}
                   <Button 
                     type="submit" 
                     className="w-full btn-festival text-lg py-6"
-                    disabled={isSubmitting}
+                    disabled={!termsAccepted || isSubmitting}
                   >
                     {isSubmitting ? 'Submitting Audition...' : 'Submit Audition'}
                   </Button>

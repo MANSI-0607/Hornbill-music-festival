@@ -4,6 +4,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+//import logo from '@/assets/logo/hmf-logo.png';
+
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
@@ -12,7 +14,7 @@ export function Navigation() {
   const navigation = [
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
     // { name: 'Hornbill Festival', href: '/hornbill-music-festival', icon: Mountain, shortName: 'Festival' },
-    { name: 'Pre-Ticket to Hornbill', href: '/auditions', icon: Mic, shortName: 'Auditions' },
+    { name: 'Ticket to Hornbill', href: '/auditions', icon: Mic, shortName: 'Auditions' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
   ];
 
@@ -20,7 +22,7 @@ export function Navigation() {
   const mobileNavigation = [
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
     // { name: 'Hornbill Festival', href: '/hornbill-music-festival', icon: Mountain, shortName: 'Festival' },
-    { name: 'Pre-Ticket to Hornbill', href: '/auditions', icon: Mic, shortName: 'Auditions' },
+    { name: 'Ticket to Hornbill', href: '/auditions', icon: Mic, shortName: 'Auditions' },
     // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
@@ -54,9 +56,16 @@ export function Navigation() {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 z-50 relative">
               {/* <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center"> */}
-                <img src="./tafmalogo.png" alt="TaFMA Logo" className="w-14 h-12" />
+               <img 
+  src="/hmf-logo.png" 
+  alt="HMF Logo" 
+  className="w-12 h-12" 
+  loading="lazy" 
+  decoding="async"
+/>
+
               {/* </div> */}
-              <span className="text-xl font-righteous text-white">TaFMA</span>
+              <span className="text-xl font-righteous text-white">Hornbill Music Festival</span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -78,11 +87,13 @@ export function Navigation() {
                   </Link>
                 );
               })}
+              {/*
               <a href="https://ahibi.in/" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-festival ml-4">
                   Book Tickets
                 </Button>
               </a>
+              */}
             </div>
 
             {/* Mobile menu button */}
@@ -140,14 +151,16 @@ export function Navigation() {
               </div>
               
               {/* Call to action button */}
-              <a href="https://ahibi.in/" target="_blank" rel="noopener noreferrer">
-                <Button 
-                  className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Book Tickets
-                </Button>
-              </a>
+               {/*
+                <a href="https://ahibi.in/" target="_blank" rel="noopener noreferrer">
+                 <Button 
+                   className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
+                   onClick={() => setIsOpen(false)}
+                 >
+                   Book Tickets
+                 </Button>
+                </a>
+               */}
             </div>
           </div>
         </div>

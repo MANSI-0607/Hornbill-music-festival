@@ -12,7 +12,7 @@ const Footer = () => {
     <footer className="bg-background/95 backdrop-blur-md border-t border-border/50 mt-auto">
       <div className="mobile-container py-12">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-32 mb-12">
           {/* Festival Info */}
           <div className="text-left">
             <div className="flex items-center gap-2 mb-4">
@@ -29,8 +29,8 @@ const Footer = () => {
                 <Calendar className="h-4 w-4 text-neon-pink" />
                 Festival Dates
               </h4>
-              <p className="text-sm text-muted-foreground">December 3-8, 2024</p>
-              <p className="text-xs text-muted-foreground">Daily events: 2:00 PM - 11:00 PM</p>
+              <p className="text-sm text-muted-foreground">December 1-10, 2025</p>
+              <p className="text-xs text-muted-foreground">Music events: 7:00 PM - 9:00 PM</p>
             </div>
 
             {/* Book Tickets */}
@@ -62,8 +62,8 @@ const Footer = () => {
                 Email
               </h4>
               <div className="space-y-1 text-sm text-muted-foreground">
-                <p>info@hornbillmusicfestival.com</p>
-                <p>press@tafma.org</p>
+                <p>hmfnagaland@gmail.com</p>
+               
               </div>
             </div>
 
@@ -74,8 +74,8 @@ const Footer = () => {
                 Phone
               </h4>
               <div className="space-y-1 text-sm text-muted-foreground">
-                <p>+91 9876 543 210</p>
-                <p>+91 8765 432 109</p>
+                <p>+91 8787 624 630</p>
+             
               </div>
             </div>
 
@@ -97,22 +97,25 @@ const Footer = () => {
           <div className="text-left">
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <div className="space-y-2">
-  <Link to="/events" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    Events
-  </Link>
-  <Link to="/artists" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    Artists
-  </Link>
-  <Link to="/auditions" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    Auditions
-  </Link>
-  <Link to="/about" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    About
-  </Link>
-  <Link to="/schedule" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
-    Schedule
-  </Link>
-</div>
+              {/* <Link to="/events" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
+                Events
+              </Link>*/}
+              {/* <Link to="/artists" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
+                Artists
+              </Link>*/}
+              <Link to="/auditions" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
+                Auditions
+              </Link>
+              <Link to="/about" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
+                About
+              </Link>
+              <Link to="/hornbill-music-festival" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
+                Hornbill Music Festival
+              </Link>
+              <Link to="/schedule" className="block text-muted-foreground hover:text-foreground transition-colors text-sm">
+                Schedule
+              </Link>
+            </div>
           </div>
         </div>
 

@@ -40,7 +40,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/admin/dashboard', adminDashboardRoutes);
 
 app.get("/", (req, res) => {
-  res.json({ message: "Hornbill Music Festival API running" });
+  res.json({ message: "Hornbill Music Festival API running 2" });
 });
 
 const PORT = process.env.PORT || 5000;

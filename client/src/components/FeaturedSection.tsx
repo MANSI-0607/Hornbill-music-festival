@@ -5,7 +5,7 @@ import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, Exter
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Link, useNavigate } from 'react-router-dom';
 import GalleryModal from './GalleryModal';
-import comeTogetherThumbnail from '@/assets/comeTogether.png';
+
 import hornbillMusic1 from '@/assets/music/hornbill (1).jpg';
 import hornbillMusic2 from '@/assets/music/hornbill (2).jpg';
 import hornbillMusic3 from '@/assets/music/hornbill (3).jpg';
@@ -35,7 +35,7 @@ const FeaturedSection = () => {
 
   const featuredCards = [
     {
-      title: '🎤 Pre-Ticket Auditions',
+      title: 'Ticket to Hornbill',
       description: 'Submit your band for a chance to perform at Hornbill Music Festival',
       cta: 'Apply Now',
       variant: 'festival',
@@ -45,7 +45,7 @@ const FeaturedSection = () => {
       link: '/auditions'
     },
     {
-      title: '🦅 Hornbill Music Festival',
+      title: 'Music Festival',
       description: 'Explore event highlights, stages, and experiences waiting for you this December.',
       cta: 'Explore Festival →',
       variant: 'stage',
@@ -55,7 +55,7 @@ const FeaturedSection = () => {
       link: '/hornbill-music-festival'
     },
     {
-      title: '📅 Live Schedule',
+      title: 'Live Schedule',
       description: 'Check out the complete festival lineup and plan your experience',
       cta: 'View Schedule',
       variant: 'tribal',
@@ -250,7 +250,7 @@ const FeaturedSection = () => {
             }`}>
               <div className="aspect-video rounded-2xl overflow-hidden neon-glow-purple">
                 <img
-                  src={comeTogetherThumbnail}
+                  src="/comeTogether.png"
                   alt="Hornbill"
                   className="w-full h-full object-cover"
                 />
@@ -312,12 +312,15 @@ const FeaturedSection = () => {
                   }}
                   onClick={() => openModal(index)}
                 >
-                  {/* Background Image */}
-                  <img 
-                    src={image.imageUrl} 
-                    // alt={image.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
+                 {/* Background Image */}
+<img 
+  src={image.imageUrl} 
+  // alt={image.title}
+  className="absolute inset-0 w-full h-full object-cover"
+  loading="lazy"
+  decoding="async"
+/>
+
                   
                   {/* Dark overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
