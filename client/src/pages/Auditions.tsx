@@ -10,7 +10,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar, Upload, Music, Users, Phone, Mail, MapPin, Link, Clock } from 'lucide-react';
+import { Calendar, Upload, Users, Phone, Mail, MapPin, Link, Clock } from 'lucide-react';
 import TermsDialog from '@/components/TermsDialog';
 
 const auditionSchema = z.object({
@@ -163,20 +163,28 @@ export default function Auditions() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 festival-bg">
+      <section className="relative pt-0 pb-6 px-0 festival-bg">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
-        <div className="relative max-w-4xl mx-auto text-center">
-          <div className="flex items-center justify-center mb-6">
-            <Music className="h-12 w-12 text-primary mr-4" />
+        <div className="relative text-center">
+          <div className="mb-0">
+            <div className="w-full" style={{ aspectRatio: '5 / 2' }}>
+              <img
+                src="/Auditionbanner.jpg"
+                alt="Ticket to Hornbill - Band Auditions"
+                className="w-full h-full block object-cover object-center"
+                width={1600}
+                height={640}
+                loading="eager"
+              />
+            </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-righteous festival-title mb-4">
-            Ticket to Hornbill
-          </h1>
-          <h2 className="text-2xl md:text-3xl text-gray-400 mb-6">Band Auditions</h2>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-            Submit your band's audition for a chance to perform at the prestigious Hornbill Music Festival. 
-            Showcase your talent to industry professionals and music lovers from around the world.
-          </p>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+            <h2 className="text-2xl md:text-3xl text-gray-400 mb-6">Band Auditions</h2>
+            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+              Submit your band's audition for a chance to perform at the prestigious Hornbill Music Festival. 
+              Showcase your talent to industry professionals and music lovers from around the world.
+            </p>
+          </div>
           
           {/* Deadline Notice */}
           {/*<div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-lg p-4 max-w-2xl mx-auto">
@@ -196,7 +204,7 @@ export default function Auditions() {
       </section>
 
       {/* Form Section */}
-      <section className="py-2 px-4 sm:px-6 lg:px-8">
+      <section className="py-2 px-4 sm:px-6 lg:px-8 ">
         <div className="max-w-4xl mx-auto">
           <Card className="festival-card">
             <CardHeader>
