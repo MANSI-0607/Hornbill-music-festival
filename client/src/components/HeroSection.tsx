@@ -26,9 +26,9 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative min-h-[65vh] md:min-h-screen overflow-hidden">
       <Carousel
-        className="w-full h-screen"
+        className="w-full min-h-[65vh] md:min-h-screen"
         plugins={[
           Autoplay({
             delay: 4000,
@@ -43,7 +43,7 @@ const HeroSection = () => {
         <CarouselContent>
           {carouselSlides.map((slide) => (
             <CarouselItem key={slide.id}>
-              <div className="relative min-h-screen flex items-start sm:items-center justify-center">
+              <div className="relative min-h-[65vh] md:min-h-screen flex items-center justify-center">
                 {/* Background Image */}
                 <div className="absolute inset-0 w-full h-full">
                   <div
@@ -73,7 +73,7 @@ const HeroSection = () => {
                              mt-24 sm:mt-0 transform sm:translate-y-[-10%] md:translate-y-[-15%]"
                 >
                   <div className="animate-fade-in">
-                  <h1 className="font-righteous text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4 leading-tight">
+                  <h1 className="font-righteous text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-8 leading-tight">
                       <span className="block festival-title neon-text">{slide.title}</span>
                       <span className="block text-white">{slide.subtitle}</span>
                     </h1>

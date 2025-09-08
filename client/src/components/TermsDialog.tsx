@@ -68,7 +68,7 @@ export default function TermsDialog() {
             <ul className="list-disc list-inside space-y-1 text-gray-200">
               <li>
                 TaFMA will announce the 30 selected bands on{" "}
-                <strong>25th September 2025</strong> via social media and
+                <strong>30th September 2025</strong> via social media and
                 website.
               </li>
               <li>Bands must perform live as per the given schedule.</li>
