@@ -30,7 +30,7 @@ const Footer = () => {
                 Festival Dates
               </h4>
               <p className="text-sm text-muted-foreground">December 1-10, 2025</p>
-              <p className="text-xs text-muted-foreground">Music events: 7:00 PM - 9:00 PM</p>
+              <p className="text-xs text-muted-foreground">Music events: 6:00 PM - 9:00 PM</p>
             </div>
 
             {/* Book Tickets */}
