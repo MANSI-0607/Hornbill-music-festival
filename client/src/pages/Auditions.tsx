@@ -169,7 +169,7 @@ export default function Auditions() {
           <div className="mb-0">
             <div className="w-full" style={{ aspectRatio: '5 / 2' }}>
               <img
-                src="/ab.jpg"
+                src="https://res.cloudinary.com/dovc3lfgz/image/upload/v1757339123/ahibi/bochmdduhenjlkuwuwxz.jpg"
                 alt="Ticket to Hornbill - Band Auditions"
                 className="w-full h-full block object-cover object-center"
                 width={1600}

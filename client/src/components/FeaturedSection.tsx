@@ -45,7 +45,7 @@ const FeaturedSection = () => {
       link: '/auditions'
     },
     {
-      title: 'Music Festival',
+      title: 'Hornbill Music Festival',
       description: 'Explore event highlights, stages, and experiences waiting for you this December.',
       cta: 'Explore Festival →',
       variant: 'stage',
@@ -68,43 +68,67 @@ const FeaturedSection = () => {
 
   const galleryImages = [
     {
-      id: 1,    
+      id: 1,
+      title: 'Hornbill Music 1',
+      description: 'Live performance highlight from the Hornbill stage.',
       category: 'Music',
+      gradient: 'from-pink-500/20 to-purple-600/20',
       imageUrl: hornbillMusic1
     },
     {
       id: 2,
+      title: 'Hornbill Music 2',
+      description: 'Crowd and artist energy captured during the show.',
       category: 'Music',
+      gradient: 'from-pink-500/20 to-purple-600/20',
       imageUrl: hornbillMusic2
     },
     {
       id: 3,
+      title: 'Hornbill Music 3',
+      description: 'Stage lights and sound in perfect harmony.',
       category: 'Music',
+      gradient: 'from-pink-500/20 to-purple-600/20',
       imageUrl: hornbillMusic3
     },
     {
       id: 4,
+      title: 'Hornbill Music 4',
+      description: 'Guitar solo moment under the spotlight.',
       category: 'Music',
+      gradient: 'from-pink-500/20 to-purple-600/20',
       imageUrl: hornbillMusic4
     },
     {
       id: 5,
+      title: 'Hornbill Music 5',
+      description: 'Rhythm and beats that move the crowd.',
       category: 'Music',
+      gradient: 'from-pink-500/20 to-purple-600/20',
       imageUrl: hornbillMusic5
     },
     {
       id: 6,
+      title: 'Hornbill Music 6',
+      description: 'Vocal performance that lifts the soul.',
       category: 'Music',
+      gradient: 'from-pink-500/20 to-purple-600/20',
       imageUrl: hornbillMusic6
     },
     {
       id: 7,
+      title: 'Hornbill Music 7',
+      description: 'Bass lines driving the groove forward.',
       category: 'Music',
+      gradient: 'from-pink-500/20 to-purple-600/20',
       imageUrl: hornbillMusic7
     },
     {
       id: 8,
+      title: 'Hornbill Music 8',
+      description: 'Encore moment with the crowd singing along.',
       category: 'Music',
+      gradient: 'from-pink-500/20 to-purple-600/20',
       imageUrl: hornbillMusic8
     }
   ];
