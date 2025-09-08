@@ -56,7 +56,7 @@ const AboutTaFMA = () => {
 
         <div 
           ref={cardsRef}
-          className={`grid md:grid-cols-4 gap-6 transition-all duration-1000 ${
+          className={`grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-1000 ${
             cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >

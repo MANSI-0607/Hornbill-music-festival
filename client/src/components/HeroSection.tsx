@@ -70,7 +70,8 @@ const HeroSection = () => {
                 {/* Content */}
                 <div
                   className="relative z-10 text-center px-4 max-w-6xl mx-auto w-full
-                             mt-24 sm:mt-0 transform sm:translate-y-[-10%] md:translate-y-[-15%]"
+                             mt-24 sm:mt-0 transform sm:translate-y-[-10%] md:translate-y-[-15%]
+                             pb-32 sm:pb-0"
                 >
                   <div className="animate-fade-in">
                   <h1 className="font-righteous text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-8 leading-tight">
@@ -78,7 +79,7 @@ const HeroSection = () => {
                       <span className="block text-white">{slide.subtitle}</span>
                     </h1>
 
-                    <p className="text-lg sm:text-3xl md:text-4xl text-gray-300 mb-8 font-light">
+                    <p className="text-lg sm:text-3xl md:text-4xl text-gray-300 mb-8 font-bold">
                       {slide.description}
                     </p>
 
@@ -111,7 +112,61 @@ const HeroSection = () => {
           ))}
         </CarouselContent>
       </Carousel>
+        {/* Festival Stats */}
+      <div className="absolute bottom-4 md:bottom-8 left-0 right-0 z-20 px-4 ">
+        <div
+          ref={statsRef}
+          className={`grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 md:gap-6 max-w-6xl mx-auto transition-all duration-1000 ${
+            statsVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-12'
+          }`}
+        >
+          {/* Legacy */}
+          <div
+            className={`festival-card text-center transition-all duration-700 py-2 px-1 sm:py-3 md:py-4 ${
+              statsVisible ? 'animate-scale-in' : ''
+            }`}
+            style={{ animationDelay: statsVisible ? '0ms' : '0ms' }}
+          >
+            <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-neon-pink mb-1">25</div>
+            <div className="text-gray-400 text-xs sm:text-sm md:text-base">Years Festival Legacy</div>
+          </div>
 
+          {/* Days of Music */}
+          <div
+            className={`festival-card text-center transition-all duration-700 py-2 px-1 sm:py-3 md:py-4 ${
+              statsVisible ? 'animate-scale-in' : ''
+            }`}
+            style={{ animationDelay: statsVisible ? '150ms' : '0ms' }}
+          >
+            <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-neon-purple mb-1">10</div>
+            <div className="text-gray-400 text-xs sm:text-sm md:text-base">Days of Music & Culture</div>
+          </div>
+
+          {/* Artistes */}
+          <div
+            className={`festival-card text-center transition-all duration-700 py-2 px-1 sm:py-3 md:py-4 ${
+              statsVisible ? 'animate-scale-in' : ''
+            }`}
+            style={{ animationDelay: statsVisible ? '300ms' : '0ms' }}
+          >
+            <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-electric-orange mb-1">800+</div>
+            <div className="text-gray-400 text-xs sm:text-sm md:text-base">Artistes</div>
+          </div>
+
+          {/* Attendance */}
+          <div
+            className={`festival-card text-center transition-all duration-700 py-2 px-1 sm:py-3 md:py-4 ${
+              statsVisible ? 'animate-scale-in' : ''
+            }`}
+            style={{ animationDelay: statsVisible ? '450ms' : '0ms' }}
+          >
+            <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-cyber-teal mb-1">3,00,000+</div>
+            <div className="text-gray-400 text-xs sm:text-sm md:text-base">Attendance</div>
+          </div>
+        </div>
+      </div>
       {/* Festival Stats */}
       {/* <div className="absolute bottom-4 md:bottom-8 left-0 right-0 z-20 px-4">
         <div

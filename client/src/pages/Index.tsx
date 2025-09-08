@@ -56,7 +56,7 @@ const Index = () => {
           <AboutTaFMA />
         </section>
 
-        <section 
+        {/* <section 
           ref={sponsorsRef}
           className={`transition-all duration-1000 ${
             sponsorsVisible 
@@ -64,8 +64,8 @@ const Index = () => {
               : 'opacity-0 translate-y-12'
           }`}
         >
-          {/* <Sponsors /> */}
-        </section>
+          <Sponsors />
+        </section> */}
       </main>
     </div>
   );
