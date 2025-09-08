@@ -20,7 +20,7 @@ const HeroSection = () => {
       title: "INDIA'S BIGGEST",
       subtitle: "MUSIC FESTIVAL",
       description: "Ticket to Hornbill",
-      backgroundImage: "/hero.jpeg",
+      backgroundImage: "https://res.cloudinary.com/dwznqrjgg/image/upload/v1757340922/hero_bjt9dl.jpg",
       primaryAction: { text: "Submit Audition", icon: Mic, link: "/auditions" }
     },
   ];

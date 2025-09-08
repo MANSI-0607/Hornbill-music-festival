@@ -5,7 +5,7 @@ import { Music, Users, Award, Heart, Mountain, Mic } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import hero4 from '@/assets/hornbillMusic (4).jpg';
 import tafma from '@/assets/tafma.jpg';
-import hornbill from '@/assets/music/hornbill (18).png';
+//import hornbill from '@/assets/music/hornbill (18).png';
 
 const About = () => {
   // Animation refs
@@ -72,14 +72,12 @@ const About = () => {
             <div className="relative order-1 lg:order-2">
               <div className="aspect-square rounded-2xl overflow-hidden neon-glow-purple">
                 <img 
-                  src={hornbill}
+                  src="https://res.cloudinary.com/dwznqrjgg/image/upload/v1757341209/hornbill-bands/1757341187701-hornbill%20%2818%29.png.png"
                   alt="Hornbill Music Festival"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-2 md:-bottom-4 -right-2 md:-right-4 w-16 h-16 md:w-24 md:h-24 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center neon-glow-pink">
-                <Mountain className="text-white" size={24} />
-              </div>
+              
             </div>
           </div>
         </div>

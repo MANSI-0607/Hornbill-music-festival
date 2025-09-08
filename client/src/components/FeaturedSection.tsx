@@ -274,7 +274,7 @@ const FeaturedSection = () => {
             }`}>
               <div className="aspect-video rounded-2xl overflow-hidden neon-glow-purple">
                 <img
-                  src="/comeTogether.png"
+                  src="https://res.cloudinary.com/dwznqrjgg/image/upload/v1757235432/hornbill-bands/1757235406541-comeTogether-min.png.png"
                   alt="Hornbill"
                   className="w-full h-full object-cover"
                 />
