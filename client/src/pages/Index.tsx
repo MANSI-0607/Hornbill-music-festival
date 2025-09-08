@@ -4,7 +4,7 @@ import { Navigation } from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
 import FeaturedSection from '@/components/FeaturedSection';
 import AboutTaFMA from '@/components/AboutTaFMA';
-import Sponsors from '@/components/Sponsors';
+//import Sponsors from '@/components/Sponsors';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 // import FestivalExperience from '@/components/FestivalExperience';
 // import FestivalThemeSong from '@/components/FestivalThemeSong';
@@ -64,7 +64,7 @@ const Index = () => {
               : 'opacity-0 translate-y-12'
           }`}
         >
-          <Sponsors />
+          {/* <Sponsors /> */}
         </section>
       </main>
     </div>

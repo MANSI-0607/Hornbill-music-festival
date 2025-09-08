@@ -48,7 +48,9 @@ const HeroSection = () => {
                 <div className="absolute inset-0 w-full h-full">
                   <div
                     className="w-full h-full bg-cover bg-center bg-no-repeat"
-                    style={{ backgroundImage: `url("${slide.backgroundImage}")` }}
+                    style={{
+                      backgroundImage: `url("${slide.backgroundImage.replace('/upload/', '/upload/f_auto,q_auto:best,dpr_auto/')}")`
+                    }}
                   />
                 </div>
 
@@ -111,7 +113,7 @@ const HeroSection = () => {
       </Carousel>
 
       {/* Festival Stats */}
-      <div className="absolute bottom-4 md:bottom-8 left-0 right-0 z-20 px-4">
+      {/* <div className="absolute bottom-4 md:bottom-8 left-0 right-0 z-20 px-4">
         <div
           ref={statsRef}
           className={`grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 md:gap-6 max-w-6xl mx-auto transition-all duration-1000 ${
@@ -159,8 +161,8 @@ const HeroSection = () => {
             <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-cyber-teal mb-1">50K+</div>
             <div className="text-gray-400 text-xs sm:text-sm md:text-base">Fans</div>
           </div>
-        </div>
-      </div>
+        </div> 
+      </div>*/}
     </section>
   );
 };
