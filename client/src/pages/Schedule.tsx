@@ -144,7 +144,7 @@ const ComingSoon = () => {
 
         {/* Footer */}
         <div className="text-center text-muted-foreground">
-          <p>© 2024 TaFMA. All rights reserved.</p>
+          <p>© 2025 TaFMA. All rights reserved.</p>
         </div>
       </div>
     </div>
