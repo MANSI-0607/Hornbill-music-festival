@@ -192,7 +192,12 @@ const Footer = () => {
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span>Made with</span>
               <Heart className="h-4 w-4 text-neon-pink" />
-              <span>by KAKI TECH</span>
+              <span>by <a 
+  href="https://kakihelpsbrands.com/"   
+  target="_blank" 
+  rel="noopener noreferrer"
+  className="text-primary/90 hover:text-primary underline underline-offset-2"
+>KAKI TECH</a></span>
             </div>
             <div className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Hornbill Music Festival. All rights
