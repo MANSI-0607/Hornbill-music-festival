@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,11 +5,14 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Mail, Calendar, Music } from 'lucide-react';
 
+const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || '';
+
 const ComingSoon = () => {
   const [email, setEmail] = useState('');
+  const [submitting, setSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleEmailSubmit = (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
       toast({
@@ -20,13 +22,54 @@ const ComingSoon = () => {
       });
       return;
     }
+    const emailRegex = /[^@\s]+@[^@\s]+\.[^@\s]+/;
+    if (!emailRegex.test(email)) {
+      toast({
+        title: 'Invalid email',
+        description: 'Please enter a valid email address',
+        variant: 'destructive',
+      });
+      return;
+    }
 
-    // Here you would typically save the email to your database
-    toast({
-      title: 'Success!',
-      description: 'Thank you for subscribing! We\'ll notify you when we launch.',
-    });
-    setEmail('');
+    try {
+      setSubmitting(true);
+      const res = await fetch(`${API_BASE_URL}/notifications/subscribe`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, source: 'schedule' }),
+      });
+
+      if (res.status === 201) {
+        toast({
+          title: 'Success!',
+          description: 'Thank you for subscribing! We\'ll notify you when we launch.',
+        });
+        setEmail('');
+        return;
+      }
+      if (res.status === 409) {
+        toast({
+          title: 'Already subscribed',
+          description: 'This email is already on our notification list.',
+        });
+        return;
+      }
+      const data = await res.json().catch(() => ({}));
+      toast({
+        title: 'Error',
+        description: data?.message || 'Subscription failed. Please try again later.',
+        variant: 'destructive',
+      });
+    } catch (err) {
+      toast({
+        title: 'Network error',
+        description: 'Unable to reach the server. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -62,7 +105,7 @@ const ComingSoon = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="flex-1"
             />
-            <Button type="submit" className="px-6">
+            <Button type="submit" className="px-6" disabled={submitting}>
               Notify Me
             </Button>
           </form>
