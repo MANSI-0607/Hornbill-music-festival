@@ -152,7 +152,7 @@ const HeroSection = () => {
             style={{ animationDelay: statsVisible ? '300ms' : '0ms' }}
           >
             <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-electric-orange mb-1">800+</div>
-            <div className="text-gray-400 text-xs sm:text-sm md:text-base">Artistes</div>
+            <div className="text-gray-400 text-xs sm:text-sm md:text-base">Artists</div>
           </div>
 
           {/* Attendance */}
