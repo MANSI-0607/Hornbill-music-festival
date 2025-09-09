@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { LogOut, Music, Eye, Check, X, Clock } from "lucide-react";
+import { LogOut, Music, Eye, Check, X, Clock, FileDown, FileSpreadsheet } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     localStorage.removeItem("adminToken");
-    navigate("/login");
+    navigate("/");
   };
 
   const getStatusBadge = (status: string) => {
@@ -137,6 +137,84 @@ export default function AdminDashboard() {
     );
   };
 
+  const formatRegistrationsForExport = (items: BandRegistration[]) => {
+    return items.map((r) => ({
+      "Band Name": r.bandName,
+      Genre: r.genre,
+      "Band Members": r.bandMembers,
+      Bio: r.bandBio,
+      "Contact Person": r.contactPerson,
+      "Contact Email": r.contactEmail,
+      "Contact Phone": r.contactPhone,
+      "City / State": r.cityState,
+      "Social Links": r.socialLinks || "",
+      "Audition Video URL": r.auditionVideoUrl || "",
+      "Band Photo URL": r.bandPhotoUrl || "",
+      Status: r.status,
+      "Submitted At": new Date(r.createdAt).toISOString(),
+    }));
+  };
+
+  const toCsv = (rows: Record<string, string>[]) => {
+    if (!rows.length) return "";
+    const headers = Object.keys(rows[0]);
+    const escape = (val: unknown) => {
+      const s = String(val ?? "");
+      if (s.includes("\"") || s.includes(",") || s.includes("\n")) {
+        return `"${s.replace(/\"/g, '""')}"`;
+      }
+      return s;
+    };
+    const lines = [
+      headers.join(","),
+      ...rows.map((r) => headers.map((h) => escape((r as any)[h])).join(",")),
+    ];
+    return lines.join("\n");
+  };
+
+  const downloadBlob = (content: string | Blob, filename: string, type: string) => {
+    const blob = content instanceof Blob ? content : new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportCSV = () => {
+    if (!registrations.length) {
+      toast.info("No registrations to export");
+      return;
+    }
+    const rows = formatRegistrationsForExport(registrations);
+    const csv = toCsv(rows as unknown as Record<string, string>[]);
+    const ts = new Date().toISOString().replace(/[:.]/g, "-");
+    downloadBlob(csv, `registrations-${ts}.csv`, "text/csv;charset=utf-8;");
+    toast.success("CSV exported");
+  };
+
+  const handleExportExcel = async () => {
+    if (!registrations.length) {
+      toast.info("No registrations to export");
+      return;
+    }
+    try {
+      const XLSX = await import("xlsx");
+      const rows = formatRegistrationsForExport(registrations);
+      const ws = XLSX.utils.json_to_sheet(rows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Registrations");
+      const ts = new Date().toISOString().replace(/[:.]/g, "-");
+      XLSX.writeFile(wb, `registrations-${ts}.xlsx`);
+      toast.success("Excel exported");
+    } catch (err) {
+      toast.error("Excel export requires the 'xlsx' package. Install it to enable.");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
       <div className="container mx-auto px-4 py-8">
@@ -145,9 +223,17 @@ export default function AdminDashboard() {
             <Music className="h-8 w-8 text-primary" />
             <h1 className="text-3xl font-bold">Admin Dashboard</h1>
           </div>
-          <Button onClick={handleLogout} variant="outline">
-            <LogOut className="mr-2 h-4 w-4" /> Logout
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={handleExportCSV}>
+              <FileDown className="mr-2 h-4 w-4" /> Export CSV
+            </Button>
+            <Button variant="outline" onClick={handleExportExcel}>
+              <FileSpreadsheet className="mr-2 h-4 w-4" /> Export Excel
+            </Button>
+            <Button onClick={handleLogout} variant="outline">
+              <LogOut className="mr-2 h-4 w-4" /> Logout
+            </Button>
+          </div>
         </div>
 
         <Tabs defaultValue="registrations" className="space-y-4">
