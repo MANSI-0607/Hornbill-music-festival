@@ -384,7 +384,7 @@ export default function Auditions() {
                       name="auditionVideoUrl"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="text-white">Audition video link (YouTube/Vimeo) *</FormLabel>
+                          <FormLabel className="text-white">Audition video link (YouTube/Vimeo/Gdrive) *</FormLabel>
                           <FormControl>
                             <Input 
                               placeholder="Paste full URL" 
