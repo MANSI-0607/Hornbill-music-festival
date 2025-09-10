@@ -34,7 +34,7 @@ export default function TermsDialog() {
             <ul className="list-disc list-inside space-y-1 text-gray-200">
               <li>
                 Bands must submit a live performance video/link on or before{" "}
-                <strong>30th September 2025</strong>.
+                <strong>25th September 2025</strong>.
               </li>
               <li>A jury will shortlist 30 bands for the final rounds.</li>
             </ul>
