@@ -1,0 +1,6 @@
+# Ignore env files
+server/.env
+client/.env
+
+# Ignore build files
+client/dist
