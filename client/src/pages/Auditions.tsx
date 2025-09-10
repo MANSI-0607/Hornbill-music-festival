@@ -532,8 +532,8 @@ export default function Auditions() {
                   By submitting, you grant TaFMA/Hornbill Music Festival permission to review your materials for audition purposes. 
                   You retain all rights to your content. Personal data will be used only for selection/communication and not shared 
                   outside the organizing team. For queries, contact{' '}
-                  <a href="mailto:auditions@hornbillmusicfestival.com" className="text-primary hover:underline">
-                    auditions@hornbillmusicfestival.com
+                  <a href="mailto:info@hornbillmusicfestival.com" className="text-primary hover:underline">
+                    info@hornbillmusicfestival.com
                   </a>
                 </p>
               </div>
