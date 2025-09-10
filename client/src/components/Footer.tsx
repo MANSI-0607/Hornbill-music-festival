@@ -90,7 +90,9 @@ const Footer = () => {
                 Email
               </h4>
               <p className="text-sm text-muted-foreground">
-                hmfnagaland@gmail.com
+                <a href="mailto:info@hornbillmusicfestival.com" className="text-primary hover:text-primary/80 transition-colors">
+                  info@hornbillmusicfestival.com
+                </a>
               </p>
             </div>
 
