@@ -159,64 +159,69 @@ export default function Auditions() {
   const bandBioLength = form.watch('bandBio')?.length || 0;
   const bandMembersLength = form.watch('bandMembers')?.length || 0;
   const termsAccepted = form.watch('termsAccepted') || false;
-
+  const isSubmissionOpen = false;
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative pt-0 pb-6 px-0 festival-bg">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
-        <div className="relative text-center">
-          <div className="mb-0">
-            <div className="w-full" style={{ aspectRatio: '5 / 2' }}>
-              <img
-                src="https://res.cloudinary.com/dovc3lfgz/image/upload/v1757339123/ahibi/bochmdduhenjlkuwuwxz.jpg"
-                alt="Ticket to Hornbill - Band Auditions"
-                className="w-full h-full block object-cover object-center"
-                width={1600}
-                height={640}
-                loading="eager"
-              />
-            </div>
+    {/* Hero Section */}
+    <section className="relative pt-0 pb-6 px-0 festival-bg">
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60"></div>
+      <div className="relative text-center">
+        {!isSubmissionOpen && (
+          <div className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-semibold shadow-md">
+            Auditions Closed
           </div>
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-            <h2 className="text-2xl md:text-3xl font-righteous text-primary mb-6">Band Auditions</h2>
-            <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Submit your band's audition for a chance to perform at the prestigious Hornbill Music Festival. 
-              Showcase your talent to industry professionals and music lovers from around the world.
-            </p>
+        )}
+        <div className="mb-0">
+          <div className="w-full" style={{ aspectRatio: '5 / 2' }}>
+            <img
+              src="https://res.cloudinary.com/dovc3lfgz/image/upload/v1757339123/ahibi/bochmdduhenjlkuwuwxz.jpg"
+              alt="Ticket to Hornbill - Band Auditions"
+              className="w-full h-full block object-cover object-center"
+              width={1600}
+              height={640}
+              loading="eager"
+            />
           </div>
-          
-          {/* Deadline Notice */}
-          {/*<div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-lg p-4 max-w-2xl mx-auto">
-            <div className="flex items-center justify-center mb-2">
-              <Clock className="h-5 w-5 text-red-400 mr-2" />
-              <span className="text-red-400 font-bold">DEADLINE ALERT</span>
-            </div>
-            <p className="text-white">
-              Auditions window closes on <span className="font-bold text-red-400">September 1st, 2025 (IST)</span>
-            </p>
-            <p className="text-gray-300 text-sm mt-1">
-              Make sure to submit all required materials before the deadline.
-            </p>
-          </div>
-          */}
         </div>
-      </section>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+          <h2 className="text-2xl md:text-3xl font-righteous text-primary mb-6">Band Auditions</h2>
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+            Submit your band's audition for a chance to perform at the prestigious Hornbill Music Festival. 
+            Showcase your talent to industry professionals and music lovers from around the world.
+          </p>
+        </div>
+      </div>
+    </section>
 
-      {/* Form Section */}
-      <section className="py-2 px-4 sm:px-6 lg:px-8 ">
-        <div className="max-w-4xl mx-auto">
-          <Card className="festival-card">
-            <CardHeader>
-              <CardTitle className="text-2xl font-righteous text-primary flex items-center">
-                <Users className="h-6 w-6 mr-2" />
-                Band Registration Form
-              </CardTitle>
-              <CardDescription className="text-lg">
-                Please fill out all required fields carefully. Make sure all information is accurate as this will be used for evaluation and communication.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
+    {/* Form Section */}
+    <section className="py-2 px-4 sm:px-6 lg:px-8 ">
+      <div className="max-w-4xl mx-auto">
+        <Card className="festival-card">
+          <CardHeader>
+            <CardTitle className="text-2xl font-righteous text-primary flex items-center">
+              <Users className="h-6 w-6 mr-2" />
+              Band Registration
+            </CardTitle>
+            <CardDescription className="text-lg">
+              {!isSubmissionOpen
+                ? 'Submissions have closed. Thank you for participating!'
+                : 'Please fill out all required fields carefully. Make sure all information is accurate as this will be used for evaluation and communication.'}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {!isSubmissionOpen ? (
+              <div className="p-8 text-center">
+                <Clock className="h-12 w-12 text-primary mx-auto mb-4" />
+                <h2 className="text-2xl md:text-3xl font-righteous text-primary mb-4">
+                  Submissions Closed
+                </h2>
+                <p className="text-lg text-gray-300 mb-6">
+                  Thank you to all the amazing bands who auditioned! 🎶  
+                  The submission window is now closed.  
+                  Results will be announced soon — stay tuned!
+                </p>
+              </div>
+            ) : (
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                   {/* Terms & Conditions must be accepted first */}
@@ -522,21 +527,9 @@ export default function Auditions() {
                   >
                     {isSubmitting ? 'Submitting Audition...' : 'Submit Audition'}
                   </Button>
-                </form>
-              </Form>
-
-              {/* Privacy & Terms Footer */}
-              <div className="mt-8 p-4 bg-gray-800/50 rounded-lg">
-                <h4 className="text-white font-medium mb-2">Privacy & Terms:</h4>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  By submitting, you grant TaFMA/Hornbill Music Festival permission to review your materials for audition purposes. 
-                  You retain all rights to your content. Personal data will be used only for selection/communication and not shared 
-                  outside the organizing team. For queries, contact{' '}
-                  <a href="mailto:info@hornbillmusicfestival.com" className="text-primary hover:underline">
-                    info@hornbillmusicfestival.com
-                  </a>
-                </p>
-              </div>
+                  </form>
+                </Form>
+              )}
             </CardContent>
           </Card>
         </div>
