@@ -221,7 +221,7 @@ export default function Auditions() {
                  
                 </p>
                 <p className="text-3xl md:text-4xl font-extrabold text-primary mb-6">
-  Results have been announced — see them on Instagram:{" "}
+             Results have been announced — see them on Instagram:{" "}
   <a
     href="https://www.instagram.com/hornbill_music/"
     target="_blank"
