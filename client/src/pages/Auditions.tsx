@@ -213,13 +213,25 @@ export default function Auditions() {
               <div className="p-8 text-center">
                 <Clock className="h-12 w-12 text-primary mx-auto mb-4" />
                 <h2 className="text-2xl md:text-3xl font-righteous text-primary mb-4">
-                  Submissions Closed
+                  Results Announced!!
                 </h2>
                 <p className="text-lg text-gray-300 mb-6">
                   Thank you to all the amazing bands who auditioned! 🎶  
                   The submission window is now closed.  
-                  Results will be announced soon — stay tuned!
+                 
                 </p>
+                <p className="text-3xl md:text-4xl font-extrabold text-primary mb-6">
+  Results have been announced — see them on Instagram:{" "}
+  <a
+    href="https://www.instagram.com/hornbill_music/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="underline text-white"
+  >
+    @hornbill_music
+  </a>
+</p>
+
               </div>
             ) : (
               <Form {...form}>
