@@ -68,7 +68,7 @@ export default function NeonArtistMarquee(): JSX.Element {
   const trackItems = [...ARTISTS, ...ARTISTS];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#05040a] to-[#07020f] p-6">
+    <div className="min-h-screen flex items-start justify-center bg-gradient-to-b from-[#05040a] to-[#07020f] py-12 px-6">
       {/* Inline keyframes for marquee */}
       <style>{`
         @keyframes marquee {
@@ -77,9 +77,9 @@ export default function NeonArtistMarquee(): JSX.Element {
         }
       `}</style>
 
-      <div className="w-full max-w-7xl">
-        <header className="mb-12">
-          <h1 className="text-4xl font-righteous text-neon-pink " >
+<div className="w-full max-w-7xl">
+        <header className="mb-24 md:mb-20">
+          <h1 className="text-4xl md:text-6xl font-righteous text-neon-pink text-center " >
             Festival Lineup
           </h1>
         </header>
