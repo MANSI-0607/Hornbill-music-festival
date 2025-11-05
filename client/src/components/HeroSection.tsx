@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Mic } from 'lucide-react';
+import { Ticket } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Link } from 'react-router-dom';
 
@@ -19,9 +19,9 @@ const HeroSection = () => {
       id: 1,
       title: "INDIA'S BIGGEST",
       subtitle: "MUSIC FESTIVAL",
-      description: "Ticket to Hornbill",
+      description: "TICKETS ARE LIVE NOW",
       backgroundImage: "https://res.cloudinary.com/dwznqrjgg/image/upload/v1757340922/hero_bjt9dl.jpg",
-      primaryAction: { text: "Submit Audition", icon: Mic, link: "/auditions" }
+      primaryAction: { text: "Book Tickets", icon: Ticket, link: "https://www.ahibi.in" }
     },
   ];
 
@@ -80,11 +80,27 @@ const HeroSection = () => {
                       <span className="block text-white">{slide.subtitle}</span>
                     </h1>
 
-                    <p className="text-lg sm:text-3xl md:text-4xl text-gray-300 mb-8 font-bold">
-                      {slide.description}
-                    </p>
+  <div className="relative inline-block">
+  <p className="absolute inset-0 text-2xl sm:text-2xl md:text-3xl font-extrabold uppercase tracking-wider pointer-events-none"
+     style={{
+       color: '#ffffff',
+       filter: 'blur(1px)', /* keep sharp */
+       WebkitTextStroke: '0', /* not required if using shadow */
+       textShadow:
+         '-1px 0 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -0.5px -0.5px 0 #fff, 0.5px 0.5px 0 #fff'
+     }}>
+    {slide.description}
+  </p>
 
-                    <div className="flex justify-center items-center mb-8 md:mb-12">
+  <p className="relative text-2xl sm:text-2xl md:text-3xl font-extrabold uppercase tracking-wider"
+     style={{ color: '#6b21a8' }}>
+    {slide.description}
+  </p>
+</div>
+
+
+
+                    <div className="flex justify-center items-center mt-8 mb-8 md:mb-12">
                       {slide.primaryAction.link.startsWith('http') ? (
                         <a
                           href={slide.primaryAction.link}

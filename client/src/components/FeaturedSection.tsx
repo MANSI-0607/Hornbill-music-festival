@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink } from 'lucide-react';
+import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink, Ticket } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Link, useNavigate } from 'react-router-dom';
 import GalleryModal from './GalleryModal';
@@ -35,14 +35,14 @@ const FeaturedSection = () => {
 
   const featuredCards = [
     {
-      title: 'Ticket to Hornbill',
-      description: 'Submit your band for a chance to perform at Hornbill Music Festival',
-      cta: 'Apply Now',
+      title: 'Book Tickets',
+      description: 'Book your tickets now to experience the biggest music festival in India',
+      cta: 'Book Tickets',
       variant: 'festival',
-      icon: Music,
+      icon: Ticket,
       gradient: 'from-pink-500/20 to-purple-600/20',
       border: 'border-pink-500/30',
-      link: '/auditions'
+      link: 'https://www.ahibi.in'
     },
     {
       title: 'Hornbill Music Festival',
@@ -209,7 +209,14 @@ const FeaturedSection = () => {
               style={{
                 animationDelay: cardsVisible ? `${index * 200}ms` : '0ms'
               }}
-              onClick={() => navigate(card.link)}
+              onClick={() => {
+                if (card.link.startsWith('http')) {
+                  window.open(card.link, '_blank'); // opens in new tab
+                } else {
+                  navigate(card.link); // internal navigation
+                }
+              }}
+              
             >
               <CardContent className="p-8">
                 <div className="flex items-center justify-between mb-6">

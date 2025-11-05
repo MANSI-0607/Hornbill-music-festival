@@ -162,10 +162,16 @@ const Footer = () => {
           <div className="space-y-3">
             <h3 className="text-lg font-semibold">Quick Links</h3>
             <Link
-              to="/auditions"
+              to="/schedule"
               className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
-              Auditions
+              Schedule
+            </Link>
+            <Link
+              to="/artists"
+              className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
+            >
+              Artists
             </Link>
             <Link
               to="/about"
@@ -180,10 +186,10 @@ const Footer = () => {
               Hornbill Music Festival
             </Link>
             <Link
-              to="/schedule"
+              to="/gallery"
               className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
-              Schedule
+              Gallery
             </Link>
           </div>
         </div>

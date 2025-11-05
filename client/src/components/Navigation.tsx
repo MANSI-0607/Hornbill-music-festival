@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image } from 'lucide-react';
+import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 //import logo from '@/assets/logo/hmf-logo.png';
@@ -13,18 +13,17 @@ export function Navigation() {
   // Desktop navigation items (original)
   const navigation = [
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
-    // { name: 'Hornbill Festival', href: '/hornbill-music-festival', icon: Mountain, shortName: 'Festival' },
-    { name: 'Ticket to Hornbill', href: '/auditions', icon: Mic, shortName: 'Auditions' },
+    { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
+    { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
   ];
 
   // Mobile navigation items (includes additional items)
   const mobileNavigation = [
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
-    // { name: 'Hornbill Festival', href: '/hornbill-music-festival', icon: Mountain, shortName: 'Festival' },
-    { name: 'Ticket to Hornbill', href: '/auditions', icon: Mic, shortName: 'Auditions' },
-    // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
-    // { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
+    { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
+    { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
+    { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
   ];
 
@@ -87,13 +86,13 @@ export function Navigation() {
                   </Link>
                 );
               })}
-              {/*
+              
               <a href="https://ahibi.in/" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-festival ml-4">
                   Book Tickets
                 </Button>
               </a>
-              */}
+             
             </div>
 
             {/* Mobile menu button */}
@@ -151,7 +150,7 @@ export function Navigation() {
               </div>
               
               {/* Call to action button */}
-               {/*
+               
                 <a href="https://ahibi.in/" target="_blank" rel="noopener noreferrer">
                  <Button 
                    className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
@@ -160,7 +159,7 @@ export function Navigation() {
                    Book Tickets
                  </Button>
                 </a>
-               */}
+              
             </div>
           </div>
         </div>

@@ -1,242 +1,278 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Navigation } from '@/components/Navigation';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Search, Play, Instagram, Youtube } from 'lucide-react';
-import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { FiX } from "react-icons/fi";
 
-const Artists = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeFilter, setActiveFilter] = useState('All');
-  
-  // Animation refs
-  const { elementRef: heroRef, isVisible: heroVisible } = useScrollAnimation<HTMLDivElement>({ threshold: 0.2 });
-  const { elementRef: filtersRef, isVisible: filtersVisible } = useScrollAnimation<HTMLDivElement>({ threshold: 0.3 });
-  const { elementRef: gridRef, isVisible: gridVisible } = useScrollAnimation<HTMLDivElement>({ threshold: 0.1 });
-  const { elementRef: ctaRef, isVisible: ctaVisible } = useScrollAnimation<HTMLDivElement>({ threshold: 0.3 });
-  
-  const filters = ['All', 'Rock', 'Folk', 'Electronic', 'Traditional', 'Fusion'];
-  
-  const artists = [
-    {
-      id: 1,
-      name: 'The Hornbill Collective',
-      genre: 'Folk',
-      district: 'Kohima',
-      language: 'Angami',
-      bio: 'Blending traditional Angami folk with modern arrangements',
-      image: '🎵',
-      socials: { instagram: '@hornbillcollective', youtube: 'HornbillMusic' }
-    },
-    {
-      id: 2,
-      name: 'Naga Thunder',
-      genre: 'Rock',
-      district: 'Dimapur',
-      language: 'English',
-      bio: 'High-energy rock band representing the spirit of modern Nagaland',
-      image: '⚡',
-      socials: { instagram: '@nagathunder', youtube: 'NagaThunderBand' }
-    },
-    {
-      id: 3,
-      name: 'Bamboo Beats',
-      genre: 'Traditional',
-      district: 'Wokha',
-      language: 'Lotha',
-      bio: 'Masters of traditional Lotha percussion and bamboo instruments',
-      image: '🎋',
-      socials: { instagram: '@bamboobeats', youtube: 'BambooBeatsOfficial' }
-    },
-    {
-      id: 4,
-      name: 'Digital Dao',
-      genre: 'Electronic',
-      district: 'Mon',
-      language: 'Konyak',
-      bio: 'Electronic music infused with Konyak tribal chants and rhythms',
-      image: '🎛️',
-      socials: { instagram: '@digitaldao', youtube: 'DigitalDaoMusic' }
-    },
-    {
-      id: 5,
-      name: 'Mountain Echo',
-      genre: 'Fusion',
-      district: 'Zunheboto',
-      language: 'Sumi',
-      bio: 'Contemporary fusion of Sumi folk melodies with jazz influences',
-      image: '🏔️',
-      socials: { instagram: '@mountainecho', youtube: 'MountainEchoMusic' }
-    },
-    {
-      id: 6,
-      name: 'Tribal Harmony',
-      genre: 'Traditional',
-      district: 'Tuensang',
-      language: 'Chang',
-      bio: 'Preserving and performing ancient Chang tribe songs and dances',
-      image: '🎭',
-      socials: { instagram: '@tribalharmony', youtube: 'TribalHarmonyNL' }
-    }
-  ];
-
-  const filteredArtists = artists.filter(artist => {
-    const matchesSearch = artist.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         artist.genre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         artist.district.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesFilter = activeFilter === 'All' || artist.genre === activeFilter;
-    return matchesSearch && matchesFilter;
-  });
-
-  return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      <main className="pt-20 pb-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          {/* Hero Section */}
-          <div 
-            ref={heroRef}
-            className={`festival-bg rounded-3xl p-8 md:p-16 text-center mb-12 tribal-pattern transition-all duration-1000 ${
-              heroVisible ? 'scroll-fade-in visible' : 'scroll-fade-in'
-            }`}
-          >
-            <h1 className="font-righteous text-4xl md:text-6xl mb-4">
-              <span className="festival-title neon-text">Featured Artists</span>
-            </h1>
-            <p className="text-xl text-gray-300 mb-8">
-              Discover the incredible musicians from all 16 tribes of Nagaland
-            </p>
-            <div className="max-w-md mx-auto relative">
-              <Search className="absolute left-3 top-3 text-gray-400" size={20} />
-              <Input
-                placeholder="Search artists, genres, districts..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-gray-800/50 border-gray-600 text-white placeholder-gray-400"
-              />
-            </div>
-          </div>
-
-          {/* Filters */}
-          <div 
-            ref={filtersRef}
-            className={`flex flex-wrap gap-4 justify-center mb-12 transition-all duration-1000 ${
-              filtersVisible ? 'scroll-scale visible' : 'scroll-scale'
-            }`}
-          >
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
-                  activeFilter === filter
-                    ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white neon-glow-pink'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border border-gray-700'
-                }`}
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-
-          {/* Artists Grid */}
-          <div 
-            ref={gridRef}
-            className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-1000 ${
-              gridVisible ? 'scroll-fade-in visible' : 'scroll-fade-in'
-            }`}
-          >
-            {filteredArtists.map((artist, index) => (
-              <Link to={`/artists/${artist.id}`} key={artist.id}>
-                <Card 
-                  className={`artist-card overflow-hidden group cursor-pointer transition-all duration-700 hover:scale-105 ${
-                    gridVisible ? 'animate-stagger-fade-in' : 'opacity-0 translate-y-8'
-                  }`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  <CardContent className="p-0">
-                    {/* Artist Image */}
-                    <div className="relative h-64 bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center text-8xl group-hover:scale-105 transition-transform duration-300">
-                      {artist.image}
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-pink-500/80 rounded-full flex items-center justify-center">
-                          <Play className="text-white ml-1" size={24} fill="currentColor" />
-                        </div>
-                      </div>
-                      <div className="absolute top-4 right-4 flex space-x-2">
-                        <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xs">🎵</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="p-6">
-                      <h3 className="font-righteous text-xl mb-2 text-white group-hover:text-pink-400 transition-colors">
-                        {artist.name}
-                      </h3>
-                      
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          artist.genre === 'Rock' ? 'bg-pink-500/20 text-pink-400' :
-                          artist.genre === 'Folk' ? 'bg-purple-500/20 text-purple-400' :
-                          artist.genre === 'Electronic' ? 'bg-orange-500/20 text-orange-400' :
-                          artist.genre === 'Traditional' ? 'bg-teal-500/20 text-teal-400' :
-                          'bg-yellow-500/20 text-yellow-400'
-                        }`}>
-                          {artist.genre}
-                        </span>
-                        <span className="px-2 py-1 bg-gray-800 rounded-full text-xs text-gray-300">
-                          {artist.district}
-                        </span>
-                        <span className="px-2 py-1 bg-gray-800 rounded-full text-xs text-gray-300">
-                          {artist.language}
-                        </span>
-                      </div>
-                      
-                      <p className="text-gray-400 text-sm mb-4 leading-relaxed">
-                        {artist.bio}
-                      </p>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex space-x-3">
-                          <Instagram size={20} className="text-gray-400 hover:text-pink-400 cursor-pointer transition-colors" />
-                          <Youtube size={20} className="text-gray-400 hover:text-red-400 cursor-pointer transition-colors" />
-                        </div>
-                        <Button className="btn-festival" onClick={(e) => e.preventDefault()}>
-                          View Details
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-
-          {/* Collaboration CTA */}
-          <div 
-            ref={ctaRef}
-            className={`festival-card mt-16 text-center transition-all duration-1000 ${
-              ctaVisible ? 'scroll-scale visible' : 'scroll-scale'
-            }`}
-          >
-            <h3 className="font-righteous text-3xl mb-4">
-              <span className="festival-title">Bring Nagaland's Sound to Your Stage</span>
-            </h3>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
-              Interested in collaborating with our talented artists? Connect with musicians 
-              who can bring the authentic sounds of Nagaland to your events and projects.
-            </p>
-            <Button className="btn-stage text-lg px-8 py-4">
-              Start Collaboration
-            </Button>
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+type Artist = {
+  id: string;
+  name: string;
+  role: string;
+  img: string;
+  color: string;
+  bio: string;
 };
 
-export default Artists;
+const ARTISTS: Artist[] = [
+  {
+    id: "a1",
+    name: "Vox Nova",
+    role: "Headliner / Electronic",
+    img: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&q=80&auto=format&fit=crop",
+    color: "#ff2dd4",
+    bio:
+      "Vox Nova is a boundary-pushing electronic artist blending neon synth textures with kinetic drum programming. Their live sets are cinematic and euphoric, perfect for late-night festival energy.",
+  },
+  {
+    id: "a2",
+    name: "Luna Rave",
+    role: "Psytrance / Live",
+    img: "https://images.unsplash.com/photo-1507878866276-a947ef722fee?w=1200&q=80&auto=format&fit=crop",
+    color: "#7c4dff",
+    bio:
+      "Luna Rave fuses otherworldly leads with deep rolling basslines. Expect immersive visuals and a kinetic crowd experience — a true cosmic rave.",
+  },
+  {
+    id: "a3",
+    name: "Neon Kai",
+    role: "Indie Electronica",
+    img: "https://images.unsplash.com/photo-1511376777868-611b54f68947?w=1200&q=80&auto=format&fit=crop",
+    color: "#00e5ff",
+    bio:
+      "Neon Kai crafts intimate melodies inside big synthscapes. Their sets feel like a midnight drive: warm, reflective, and glowing.",
+  },
+  {
+    id: "a4",
+    name: "Chrome Tongue",
+    role: "Experimental / DJ",
+    img: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&q=80&auto=format&fit=crop",
+    color: "#ff8a00",
+    bio:
+      "Chrome Tongue mixes analog grit with futuristic polish — expect modular chaos and precise drops that keep the crowd on edge.",
+  },
+];
+
+export default function NeonArtistMarquee(): JSX.Element {
+  const [selected, setSelected] = useState<Artist | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+
+  // Accessibility: close with Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelected(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Duplicate artists so the marquee looks continuous
+  const trackItems = [...ARTISTS, ...ARTISTS];
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#05040a] to-[#07020f] p-6">
+      {/* Inline keyframes for marquee */}
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
+
+      <div className="w-full max-w-7xl">
+        <header className="mb-12">
+          <h1 className="text-4xl font-righteous text-neon-pink " >
+            Festival Lineup
+          </h1>
+        </header>
+
+        {/* Marquee wrapper */}
+        <div
+          className="relative overflow-hidden rounded-2xl"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          aria-hidden={false}
+        >
+          {/* Marquee track (duplicated) */}
+          <div
+            ref={trackRef}
+            className="flex gap-6 items-stretch whitespace-nowrap"
+            style={{
+              // Use CSS animation for a smooth infinite marquee effect
+              animation: `marquee ${trackItems.length * 2}s linear infinite`,
+              animationPlayState: isPaused ? "paused" : "running",
+            }}
+          >
+            {trackItems.map((a, idx) => (
+              <ArtistCard
+                key={`${a.id}-${idx}`}
+                artist={a}
+                onClick={() => setSelected(a)}
+              />
+            ))}
+          </div>
+
+          {/* subtle gradient edges for neon fade */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-0 top-0 bottom-0 w-24"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(7,2,15,1), rgba(7,2,15,0))",
+            }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute right-0 top-0 bottom-0 w-24"
+            style={{
+              background:
+                "linear-gradient(270deg, rgba(7,2,15,1), rgba(7,2,15,0))",
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {selected && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelected(null)}
+          >
+            <motion.div
+              className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            <motion.div
+              className="relative z-60 max-w-3xl w-full mx-4"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300, damping: 22 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div
+                className="rounded-2xl overflow-hidden border p-6"
+                style={{
+                  borderColor: "rgba(255,255,255,0.06)",
+                  background:
+                    "linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.35))",
+                  boxShadow: `0 12px 50px rgba(0,0,0,0.6), 0 0 40px ${selected.color}33`,
+                }}
+              >
+                <div className="flex flex-col md:flex-row gap-6">
+                  <div className="w-full md:w-1/3 rounded-lg overflow-hidden">
+                    <img
+                      src={selected.img}
+                      alt={selected.name}
+                      className="w-full h-60 object-cover"
+                    />
+                    <div
+                      className="absolute inset-0 pointer-events-none"
+                      style={{
+                        mixBlendMode: "screen",
+                        background: `linear-gradient(180deg, ${selected.color}22, transparent 40%)`,
+                      }}
+                    />
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h2
+                          className="text-3xl font-extrabold text-neon-pink"
+                      
+                        >
+                          {selected.name}
+                        </h2>
+                        <p className="mt-1 text-sm text-gray-300/90">
+                          {selected.role}
+                        </p>
+                      </div>
+
+                      <button
+                        onClick={() => setSelected(null)}
+                        className="ml-4 p-2 rounded-full hover:bg-white/5 focus:outline-none"
+                        aria-label="Close"
+                      >
+                        <FiX className="w-6 h-6" />
+                      </button>
+                    </div>
+
+                    <p className="mt-4 text-gray-200/90 leading-relaxed">
+                      {selected.bio}
+                    </p>
+
+                    <div className="mt-6 flex items-center gap-4">
+                      <button
+                        className="px-5 py-2 rounded-full font-semibold text-black"
+                        style={{
+                          background: `linear-gradient(90deg, ${selected.color}, rgba(124,77,255,0.9))`,
+                          boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+                        }}
+                      >
+                        Listen
+                      </button>
+                      <button className="px-4 py-2 rounded-full border border-white/8">
+                        Read more
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/* ---------- ArtistCard (framer-motion hover + tap) ---------- */
+function ArtistCard({
+  artist,
+  onClick,
+}: {
+  artist: Artist;
+  onClick: () => void;
+}) {
+  return (
+    <motion.button
+      whileHover={{ scale: 1.04, y: -8 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onClick}
+      className="w-72 min-w-[18rem] rounded-2xl p-0 overflow-hidden cursor-pointer border"
+      style={{
+        borderColor: "rgba(255,255,255,0.06)",
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08))",
+        boxShadow: `0 12px 40px rgba(0,0,0,0.6), 0 0 24px ${artist.color}22`,
+      }}
+      aria-label={`Open ${artist.name} bio`}
+    >
+      <div className="relative h-60 w-full">
+        <img
+          src={artist.img}
+          alt={artist.name}
+          className="w-full h-full object-cover block"
+        />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            boxShadow: `inset 0 0 40px ${artist.color}, 0 12px 40px ${artist.color}33`,
+            mixBlendMode: "screen",
+          }}
+        />
+      </div>
+
+      <div className="p-4">
+        <h3 className="text-lg font-bold text-neon-pink">
+          {artist.name}
+        </h3>
+        <p className="text-sm text-gray-300/90 mt-1">{artist.role}</p>
+      </div>
+    </motion.button>
+  );
+}
