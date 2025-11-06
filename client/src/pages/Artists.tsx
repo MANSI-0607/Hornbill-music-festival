@@ -54,6 +54,8 @@ export default function NeonArtistMarquee(): JSX.Element {
   const [selected, setSelected] = useState<Artist | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef<HTMLDivElement | null>(null);
+  const styleRef = useRef<HTMLStyleElement | null>(null);
+  const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
   // Accessibility: close with Escape
   useEffect(() => {
@@ -65,23 +67,95 @@ export default function NeonArtistMarquee(): JSX.Element {
   }, []);
 
   // Duplicate artists so the marquee looks continuous
-  const trackItems = [...ARTISTS, ...ARTISTS];
+  const trackItems: Artist[] = [...ARTISTS, ...ARTISTS];
+
+  // Sets up measured pixel-based keyframes so the animation is accurate across devices
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    // create style tag if not present
+    if (!styleRef.current) {
+      const s = document.createElement("style");
+      s.id = "neon-marquee-style";
+      document.head.appendChild(s);
+      styleRef.current = s;
+    }
+
+    const updateAnimation = () => {
+      if (!el || !styleRef.current) return;
+
+      // total scroll width contains both concatenated copies
+      const totalWidth = el.scrollWidth;
+      // width of a single copy
+      const singleWidth = totalWidth / 2;
+
+      // pixels per second speed — tweak to taste
+      const PIXELS_PER_SECOND = 80;
+      // duration in seconds to travel a single copy
+      const durationSeconds = Math.max(6, singleWidth / PIXELS_PER_SECOND);
+
+      // if user prefers reduced motion, do not animate
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReduced) {
+        styleRef.current.innerHTML = `@keyframes neon-marquee-measured { 0% { transform: translateX(0); } 100% { transform: translateX(0); } }`;
+        el.style.animation = "none";
+        return;
+      }
+
+      // Create pixel-accurate keyframes
+      styleRef.current.innerHTML = `
+        @keyframes neon-marquee-measured {
+          0% { transform: translateX(0px); }
+          100% { transform: translateX(-${singleWidth}px); }
+        }
+      `;
+
+      el.style.animation = `neon-marquee-measured ${durationSeconds}s linear infinite`;
+      el.style.animationPlayState = isPaused ? "paused" : "running";
+    };
+
+    // initial set and observe resizes
+    updateAnimation();
+
+    // Use ResizeObserver to react when children / images change layout
+    if (typeof ResizeObserver !== "undefined") {
+      resizeObserverRef.current = new ResizeObserver(() => {
+        updateAnimation();
+      });
+      resizeObserverRef.current.observe(el);
+      // also observe the viewport in case of container width changes
+      if (el.parentElement) resizeObserverRef.current.observe(el.parentElement);
+    } else {
+      // fallback on resize event
+      window.addEventListener("resize", updateAnimation);
+    }
+
+    // cleanup
+    return () => {
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect();
+        resizeObserverRef.current = null;
+      }
+      if (typeof ResizeObserver === "undefined") {
+        window.removeEventListener("resize", updateAnimation);
+      }
+    };
+  }, [isPaused, trackItems.length]);
+
+  // Pause animation when isPaused changes
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.style.animationPlayState = isPaused ? "paused" : "running";
+  }, [isPaused]);
 
   return (
     <div className="min-h-screen flex items-start justify-center bg-gradient-to-b from-[#05040a] to-[#07020f] py-12 px-6">
-      {/* Inline keyframes for marquee */}
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0%); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
-
-<div className="w-full max-w-7xl">
+      <div className="w-full max-w-7xl">
         <header className="mb-24 md:mb-20">
-          <h1 className="text-4xl md:text-6xl font-righteous text-neon-pink text-center " >
-            Festival Lineup
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-righteous text-neon-pink text-center">Festival Lineup</h1>
         </header>
 
         {/* Marquee wrapper */}
@@ -89,24 +163,24 @@ export default function NeonArtistMarquee(): JSX.Element {
           className="relative overflow-hidden rounded-2xl"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
           aria-hidden={false}
         >
-          {/* Marquee track (duplicated) */}
+          {/* Animated inner track (measured) */}
           <div
             ref={trackRef}
-            className="flex gap-6 items-stretch whitespace-nowrap"
+            className="inline-flex gap-6 items-stretch whitespace-nowrap"
             style={{
-              // Use CSS animation for a smooth infinite marquee effect
-              animation: `marquee ${trackItems.length * 2}s linear infinite`,
-              animationPlayState: isPaused ? "paused" : "running",
+              // let JS set pixel-accurate animation; ensure children don't shrink
+              transform: "translateZ(0)",
+              willChange: "transform",
             }}
           >
             {trackItems.map((a, idx) => (
-              <ArtistCard
-                key={`${a.id}-${idx}`}
-                artist={a}
-                onClick={() => setSelected(a)}
-              />
+              <div key={`${a.id}-${idx}`} style={{ flex: "0 0 auto" }}>
+                <ArtistCard artist={a} onClick={() => setSelected(a)} />
+              </div>
             ))}
           </div>
 
@@ -115,16 +189,14 @@ export default function NeonArtistMarquee(): JSX.Element {
             aria-hidden
             className="pointer-events-none absolute left-0 top-0 bottom-0 w-24"
             style={{
-              background:
-                "linear-gradient(90deg, rgba(7,2,15,1), rgba(7,2,15,0))",
+              background: "linear-gradient(90deg, rgba(7,2,15,1), rgba(7,2,15,0))",
             }}
           />
           <div
             aria-hidden
             className="pointer-events-none absolute right-0 top-0 bottom-0 w-24"
             style={{
-              background:
-                "linear-gradient(270deg, rgba(7,2,15,1), rgba(7,2,15,0))",
+              background: "linear-gradient(270deg, rgba(7,2,15,1), rgba(7,2,15,0))",
             }}
           />
         </div>
@@ -157,18 +229,13 @@ export default function NeonArtistMarquee(): JSX.Element {
                 className="rounded-2xl overflow-hidden border p-6"
                 style={{
                   borderColor: "rgba(255,255,255,0.06)",
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.35))",
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.35))",
                   boxShadow: `0 12px 50px rgba(0,0,0,0.6), 0 0 40px ${selected.color}33`,
                 }}
               >
                 <div className="flex flex-col md:flex-row gap-6">
-                  <div className="w-full md:w-1/3 rounded-lg overflow-hidden">
-                    <img
-                      src={selected.img}
-                      alt={selected.name}
-                      className="w-full h-60 object-cover"
-                    />
+                  <div className="w-full md:w-1/3 rounded-lg overflow-hidden relative">
+                    <img src={selected.img} alt={selected.name} className="w-full h-60 object-cover" />
                     <div
                       className="absolute inset-0 pointer-events-none"
                       style={{
@@ -181,15 +248,8 @@ export default function NeonArtistMarquee(): JSX.Element {
                   <div className="flex-1">
                     <div className="flex items-start justify-between">
                       <div>
-                        <h2
-                          className="text-3xl font-extrabold text-neon-pink"
-                      
-                        >
-                          {selected.name}
-                        </h2>
-                        <p className="mt-1 text-sm text-gray-300/90">
-                          {selected.role}
-                        </p>
+                        <h2 className="text-3xl font-extrabold text-neon-pink">{selected.name}</h2>
+                        <p className="mt-1 text-sm text-gray-300/90">{selected.role}</p>
                       </div>
 
                       <button
@@ -201,9 +261,7 @@ export default function NeonArtistMarquee(): JSX.Element {
                       </button>
                     </div>
 
-                    <p className="mt-4 text-gray-200/90 leading-relaxed">
-                      {selected.bio}
-                    </p>
+                    <p className="mt-4 text-gray-200/90 leading-relaxed">{selected.bio}</p>
 
                     <div className="mt-6 flex items-center gap-4">
                       <button
@@ -215,9 +273,7 @@ export default function NeonArtistMarquee(): JSX.Element {
                       >
                         Listen
                       </button>
-                      <button className="px-4 py-2 rounded-full border border-white/8">
-                        Read more
-                      </button>
+                      <button className="px-4 py-2 rounded-full border border-white/8">Read more</button>
                     </div>
                   </div>
                 </div>
@@ -246,18 +302,13 @@ function ArtistCard({
       className="w-72 min-w-[18rem] rounded-2xl p-0 overflow-hidden cursor-pointer border"
       style={{
         borderColor: "rgba(255,255,255,0.06)",
-        background:
-          "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08))",
+        background: "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08))",
         boxShadow: `0 12px 40px rgba(0,0,0,0.6), 0 0 24px ${artist.color}22`,
       }}
       aria-label={`Open ${artist.name} bio`}
     >
       <div className="relative h-60 w-full">
-        <img
-          src={artist.img}
-          alt={artist.name}
-          className="w-full h-full object-cover block"
-        />
+        <img src={artist.img} alt={artist.name} className="w-full h-full object-cover block" />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -268,9 +319,7 @@ function ArtistCard({
       </div>
 
       <div className="p-4">
-        <h3 className="text-lg font-bold text-neon-pink">
-          {artist.name}
-        </h3>
+        <h3 className="text-lg font-bold text-neon-pink">{artist.name}</h3>
         <p className="text-sm text-gray-300/90 mt-1">{artist.role}</p>
       </div>
     </motion.button>
