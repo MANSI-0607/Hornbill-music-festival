@@ -13,16 +13,16 @@ export function Navigation() {
   // Desktop navigation items (original)
   const navigation = [
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
-    { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
-    { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
+    // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
+    // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
   ];
 
   // Mobile navigation items (includes additional items)
   const mobileNavigation = [
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
-    { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
-    { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
+    // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
+    // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
   ];
