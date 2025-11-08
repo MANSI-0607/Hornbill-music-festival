@@ -80,12 +80,12 @@ const HeroSection = () => {
                       <span className="block text-white">{slide.subtitle}</span>
                     </h1>
 
-  <div className="relative inline-block">
+  {/* <div className="relative inline-block">
   <p className="absolute inset-0 text-2xl sm:text-2xl md:text-3xl font-extrabold uppercase tracking-wider pointer-events-none"
      style={{
        color: '#ffffff',
-       filter: 'blur(1px)', /* keep sharp */
-       WebkitTextStroke: '0', /* not required if using shadow */
+       filter: 'blur(1px)', 
+       WebkitTextStroke: '0', 
        textShadow:
          '-1px 0 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -0.5px -0.5px 0 #fff, 0.5px 0.5px 0 #fff'
      }}>
@@ -96,7 +96,7 @@ const HeroSection = () => {
      style={{ color: '#6b21a8' }}>
     {slide.description}
   </p>
-</div>
+</div> */}
 
 
 
