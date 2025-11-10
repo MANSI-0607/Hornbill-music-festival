@@ -29,7 +29,7 @@ const Media: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
         <div className="rounded-xl overflow-hidden border border-white/10 mb-8 mx-auto max-w-3xl">
           <div
             className="relative w-full"
-            style={{ aspectRatio: "16/9", maxHeight: "280px" }}
+            style={{ aspectRatio: "16/9", maxHeight: "400px" }}
           >
             <iframe
               src={`https://www.youtube.com/embed/${youtubeId}`}
