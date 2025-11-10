@@ -19,6 +19,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Media from "./components/Media";
+import Merch from "./pages/Merch";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -38,6 +39,7 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/schedule" element={<Schedule />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/merch" element={<Merch />} />
               <Route path="/media" element={<Media youtubeId="Uzt5_n0vchU" articles={[
                 { title: "TaFMA announces 26th Toyota Hornbill Music Festival 2025", url: "https://www.easternmirrornagaland.com/tafma-announces-26th-toyota-hornbill-music-festival-2025-to-feature-several-new-initiatives" },
                 { title: "Toyota Hornbill Music Festival 2025 set to showcase collaborations", url: "https://nagalandtribune.in/toyota-hornbill-music-festival-2025-set-to-showcase-international-collaborations-local-talent-and-inclusivity/" },
