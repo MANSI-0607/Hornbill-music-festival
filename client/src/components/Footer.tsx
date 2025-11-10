@@ -167,24 +167,30 @@ const Footer = () => {
             >
               Schedule
             </Link>
-            <Link
+             <Link
+              to="/media"
+              className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
+            >
+              Media
+            </Link>
+            {/* <Link
               to="/artists"
               className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               Artists
-            </Link>
+            </Link> */}
             <Link
               to="/about"
               className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               About
             </Link>
-            <Link
+            {/* <Link
               to="/hornbill-music-festival"
               className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               Hornbill Music Festival
-            </Link>
+            </Link> */}
             <Link
               to="/gallery"
               className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
