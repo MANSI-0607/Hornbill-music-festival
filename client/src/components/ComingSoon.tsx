@@ -7,9 +7,11 @@ import { Mail, Music } from "lucide-react";
 
 const ComingSoon = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
 
-  const handleEmailSubmit = (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
       toast({
@@ -20,12 +22,63 @@ const ComingSoon = () => {
       return;
     }
 
-    toast({
-      title: "Success!",
-      description:
-        "Thank you for subscribing! We’ll notify you when we launch.",
-    });
-    setEmail("");
+    // simple client-side email check
+    const emailRegex = /[^@\s]+@[^@\s]+\.[^@\s]+/;
+    if (!emailRegex.test(email)) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await fetch(`${API_BASE_URL}/notifications/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, source: "coming-soon" }),
+      });
+
+      if (res.ok) {
+        toast({
+          title: "Success!",
+          description:
+            "Thank you for subscribing! We’ll notify you when we launch.",
+        });
+        setEmail("");
+        return;
+      }
+
+      const data = await res.json().catch(() => ({ message: "Request failed" }));
+      if (res.status === 409) {
+        toast({
+          title: "You're already on the list",
+          description: "We'll keep you posted as soon as we launch.",
+        });
+      } else if (res.status === 400) {
+        toast({
+          title: "Invalid email",
+          description: data.message || "Please check your email and try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: data.message || "Please try again later.",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Network error",
+        description: "Please check your connection and try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,12 +117,14 @@ const ComingSoon = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="flex-1 rounded-full border-pink-500/40 bg-white/5 text-white placeholder:text-gray-400"
+              required
             />
             <Button
               type="submit"
               className="px-6 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold transition-all duration-300"
+              disabled={loading}
             >
-              Notify Me
+              {loading ? "Submitting..." : "Notify Me"}
             </Button>
           </form>
         </div>
