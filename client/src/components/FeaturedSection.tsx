@@ -36,8 +36,8 @@ const FeaturedSection = () => {
   const featuredCards = [
     {
       title: 'Book Tickets',
-      description: 'Book your tickets now to experience the biggest music festival in India',
-      cta: 'Book Tickets',
+      description: 'Tickets will be available soon at Ahibi.in',
+      cta: 'Coming Soon',
       variant: 'festival',
       icon: Ticket,
       gradient: 'from-pink-500/20 to-purple-600/20',
