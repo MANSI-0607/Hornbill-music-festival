@@ -13,6 +13,8 @@ export function Navigation() {
   // Desktop navigation items (original)
   const navigation = [
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
+    { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
+    { name: 'Media', href: '/media', icon: Image, shortName: 'Media' },
     // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
@@ -21,9 +23,10 @@ export function Navigation() {
   // Mobile navigation items (includes additional items)
   const mobileNavigation = [
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
+    { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
+    { name: 'Media', href: '/media', icon: Image, shortName: 'Media' },
     // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
-    { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
   ];
 
@@ -89,7 +92,7 @@ export function Navigation() {
               
               <a href="https://ahibi.in/" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-festival ml-4">
-                  Book Tickets
+                  Tickets Coming Soon
                 </Button>
               </a>
              
@@ -156,7 +159,7 @@ export function Navigation() {
                    className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
                    onClick={() => setIsOpen(false)}
                  >
-                   Book Tickets
+                   Tickets Coming Soon at Ahibi.in
                  </Button>
                 </a>
               

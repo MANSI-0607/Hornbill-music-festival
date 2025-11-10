@@ -8,7 +8,7 @@ interface MediaPanelProps {
   articles: { title: string; url: string }[];
 }
 
-const MediaPanel: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
+const Media: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
   return (
     <Card
       className="border border-white/10 bg-gradient-to-b from-[#0a0a0a]/60 to-[#0b0b0f]/80 rounded-2xl overflow-hidden transition-all duration-500"
@@ -17,9 +17,9 @@ const MediaPanel: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
         {/* Center Heading */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
-            <Youtube className="text-gray-300" size={36} />
+            <Youtube className="text-neon-pink" size={36} />
           </div>
-          <h3 className="text-3xl md:text-4xl font-righteous text-white tracking-wide">
+          <h3 className="text-3xl md:text-4xl font-righteous text-neon-pink tracking-wide">
             Media
           </h3>
           <div className="w-16 h-[2px] bg-pink-500 mx-auto mt-3 rounded-full" />
@@ -94,4 +94,4 @@ const MediaPanel: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
   );
 };
 
-export default MediaPanel;
+export default Media;
