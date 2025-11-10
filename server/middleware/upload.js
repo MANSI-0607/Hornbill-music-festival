@@ -20,5 +20,15 @@ const storage = new CloudinaryStorage({
   }
 });
 
+const merchStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'hornbill-merch',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+    public_id: (req, file) => `merch-${Date.now()}-${file.originalname}`
+  }
+});
+
 const upload = multer({ storage });
+export const uploadMerch = multer({ storage: merchStorage });
 export default upload;
