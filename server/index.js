@@ -6,8 +6,9 @@ import morgan from "morgan";
 import connectDB from './config/db.js';
 import routes from './routes/auditionRoute.js';
 import adminRoutes from './routes/adminRoutes.js';
-import adminDashboardRoutes from './routes/adminDashboard_route.js';
+
 import notificationRoutes from './routes/notificationRoutes.js';
+import merchRoutes from './routes/merchRoutes.js';
 
 dotenv.config();
 connectDB();
@@ -38,8 +39,8 @@ app.use(cors({
 
 app.use('/api', routes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/admin/dashboard', adminDashboardRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/merch', merchRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hornbill Music Festival API running 2" });
