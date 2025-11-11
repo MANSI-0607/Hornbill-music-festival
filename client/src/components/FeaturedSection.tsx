@@ -42,7 +42,7 @@ const FeaturedSection = () => {
       icon: Ticket,
       gradient: 'from-pink-500/20 to-purple-600/20',
       border: 'border-pink-500/30',
-      link: 'https://www.ahibi.in'
+      link: 'https://www.ahibi.in/events'
     },
     {
       title: 'Hornbill Music Festival',

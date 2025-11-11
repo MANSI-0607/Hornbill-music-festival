@@ -90,7 +90,7 @@ export function Navigation() {
                 );
               })}
               
-              <a href="https://ahibi.in/" target="_blank" rel="noopener noreferrer">
+              <a href="https://ahibi.in/events" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-festival ml-4">
                   Tickets Coming Soon
                 </Button>
@@ -154,7 +154,7 @@ export function Navigation() {
               
               {/* Call to action button */}
                
-                <a href="https://ahibi.in/" target="_blank" rel="noopener noreferrer">
+                <a href="https://ahibi.in/events" target="_blank" rel="noopener noreferrer">
                  <Button 
                    className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
                    onClick={() => setIsOpen(false)}
