@@ -407,7 +407,34 @@ const FeaturedSection = () => {
         images={galleryImages}
         initialIndex={selectedImageIndex}
       />
+{/* Drum Tao Section */}
+<div className="mt-12 text-center">
+  {/* Centered Heading */}
+  <h3 className="font-righteous text-4xl md:text-5xl mb-3">
+    <span className="festival-title">Drum Tao Comes to Hornbill!</span>
+   
+
+  </h3>
+    <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-3">
+        Prepare to be mesmerized by <strong>DRUM TAO</strong> — the world-famous 
+        Japanese drumming ensemble known for their breathtaking blend of rhythm, 
+        movement, and martial artistry. 
+      </p>
+
+  {/* YouTube Video (slightly smaller, with sound) */}
+  <div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
+    <iframe
+      className="w-full h-full"
+      src="https://www.youtube.com/embed/C7InxbCEJtE?autoplay=1&controls=1&rel=0&modestbranding=1"
+      title="Drum Tao at Hornbill Festival"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+      allowFullScreen
+    ></iframe>
+  </div>
+</div>
+
     </section>
+    
   );
 };
 
