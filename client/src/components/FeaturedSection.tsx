@@ -421,16 +421,19 @@ const FeaturedSection = () => {
         movement, and martial artistry. 
       </p>
 
-  {/* YouTube Video (slightly smaller, with sound) */}
-  <div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
-    <iframe
-      className="w-full h-full"
-      src="https://www.youtube.com/embed/C7InxbCEJtE?autoplay=1&controls=1&rel=0&modestbranding=1"
-      title="Drum Tao at Hornbill Festival"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-      allowFullScreen
-    ></iframe>
-  </div>
+ {/* BandMate Promo Video (from Vercel Blob) */}
+<div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
+  <video
+    src="https://nxpvonrxicnsjd5i.public.blob.vercel-storage.com/Drum%20Tao%20Promo%20Video%20-%20without%20Super.mp4"
+    className="w-full h-full object-cover"
+    controls
+    playsInline
+    preload="metadata"
+  >
+    Your browser does not support the video tag.
+  </video>
+</div>
+
 </div>
 
     </section>
