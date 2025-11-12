@@ -250,7 +250,7 @@ const HeroSection: React.FC = () => {
             }`}
             style={{ animationDelay: statsVisible ? "0ms" : "0ms" }}
           >
-            <div className="text-3xl md:text-4xl font-bold text-neon-pink mb-1">
+            <div className="text-3xl md:text-4xl font-bold text-festival-blue-light mb-1">
               25
             </div>
             <div className="text-gray-400 text-sm md:text-base">
@@ -265,7 +265,7 @@ const HeroSection: React.FC = () => {
             }`}
             style={{ animationDelay: statsVisible ? "150ms" : "0ms" }}
           >
-            <div className="text-3xl md:text-4xl font-bold text-neon-purple mb-1">
+            <div className="text-3xl md:text-4xl font-bold text-neon-pink mb-1">
               10
             </div>
             <div className="text-gray-400 text-sm md:text-base">
@@ -293,7 +293,7 @@ const HeroSection: React.FC = () => {
             }`}
             style={{ animationDelay: statsVisible ? "450ms" : "0ms" }}
           >
-            <div className="text-3xl md:text-4xl font-bold text-cyber-teal mb-1">
+            <div className="text-3xl md:text-4xl font-bold text-neon-purple mb-1">
               3,00,000+
             </div>
             <div className="text-gray-400 text-sm md:text-base">Attendance</div>

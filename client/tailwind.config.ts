@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -59,6 +58,15 @@ export default {
 				'electric-orange': 'hsl(var(--electric-orange))',
 				'cyber-teal': 'hsl(var(--cyber-teal))',
 				'tribal-gold': 'hsl(var(--tribal-gold))',
+				// Custom blue and orange palette
+				'festival-blue': {
+					DEFAULT: '#12499c',
+					light: '#165caa',
+				},
+				'festival-orange': {
+					DEFAULT: '#f05d29',
+					dark: '#c90000',
+				},
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -108,10 +116,10 @@ export default {
 				},
 				'festival-pulse': {
 					'0%, 100%': {
-						boxShadow: '0 0 20px hsl(320 100% 50% / 0.5)'
+						boxShadow: '0 0 20px rgba(18, 73, 156, 0.5)'
 					},
 					'50%': {
-						boxShadow: '0 0 40px hsl(320 100% 50% / 0.8), 0 0 60px hsl(280 100% 60% / 0.6)'
+						boxShadow: '0 0 40px rgba(22, 92, 170, 0.8), 0 0 60px rgba(240, 93, 41, 0.6)'
 					}
 				}
 			},

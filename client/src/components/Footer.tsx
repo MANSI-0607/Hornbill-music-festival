@@ -32,7 +32,7 @@ const Footer = () => {
           {/* Festival Info */}
           <div className="space-y-6">
             <div className="flex items-center gap-2">
-              <Music className="h-6 w-6 text-neon-pink" />
+              <Music className="h-6 w-6 text-festival-blue" />
               <h3 className="text-lg font-semibold">Hornbill Music Festival</h3>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
@@ -43,7 +43,7 @@ const Footer = () => {
             {/* Festival Dates */}
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-neon-pink" />
+                <Calendar className="h-4 w-4 text-festival-blue" />
                 Festival Dates
               </h4>
               <p className="text-sm text-muted-foreground">
@@ -55,7 +55,7 @@ const Footer = () => {
             </div>
 
             {/* Book Tickets */}
-            <div className="bg-gradient-to-r from-neon-pink/10 to-neon-purple/10 p-4 rounded-lg border border-neon-pink/20">
+            <div className="bg-gradient-to-r from-festival-blue/10 to-festival-orange/10 p-4 rounded-lg border border-festival-blue/20">
               <h4 className="font-semibold mb-2">
                 Ready to Experience the Festival?
               </h4>
@@ -67,7 +67,7 @@ const Footer = () => {
                 href="https://ahibi.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-neon-pink hover:text-neon-purple transition-colors text-sm font-medium"
+                className="inline-flex items-center gap-2 text-festival-blue hover:text-festival-orange transition-colors text-sm font-medium"
               >
                 Book Tickets <ExternalLink className="h-4 w-4" />
               </a>
@@ -86,11 +86,11 @@ const Footer = () => {
             {/* Email */}
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Mail className="h-4 w-4 text-neon-pink" />
+                <Mail className="h-4 w-4 text-festival-blue" />
                 Email
               </h4>
               <p className="text-sm text-muted-foreground">
-                <a href="mailto:info@hornbillmusicfestival.com" className="text-primary hover:text-primary/80 transition-colors">
+                <a href="mailto:info@hornbillmusicfestival.com" className="text-festival-orange/80 hover:text-festival-orange transition-colors">
                   info@hornbillmusicfestival.com
                 </a>
               </p>
@@ -99,7 +99,7 @@ const Footer = () => {
             {/* Phone */}
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <Phone className="h-4 w-4 text-neon-pink" />
+                <Phone className="h-4 w-4 text-festival-blue" />
                 Phone
               </h4>
               <p className="text-sm text-muted-foreground">+91 8787 624 630</p>
@@ -108,7 +108,7 @@ const Footer = () => {
             {/* Follow Us */}
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-              <Globe className="h-4 w-4 text-neon-pink" />
+              <Globe className="h-4 w-4 text-festival-blue" />
                 Follow us</h4>
               <div className="flex items-center gap-5">
                 <a
@@ -116,7 +116,7 @@ const Footer = () => {
                   aria-label="Follow on Instagram"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-neon-pink transition-colors"
+                  className="text-muted-foreground hover:text-festival-orange transition-colors"
                   title="Instagram"
                 >
                   <FaInstagram className="h-6 w-6" />
@@ -126,7 +126,7 @@ const Footer = () => {
                   aria-label="Subscribe on YouTube"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-neon-pink transition-colors"
+                  className="text-muted-foreground hover:text-festival-orange transition-colors"
                   title="YouTube"
                 >
                   <FaYoutube className="h-6 w-6" />
@@ -136,7 +136,7 @@ const Footer = () => {
                   aria-label="Chat on WhatsApp"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-neon-pink transition-colors"
+                  className="text-muted-foreground hover:text-festival-orange transition-colors"
                   title="WhatsApp"
                 >
                   <FaWhatsapp className="h-6 w-6" />
@@ -147,7 +147,7 @@ const Footer = () => {
             {/* Location */}
             <div>
               <h4 className="font-semibold mb-2 flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-neon-pink" />
+                <MapPin className="h-4 w-4 text-festival-blue" />
                 Location
               </h4>
               <div className="text-sm text-muted-foreground">
@@ -205,12 +205,12 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <span>Made with</span>
-              <Heart className="h-4 w-4 text-neon-pink" />
+              <Heart className="h-4 w-4 text-festival-orange" />
               <span>by <a 
   href="https://kakihelpsbrands.com/"   
   target="_blank" 
   rel="noopener noreferrer"
-  className="text-primary/90 hover:text-primary underline underline-offset-2"
+  className="text-festival-orange/80 hover:text-festival-orange underline underline-offset-2"
 >KAKI TECH</a></span>
             </div>
             <div className="text-sm text-muted-foreground">

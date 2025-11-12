@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Righteous&display=swap');
 @tailwind base;
 @tailwind components;
@@ -12,7 +11,7 @@
     --card-foreground: 0 0% 98%;
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 320 100% 50%;
+    --primary: 211 72% 34%;
     --primary-foreground: 0 0% 98%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -24,11 +23,11 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
-    --ring: 320 100% 50%;
+    --ring: 211 72% 34%;
     --radius: 0.75rem;
     
-    /* Festival theme colors */
-    --neon-pink: 320 100% 50%;
+    /* Festival theme colors - Blue & Orange */
+   --neon-pink: 320 100% 50%;
     --neon-purple: 280 100% 60%;
     --electric-orange: 25 100% 55%;
     --cyber-teal: 180 100% 50%;
@@ -80,13 +79,13 @@
 @layer components {
   /* Enhanced button styles for mobile */
   .btn-festival {
-    @apply bg-gradient-to-r from-pink-500 via-purple-600 to-pink-500 
+    @apply bg-gradient-to-r from-[#12499c] via-[#165caa] to-[#c90000] 
            text-white font-semibold px-8 py-3 rounded-full 
            shadow-lg hover:shadow-xl transform hover:scale-105 
            transition-all duration-300 border-0 
            active:scale-95;
     background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
+    animation: gradient-shift 2s ease infinite;
   }
 
   /* Mobile-optimized card styles */
@@ -193,10 +192,10 @@
 
 @keyframes festival-pulse {
   0%, 100% {
-    box-shadow: 0 0 20px hsl(320 100% 50% / 0.5);
+    box-shadow: 0 0 20px rgba(18, 73, 156, 0.5);
   }
   50% {
-    box-shadow: 0 0 40px hsl(320 100% 50% / 0.8), 0 0 60px hsl(280 100% 60% / 0.6);
+    box-shadow: 0 0 40px rgba(22, 92, 170, 0.8), 0 0 60px rgba(240, 93, 41, 0.6);
   }
 }
 

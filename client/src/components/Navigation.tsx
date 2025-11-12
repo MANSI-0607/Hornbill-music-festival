@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image, Users,Youtube } from 'lucide-react';
@@ -80,7 +79,7 @@ export function Navigation() {
                     to={item.href}
                     className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       location.pathname === item.href
-                        ? 'bg-primary/20 text-primary'
+                        ? 'bg-festival-orange/20 text-festival-orange border border-festival-orange/30'
                         : 'text-gray-300 hover:text-white hover:bg-gray-800'
                     }`}
                   >
@@ -102,7 +101,7 @@ export function Navigation() {
             <div className="md:hidden z-50 relative">
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="text-gray-300 hover:text-white p-2 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className="text-gray-300 hover:text-white p-2 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-festival-orange/50"
                 aria-label="Toggle mobile menu"
               >
                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -139,7 +138,7 @@ export function Navigation() {
                       onClick={() => setIsOpen(false)}
                       className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 active:scale-95 ${
                         location.pathname === item.href
-                          ? 'bg-primary/20 text-primary border border-primary/30'
+                          ? 'bg-festival-orange/20 text-festival-orange border border-festival-orange/30'
                           : 'bg-gray-800/50 text-gray-300 hover:text-white hover:bg-gray-800/80 border border-gray-700/50'
                       }`}
                     >
@@ -180,12 +179,12 @@ export function Navigation() {
                 to={item.href}
                 className={`flex flex-col items-center justify-center py-2 px-2 rounded-lg min-w-[60px] transition-all duration-200 active:scale-95 ${
                   isActive
-                    ? 'text-primary bg-primary/10'
+                    ? 'text-festival-orange bg-festival-orange/10'
                     : 'text-gray-400 hover:text-white active:bg-gray-800/50'
                 }`}
               >
-                <Icon className={`w-5 h-5 mb-1 ${isActive ? 'text-primary' : ''}`} />
-                <span className={`text-xs font-medium ${isActive ? 'text-primary' : ''}`}>
+                <Icon className={`w-5 h-5 mb-1 ${isActive ? 'text-festival-orange' : ''}`} />
+                <span className={`text-xs font-medium ${isActive ? 'text-festival-orange' : ''}`}>
                   {item.shortName}
                 </span>
               </Link>

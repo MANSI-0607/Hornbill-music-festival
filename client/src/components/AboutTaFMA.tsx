@@ -19,7 +19,7 @@ const AboutTaFMA = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-righteous festival-title mb-4">
+          <h2 className="text-4xl font-righteous festival-title mb-4 bg-gradient-to-r from-festival-blue to-festival-orange bg-clip-text text-transparent">
             About TaFMA
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -37,7 +37,7 @@ const AboutTaFMA = () => {
               Through partnerships with institutions and festivals, we help Naga musicians share their unique sound with the world while documenting traditional songs for future generations.
             </p>
             <Link to="/about">
-              <Button className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <Button className="bg-gradient-to-r from-blue-700 to-orange-600 hover:from-blue-800 hover:to-orange-700 text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                 Learn More about TaFMA
                 <ArrowRight className="ml-2" size={18} />
               </Button>
@@ -54,6 +54,7 @@ const AboutTaFMA = () => {
           </div>
         </div>
 
+ 
         <div 
           ref={cardsRef}
           className={`grid grid-cols-2 md:grid-cols-4 gap-6 transition-all duration-1000 ${
@@ -83,7 +84,7 @@ const AboutTaFMA = () => {
           </Card>
           <Card className="bg-card/50 backdrop-blur-md border border-gray-700/50 text-center">
             <CardContent className="pt-6">
-              <Heart className="mx-auto text-teal-500 mb-4" size={32} />
+              <Heart className="mx-auto text-festival-blue-light mb-4" size={32} />
               <h4 className="text-2xl font-righteous text-white mb-2">Year-round</h4>
               <p className="text-muted-foreground text-sm">Community Programs</p>
             </CardContent>

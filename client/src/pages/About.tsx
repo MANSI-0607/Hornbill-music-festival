@@ -110,7 +110,7 @@ const About = () => {
             <Card className="festival-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-xl md:text-2xl">
-                  <Heart className="text-pink-500" size={24} />
+                  <Heart className="text-blue-500" size={24} />
                   Our Mission
                 </CardTitle>
               </CardHeader>

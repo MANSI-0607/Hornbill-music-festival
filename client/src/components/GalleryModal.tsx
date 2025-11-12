@@ -1,8 +1,13 @@
-
-import React from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, X, Download, Share2, ZoomIn, ZoomOut } from 'lucide-react';
+import React from "react";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import {
+  ChevronLeft,
+  ChevronRight,
+  X,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
 
 interface GalleryImage {
   id: number;
@@ -21,7 +26,12 @@ interface GalleryModalProps {
   initialIndex?: number;
 }
 
-const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModalProps) => {
+const GalleryModal = ({
+  isOpen,
+  onClose,
+  images,
+  initialIndex = 0,
+}: GalleryModalProps) => {
   const [currentIndex, setCurrentIndex] = React.useState(initialIndex);
   const [isZoomed, setIsZoomed] = React.useState(false);
 
@@ -45,15 +55,15 @@ const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModa
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'ArrowRight') goToNext();
-    if (e.key === 'ArrowLeft') goToPrevious();
-    if (e.key === 'Escape') onClose();
+    if (e.key === "ArrowRight") goToNext();
+    if (e.key === "ArrowLeft") goToPrevious();
+    if (e.key === "Escape") onClose();
   };
 
   React.useEffect(() => {
     if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-      return () => document.removeEventListener('keydown', handleKeyDown);
+      document.addEventListener("keydown", handleKeyDown);
+      return () => document.removeEventListener("keydown", handleKeyDown);
     }
   }, [isOpen]);
 
@@ -69,7 +79,7 @@ const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModa
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    
+
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -115,7 +125,7 @@ const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModa
             <Button
               variant="ghost"
               size="icon"
-              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 w-10 h-10 md:w-12 md:h-12 z-30 bg-black/20 backdrop-blur-sm border border-white/20"
+              className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 text-white hover:bg-festival-blue/10 w-10 h-10 md:w-12 md:h-12 z-30 bg-black/20 backdrop-blur-sm border border-festival-blue/20"
               onClick={goToPrevious}
             >
               <ChevronLeft size={20} className="md:w-6 md:h-6" />
@@ -124,7 +134,7 @@ const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModa
             <Button
               variant="ghost"
               size="icon"
-              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/10 w-10 h-10 md:w-12 md:h-12 z-30 bg-black/20 backdrop-blur-sm border border-white/20"
+              className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 text-white hover:bg-festival-blue/10 w-10 h-10 md:w-12 md:h-12 z-30 bg-black/20 backdrop-blur-sm border border-festival-blue/20"
               onClick={goToNext}
             >
               <ChevronRight size={20} className="md:w-6 md:h-6" />
@@ -133,7 +143,7 @@ const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModa
         )}
 
         {/* Main Image with Touch Support */}
-        <div 
+        <div
           className="relative w-full h-full flex items-center justify-center p-0 md:p-16"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
@@ -141,23 +151,23 @@ const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModa
         >
           <div
             className={`relative rounded-lg overflow-hidden transition-all duration-300 cursor-pointer ${
-              isZoomed 
-                ? 'w-full h-full' 
-                : 'w-full h-[400px] md:w-4/5 md:h-[390px] max-w-4xl'
+              isZoomed
+                ? "w-full h-full"
+                : "w-full h-[400px] md:w-4/5 md:h-[390px] max-w-4xl"
             }`}
             onClick={() => setIsZoomed(!isZoomed)}
           >
             {/* Actual Image */}
-            <img 
-              src={currentImage.imageUrl} 
+            <img
+              src={currentImage.imageUrl}
               alt={currentImage.title}
               className="absolute inset-0 w-full h-full object-cover"
             />
-            
+
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4 text-white">
               <div className="flex items-center justify-between mb-2">
-                <span className="px-2 md:px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs md:text-sm font-medium border border-white/30">
+                <span className="px-2 md:px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs md:text-sm font-medium border border-festival-blue/30 text-white/90">
                   {currentImage.category}
                 </span>
                 <div className="flex gap-1 md:gap-2">
@@ -170,7 +180,11 @@ const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModa
                     }}
                     className="text-white hover:bg-white/10 p-1 md:p-2"
                   >
-                    {isZoomed ? <ZoomOut size={14} className="md:w-4 md:h-4" /> : <ZoomIn size={14} className="md:w-4 md:h-4" />}
+                    {isZoomed ? (
+                      <ZoomOut size={14} className="md:w-4 md:h-4" />
+                    ) : (
+                      <ZoomIn size={14} className="md:w-4 md:h-4" />
+                    )}
                   </Button>
                 </div>
               </div>
@@ -190,13 +204,13 @@ const GalleryModal = ({ isOpen, onClose, images, initialIndex = 0 }: GalleryModa
                   key={image.id}
                   onClick={() => setCurrentIndex(index)}
                   className={`flex-shrink-0 w-16 h-12 rounded overflow-hidden transition-all duration-200 ${
-                    index === currentIndex 
-                      ? 'ring-2 ring-pink-500 opacity-100' 
-                      : 'opacity-60 hover:opacity-80'
+                    index === currentIndex
+                      ? "ring-2 ring-festival-orange opacity-100"
+                      : "opacity-60 hover:opacity-80"
                   }`}
                 >
-                  <img 
-                    src={image.imageUrl} 
+                  <img
+                    src={image.imageUrl}
                     alt={image.title}
                     className="w-full h-full object-cover"
                   />

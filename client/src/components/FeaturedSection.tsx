@@ -40,8 +40,9 @@ const FeaturedSection = () => {
       cta: 'Coming Soon',
       variant: 'festival',
       icon: Ticket,
-      gradient: 'from-pink-500/20 to-purple-600/20',
-      border: 'border-pink-500/30',
+      // changed pink → festival-blue / festival-orange
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
+      border: 'border-festival-orange/30',
       link: 'https://www.ahibi.in/events'
     },
     {
@@ -50,8 +51,8 @@ const FeaturedSection = () => {
       cta: 'Explore Festival →',
       variant: 'stage',
       icon: Users,
-      gradient: 'from-orange-500/20 to-teal-500/20',
-      border: 'border-orange-500/30',
+      gradient: 'from-festival-orange/20 to-festival-blue/20',
+      border: 'border-festival-blue/30',
       link: '/hornbill-music-festival'
     },
     {
@@ -60,8 +61,8 @@ const FeaturedSection = () => {
       cta: 'View Schedule',
       variant: 'tribal',
       icon: Camera,
-      gradient: 'from-purple-600/20 to-yellow-500/20',
-      border: 'border-purple-500/30',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
+      border: 'border-festival-blue/30',
       link: '/schedule'
     }
   ];
@@ -72,7 +73,7 @@ const FeaturedSection = () => {
       title: 'Hornbill Music 1',
       description: 'Live performance highlight from the Hornbill stage.',
       category: 'Music',
-      gradient: 'from-pink-500/20 to-purple-600/20',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic1
     },
     {
@@ -80,7 +81,7 @@ const FeaturedSection = () => {
       title: 'Hornbill Music 2',
       description: 'Crowd and artist energy captured during the show.',
       category: 'Music',
-      gradient: 'from-pink-500/20 to-purple-600/20',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic2
     },
     {
@@ -88,7 +89,7 @@ const FeaturedSection = () => {
       title: 'Hornbill Music 3',
       description: 'Stage lights and sound in perfect harmony.',
       category: 'Music',
-      gradient: 'from-pink-500/20 to-purple-600/20',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic3
     },
     {
@@ -96,7 +97,7 @@ const FeaturedSection = () => {
       title: 'Hornbill Music 4',
       description: 'Guitar solo moment under the spotlight.',
       category: 'Music',
-      gradient: 'from-pink-500/20 to-purple-600/20',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic4
     },
     {
@@ -104,7 +105,7 @@ const FeaturedSection = () => {
       title: 'Hornbill Music 5',
       description: 'Rhythm and beats that move the crowd.',
       category: 'Music',
-      gradient: 'from-pink-500/20 to-purple-600/20',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic5
     },
     {
@@ -112,7 +113,7 @@ const FeaturedSection = () => {
       title: 'Hornbill Music 6',
       description: 'Vocal performance that lifts the soul.',
       category: 'Music',
-      gradient: 'from-pink-500/20 to-purple-600/20',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic6
     },
     {
@@ -120,7 +121,7 @@ const FeaturedSection = () => {
       title: 'Hornbill Music 7',
       description: 'Bass lines driving the groove forward.',
       category: 'Music',
-      gradient: 'from-pink-500/20 to-purple-600/20',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic7
     },
     {
@@ -128,7 +129,7 @@ const FeaturedSection = () => {
       title: 'Hornbill Music 8',
       description: 'Encore moment with the crowd singing along.',
       category: 'Music',
-      gradient: 'from-pink-500/20 to-purple-600/20',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic8
     }
   ];
@@ -216,12 +217,12 @@ const FeaturedSection = () => {
                   navigate(card.link); // internal navigation
                 }
               }}
-              
             >
               <CardContent className="p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <card.icon className="text-4xl text-pink-400" size={48} />
-                  <ArrowRight className="text-gray-400 group-hover:text-pink-400 group-hover:translate-x-2 transition-all duration-300" size={24} />
+                  {/* icon tint -> festival-orange for visibility */}
+                  <card.icon className="text-4xl text-festival-orange" size={48} />
+                  <ArrowRight className="text-gray-400 group-hover:text-festival-orange group-hover:translate-x-2 transition-all duration-300" size={24} />
                 </div>
                 
                 <h3 className="font-righteous text-2xl mb-4 text-white">
@@ -269,7 +270,7 @@ const FeaturedSection = () => {
               <a href="https://youtu.be/8-1GZQ2w8kE?si=fJpAyHI2cRjLiF0L" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-festival">
                   <Camera className="mr-2" size={20} />
-                  Watch Official Music Video
+                  Watch Official Music Video
                 </Button>
               </a>
             </div>
@@ -310,15 +311,15 @@ const FeaturedSection = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => scrollGallery('left')}
-                className="p-2 bg-gray-800/50 border border-gray-700/50 rounded-full hover:bg-gray-700/50 hover:border-pink-500/50 transition-all duration-300"
+                className="p-2 bg-gray-800/50 border border-gray-700/50 rounded-full hover:bg-gray-700/50 hover:border-festival-orange/50 transition-all duration-300"
               >
-                <ChevronLeft className="text-gray-400 hover:text-pink-400" size={20} />
+                <ChevronLeft className="text-gray-400 hover:text-festival-orange" size={20} />
               </button>
               <button
                 onClick={() => scrollGallery('right')}
-                className="p-2 bg-gray-800/50 border border-gray-700/50 rounded-full hover:bg-gray-700/50 hover:border-pink-500/50 transition-all duration-300"
+                className="p-2 bg-gray-800/50 border border-gray-700/50 rounded-full hover:bg-gray-700/50 hover:border-festival-orange/50 transition-all duration-300"
               >
-                <ChevronRight className="text-gray-400 hover:text-pink-400" size={20} />
+                <ChevronRight className="text-gray-400 hover:text-festival-orange" size={20} />
               </button>
             </div>
           </div>
@@ -344,15 +345,14 @@ const FeaturedSection = () => {
                   onClick={() => openModal(index)}
                 >
                  {/* Background Image */}
-<img 
-  src={image.imageUrl} 
-  // alt={image.title}
-  className="absolute inset-0 w-full h-full object-cover"
-  loading="lazy"
-  decoding="async"
-/>
+                  <img 
+                    src={image.imageUrl} 
+                    // alt={image.title}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
 
-                  
                   {/* Dark overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   
@@ -361,22 +361,13 @@ const FeaturedSection = () => {
                       <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white border border-white/30">
                         {image.category}
                       </span>
-                      <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-pink-500/50 transition-all duration-300">
+                      <div className="w-8 h-8 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center group-hover:bg-festival-orange/50 transition-all duration-300">
                         <Eye className="text-white" size={16} />
                       </div>
                     </div>
-                  {/*                     
-                    <div>
-                      <h4 className="font-righteous text-lg md:text-xl text-white mb-2 group-hover:text-pink-200 transition-colors duration-300">
-                        {image.title}
-                      </h4>
-                      <p className="text-gray-200 text-sm opacity-90 line-clamp-2">
-                        {image.description}
-                      </p>
-                    </div> */}
                   </div>
                   
-                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-pink-400/50 rounded-2xl transition-all duration-300" />
+                  <div className="absolute inset-0 border-2 border-transparent group-hover:border-festival-orange/50 rounded-2xl transition-all duration-300" />
                 </div>
               ))}
             </div>
@@ -407,22 +398,20 @@ const FeaturedSection = () => {
         images={galleryImages}
         initialIndex={selectedImageIndex}
       />
-{/* Drum Tao Section */}
+{/* Drum Tao Section */} 
 <div className="mt-12 text-center">
   {/* Centered Heading */}
   <h3 className="font-righteous text-4xl md:text-5xl mb-3">
     <span className="festival-title">Drum Tao Comes to Hornbill!</span>
-   
-
   </h3>
-    <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-3">
-        Prepare to be mesmerized by <strong>DRUM TAO</strong> — the world-famous 
-        Japanese drumming ensemble known for their breathtaking blend of rhythm, 
-        movement, and martial artistry. 
-      </p>
+  <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-3">
+    Prepare to be mesmerized by <strong>DRUM TAO</strong> — the world-famous 
+    Japanese drumming ensemble known for their breathtaking blend of rhythm, 
+    movement, and martial artistry. 
+  </p>
 
  {/* BandMate Promo Video (from Vercel Blob) */}
-<div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
+ <div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
   <video
     src="https://nxpvonrxicnsjd5i.public.blob.vercel-storage.com/Drum%20Tao%20Promo%20Video%20-%20without%20Super.mp4"
     className="w-full h-full object-cover"
@@ -432,8 +421,7 @@ const FeaturedSection = () => {
   >
     Your browser does not support the video tag.
   </video>
-</div>
-
+ </div>
 </div>
 
     </section>

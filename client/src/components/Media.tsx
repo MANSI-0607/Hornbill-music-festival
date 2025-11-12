@@ -17,12 +17,12 @@ const Media: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
         {/* Center Heading */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-3">
-            <Youtube className="text-neon-pink" size={36} />
+            <Youtube className="text-festival-blue" size={36} />
           </div>
-          <h3 className="text-3xl md:text-4xl font-righteous text-neon-pink tracking-wide">
+          <h3 className="text-3xl md:text-4xl font-righteous text-festival-blue tracking-wide">
             Media
           </h3>
-          <div className="w-16 h-[2px] bg-pink-500 mx-auto mt-3 rounded-full" />
+          <div className="w-16 h-[2px] bg-festival-blue mx-auto mt-3 rounded-full" />
         </div>
 
         {/* YouTube Video */}
@@ -43,7 +43,7 @@ const Media: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
 
         {/* Articles Section */}
         <div className="max-w-5xl mx-auto space-y-4">
-          <h4 className="text-lg md:text-xl font-semibold text-gray-100 mb-4 text-center">
+          <h4 className="text-lg md:text-xl font-semibold text-festival-orange mb-4 text-center">
             Latest News & Articles
           </h4>
 
@@ -53,11 +53,11 @@ const Media: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
               href={a.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block rounded-xl p-5 border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 hover:border-pink-400/40"
+              className="group block rounded-xl p-5 border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 hover:border-festival-blue/40"
             >
               <div className="flex items-start gap-3">
                 <div className="flex-1">
-                  <p className="text-gray-100 font-medium leading-snug group-hover:text-pink-300 transition-colors duration-200">
+                  <p className="text-gray-100 font-medium leading-snug group-hover:text-festival-blue/40 transition-colors duration-200">
                     {a.title}
                   </p>
                   <p className="text-xs text-gray-400 mt-1">
@@ -66,7 +66,7 @@ const Media: React.FC<MediaPanelProps> = ({ youtubeId, articles }) => {
                 </div>
                 <ExternalLink
                   size={18}
-                  className="text-gray-400 group-hover:text-pink-400 transition-transform duration-300 group-hover:translate-x-1"
+                  className="text-gray-400 group-hover:text-festival-blue transition-transform duration-300 group-hover:translate-x-1"
                 />
               </div>
             </a>

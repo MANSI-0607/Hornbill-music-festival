@@ -82,16 +82,16 @@ const ComingSoon = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0a0f] via-[#05040a] to-[#100016] flex items-center justify-center p-6 md:p-10">
+    <div className="min-h-screen bg-gradient-to-br from-[#060616] via-[#020214] to-[#08102a] flex items-center justify-center p-6 md:p-10">
       <div className="max-w-3xl mx-auto text-center space-y-12">
         {/* Logo / Brand Section */}
         <div className="space-y-4">
           <div className="flex justify-center gap-2">
-            <div className="w-24 h-24 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center shadow-[0_0_30px_#ff2dd466]">
+            <div className="w-24 h-24 bg-gradient-to-br from-festival-blue to-festival-orange rounded-full flex items-center justify-center shadow-festival-glow">
               <Music className="w-12 h-12 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl md:text-6xl font-righteous bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent tracking-wide">
+          <h1 className="text-4xl md:text-6xl font-righteous bg-gradient-to-r from-festival-blue to-festival-orange bg-clip-text text-transparent tracking-wide">
             Coming Soon
           </h1>
           <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
@@ -103,7 +103,7 @@ const ComingSoon = () => {
         {/* Email Subscription */}
         <div className="max-w-md mx-auto">
           <div className="flex items-center justify-center gap-2 text-gray-400 mb-3">
-            <Mail className="w-5 h-5" />
+            <Mail className="w-5 h-5 text-festival-orange" />
             <span>Get notified when we launch</span>
           </div>
 
@@ -116,12 +116,12 @@ const ComingSoon = () => {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 rounded-full border-pink-500/40 bg-white/5 text-white placeholder:text-gray-400"
+              className="flex-1 rounded-full border-festival-orange/40 bg-white/5 text-white placeholder:text-gray-400"
               required
             />
             <Button
               type="submit"
-              className="px-6 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold transition-all duration-300"
+              className="px-6 rounded-full bg-festival-orange hover:bg-festival-orange-dark text-white font-semibold transition-all duration-300"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Notify Me"}
@@ -131,10 +131,10 @@ const ComingSoon = () => {
 
         {/* Single Centered Card */}
         <div className="max-w-md mx-auto">
-         
+          <Card>
             <CardContent className="p-8 text-center space-y-4">
               <div className="flex justify-center">
-                <Mail className="w-8 h-8 text-pink-400" />
+                <Mail className="w-8 h-8 text-festival-blue" />
               </div>
               <h3 className="font-semibold text-xl text-white">
                 Stay Connected
@@ -143,7 +143,7 @@ const ComingSoon = () => {
                 Get updates and exclusive news about Hornbill Festival 2025.
               </p>
             </CardContent>
-          
+          </Card>
         </div>
 
         {/* Footer */}
