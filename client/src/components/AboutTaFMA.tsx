@@ -84,7 +84,7 @@ const AboutTaFMA = () => {
           </Card>
           <Card className="bg-card/50 backdrop-blur-md border border-gray-700/50 text-center">
             <CardContent className="pt-6">
-              <Heart className="mx-auto text-festival-blue-light mb-4" size={32} />
+              <Heart className="mx-auto text-festival-blue mb-4" size={32} />
               <h4 className="text-2xl font-righteous text-white mb-2">Year-round</h4>
               <p className="text-muted-foreground text-sm">Community Programs</p>
             </CardContent>

@@ -250,7 +250,7 @@ const HeroSection: React.FC = () => {
             }`}
             style={{ animationDelay: statsVisible ? "0ms" : "0ms" }}
           >
-            <div className="text-3xl md:text-4xl font-bold text-festival-blue-light mb-1">
+            <div className="text-3xl md:text-4xl font-bold text-[#1e90ff] mb-1">
               25
             </div>
             <div className="text-gray-400 text-sm md:text-base">
