@@ -14,6 +14,7 @@ import hornbillMusic5 from '@/assets/music/hornbill (5).jpg';
 import hornbillMusic6 from '@/assets/music/hornbill (6).jpg';
 import hornbillMusic7 from '@/assets/music/hornbill (7).jpg';
 import hornbillMusic8 from '@/assets/music/hornbill (8).jpg';
+import hornbillMusic9 from '@/assets/music/hornbill (3).png';
 
 const FeaturedSection = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const FeaturedSection = () => {
       description: 'Live performance highlight from the Hornbill stage.',
       category: 'Music',
       gradient: 'from-festival-blue/20 to-festival-orange/20',
-      imageUrl: hornbillMusic1
+      imageUrl: hornbillMusic7
     },
     {
       id: 2,
@@ -82,7 +83,7 @@ const FeaturedSection = () => {
       description: 'Crowd and artist energy captured during the show.',
       category: 'Music',
       gradient: 'from-festival-blue/20 to-festival-orange/20',
-      imageUrl: hornbillMusic2
+      imageUrl: hornbillMusic9
     },
     {
       id: 3,
@@ -122,11 +123,19 @@ const FeaturedSection = () => {
       description: 'Bass lines driving the groove forward.',
       category: 'Music',
       gradient: 'from-festival-blue/20 to-festival-orange/20',
-      imageUrl: hornbillMusic7
+      imageUrl: hornbillMusic1
     },
     {
       id: 8,
       title: 'Hornbill Music 8',
+      description: 'Encore moment with the crowd singing along.',
+      category: 'Music',
+      gradient: 'from-festival-blue/20 to-festival-orange/20',
+      imageUrl: hornbillMusic2
+    },
+      {
+      id: 9,
+      title: 'Hornbill Music 9',
       description: 'Encore moment with the crowd singing along.',
       category: 'Music',
       gradient: 'from-festival-blue/20 to-festival-orange/20',
