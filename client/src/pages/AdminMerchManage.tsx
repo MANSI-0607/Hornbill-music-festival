@@ -320,7 +320,7 @@ export default function AdminMerchManage() {
                       </div>
                     )}
                   </div>
-                  <div>
+                  {/* <div>
                     <Label htmlFor="description">Description</Label>
                     <Textarea
                       id="description"
@@ -330,7 +330,7 @@ export default function AdminMerchManage() {
                       placeholder="Short description"
                       rows={3}
                     />
-                  </div>
+                  </div> */}
                   <div className="flex items-center gap-2">
                     <Switch
                       id="isActive"

@@ -39,36 +39,62 @@ export default function Merch() {
   if (loading) {
     return (
       <section className="min-h-screen bg-gradient-to-b from-[#05040a] to-[#0a0a0f] text-white py-16 px-4 md:px-10 flex items-center justify-center">
-        <Loader2 className="h-8 w-8 animate-spin text-pink-400" />
+        <Loader2 className="h-8 w-8 animate-spin text-festival-blue" />
       </section>
     );
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-b from-[#05040a] to-[#0a0a0f] text-white py-16 px-4 md:px-10">
-      <div className="max-w-7xl mx-auto">
-        {/* Page Title */}
-        <div className="text-center mb-12">
-          <h1 className="font-righteous text-4xl md:text-6xl mb-2 text-white">
-            Hornbill Music Festival Store
-          </h1>
-          <p className="text-gray-400 text-lg">
-            Official Hornbill 2025 merchandise — wear the vibe 🎶
-          </p>
+    <section className="min-h-screen bg-gradient-to-b from-[#05040a] to-[#0a0a0f] text-white">
+      {/* Banner Section */}
+      <div className="w-full overflow-hidden">
+        {/* Desktop Banner - 16:9 */}
+        <div className="hidden md:block w-full">
+          <img
+            src="/merchbanner.jpg"
+            alt="Merch Banner"
+            className="w-full h-auto object-cover"
+            loading="eager"
+          />
         </div>
+        
+        {/* Mobile Banner - 9:16 */}
+        <div className="md:hidden w-full">
+          <img
+            src="/mob_merch.jpeg"
+            alt="Merch Banner"
+            className="w-full h-auto object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
 
-        {/* Merch Grid */}
-        {merchItems.length === 0 ? (
-          <div className="text-center text-gray-400 py-12">
-            <p>No merchandise available at the moment. Check back soon!</p>
+      {/* Content Section */}
+      <div className="py-16 px-4 md:px-10">
+        <div className="max-w-7xl mx-auto">
+          {/* Page Title */}
+          <div className="text-center mb-12">
+            <h1 className="font-righteous text-4xl md:text-6xl mb-2 text-festival-blue">
+              Hornbill Music Festival Store
+            </h1>
+            <p className="text-gray-400 text-lg">
+              Official Hornbill 2025 merchandise — wear the vibe 🎶
+            </p>
           </div>
-        ) : (
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {merchItems.map((item) => (
-              <MerchCard key={item._id} item={item} />
-            ))}
-          </div>
-        )}
+
+          {/* Merch Grid */}
+          {merchItems.length === 0 ? (
+            <div className="text-center text-gray-400 py-12">
+              <p>No merchandise available at the moment. Check back soon!</p>
+            </div>
+          ) : (
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {merchItems.map((item) => (
+                <MerchCard key={item._id} item={item} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
@@ -88,7 +114,7 @@ function MerchCard({ item }: { item: MerchItem }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
-      className="bg-[#0d0d14]/70 border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:border-pink-500/40 hover:shadow-[0_0_30px_#ff2dd433] transition-all duration-500 flex flex-col"
+      className="bg-[#0d0d14]/70 border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:border-festival-orange/40 hover:shadow-[0_0_30px_rgba(240,93,41,0.2)] transition-all duration-500 flex flex-col"
     >
       {/* Image */}
       <div className="relative w-full aspect-[4/3] overflow-hidden bg-black">
@@ -110,13 +136,13 @@ function MerchCard({ item }: { item: MerchItem }) {
               <>
                 <button
                   onClick={prev}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 rounded-full p-2 backdrop-blur-md"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-festival-blue/70 rounded-full p-2 backdrop-blur-md transition-colors"
                 >
                   <ChevronLeft size={20} />
                 </button>
                 <button
                   onClick={next}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/70 rounded-full p-2 backdrop-blur-md"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-festival-blue/70 rounded-full p-2 backdrop-blur-md transition-colors"
                 >
                   <ChevronRight size={20} />
                 </button>
@@ -131,7 +157,7 @@ function MerchCard({ item }: { item: MerchItem }) {
       {/* Info */}
       <div className="flex flex-col flex-grow justify-between p-5">
         <div>
-          <h3 className="text-xl font-semibold mb-1 text-pink-400">
+          <h3 className="text-xl font-semibold mb-1 text-festival-orange">
             {item.name}
           </h3>
           {item.description && (
@@ -149,7 +175,7 @@ function MerchCard({ item }: { item: MerchItem }) {
             ₹{item.price.toFixed(2)}
           </span>
           <Button
-            className="flex items-center gap-2 bg-pink-500 hover:bg-pink-600 text-white rounded-full px-4 py-2"
+            className="flex items-center gap-2 bg-gradient-to-r from-festival-blue to-festival-orange hover:from-festival-blue-light hover:to-festival-orange text-white rounded-full px-4 py-2 transition-all duration-300"
             disabled={item.stock === 0}
           >
             <ShoppingBag size={16} />
