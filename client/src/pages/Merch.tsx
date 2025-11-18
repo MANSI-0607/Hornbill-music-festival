@@ -89,7 +89,7 @@ export default function Merch() {
             </div>
           ) : (
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {merchItems.map((item) => (
+{merchItems.slice().reverse().map((item) => (
                 <MerchCard key={item._id} item={item} />
               ))}
             </div>
@@ -163,11 +163,11 @@ function MerchCard({ item }: { item: MerchItem }) {
           {item.description && (
             <p className="text-gray-400 text-sm mb-2">{item.description}</p>
           )}
-          {item.stock > 0 ? (
+          {/* {item.stock > 0 ? (
             <p className="text-xs text-gray-500">In stock: {item.stock}</p>
           ) : (
             <p className="text-xs text-red-400">Out of stock</p>
-          )}
+          )} */}
         </div>
 
         <div className="mt-4 flex items-center justify-between">
