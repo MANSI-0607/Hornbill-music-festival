@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight, ShoppingBag, Loader2 } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ShoppingBag,
+  Loader2,
+  X,
+  Trash2,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type MerchItem = {
@@ -14,11 +21,20 @@ type MerchItem = {
   isActive: boolean;
 };
 
+type CartEntry = {
+  item: MerchItem;
+  qty: number;
+};
+
 const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
 
 export default function Merch() {
   const [merchItems, setMerchItems] = useState<MerchItem[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const [cart, setCart] = useState<CartEntry[]>([]);
+  const [cartOpen, setCartOpen] = useState(false);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   useEffect(() => {
     const fetchMerch = async () => {
@@ -35,6 +51,82 @@ export default function Merch() {
     };
     fetchMerch();
   }, []);
+
+  const addToCart = (product: MerchItem) => {
+    if (product.stock === 0) return;
+
+    setCart((prev) => {
+      const found = prev.find((c) => c.item._id === product._id);
+      if (found) {
+        return prev.map((c) =>
+          c.item._id === product._id ? { ...c, qty: c.qty + 1 } : c
+        );
+      }
+      return [...prev, { item: product, qty: 1 }];
+    });
+
+    setCartOpen(true);
+  };
+
+  const updateQty = (productId: string, delta: number) => {
+    setCart((prev) =>
+      prev
+        .map((c) =>
+          c.item._id === productId ? { ...c, qty: c.qty + delta } : c
+        )
+        .filter((c) => c.qty > 0)
+    );
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCart((prev) => prev.filter((c) => c.item._id !== productId));
+  };
+
+  const cartCount = cart.reduce((sum, c) => sum + c.qty, 0);
+  const cartTotal = cart.reduce(
+    (sum, c) => sum + c.qty * c.item.price,
+    0
+  );
+
+  const checkout = async () => {
+    if (cart.length === 0 || checkoutLoading) return;
+
+    try {
+      setCheckoutLoading(true);
+
+      const body = {
+        items: cart.map((c) => ({
+          productId: c.item._id,
+          quantity: c.qty,
+        })),
+      };
+
+      const res = await fetch(`${API_BASE_URL}/merch/cart/session`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        console.error("Cart session creation failed");
+        alert("Unable to start checkout. Please try again.");
+        return;
+      }
+
+      const data = await res.json();
+      if (!data.sessionId) {
+        alert("Checkout session missing. Please try again.");
+        return;
+      }
+
+      window.location.href = `https://ahibi.in/checkout?session=${data.sessionId}`;
+    } catch (err) {
+      console.error("Checkout error:", err);
+      alert("Checkout failed. Please try again.");
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -57,7 +149,7 @@ export default function Merch() {
             loading="eager"
           />
         </div>
-        
+
         {/* Mobile Banner - 9:16 */}
         <div className="md:hidden w-full">
           <img
@@ -89,24 +181,165 @@ export default function Merch() {
             </div>
           ) : (
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-{merchItems.slice().reverse().map((item) => (
-                <MerchCard key={item._id} item={item} />
-              ))}
+              {merchItems
+                .slice()
+                .reverse()
+                .map((item) => (
+                  <MerchCard
+                    key={item._id}
+                    item={item}
+                    onAddToCart={addToCart}
+                  />
+                ))}
             </div>
           )}
         </div>
       </div>
+
+      {/* Floating Cart Button */}
+      {cartCount > 0 && (
+        <button
+          onClick={() => setCartOpen(true)}
+          className="fixed bottom-6 right-6 z-40 bg-festival-blue text-white px-5 py-3 rounded-full shadow-xl font-semibold flex items-center gap-2"
+        >
+          <ShoppingBag size={18} />
+          <span>Cart ({cartCount})</span>
+        </button>
+      )}
+
+      {/* Cart Drawer */}
+      <AnimatePresence>
+        {cartOpen && (
+          <motion.div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-end"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ x: 400 }}
+              animate={{ x: 0 }}
+              exit={{ x: 400 }}
+              transition={{ type: "spring", stiffness: 260, damping: 25 }}
+              className="w-80 sm:w-96 bg-[#0d0d14] h-full p-6 flex flex-col border-l border-white/10"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold">🛒 Your Cart</h2>
+                <button
+                  onClick={() => setCartOpen(false)}
+                  className="text-gray-400 hover:text-white"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-4 flex-grow overflow-y-auto">
+                {cart.length === 0 ? (
+                  <p className="text-gray-500 text-sm">
+                    Your cart is empty. Add some Hornbill drip ✨
+                  </p>
+                ) : (
+                  cart.map((c) => (
+                    <div
+                      key={c.item._id}
+                      className="flex items-center justify-between gap-2 border-b border-white/10 pb-3"
+                    >
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold">
+                          {c.item.name}
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          ₹{c.item.price.toFixed(2)} × {c.qty}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => updateQty(c.item._id, -1)}
+                          className="w-7 h-7 rounded-full border border-white/20 flex items-center justify-center text-sm"
+                        >
+                          -
+                        </button>
+                        <span className="w-5 text-center text-sm">
+                          {c.qty}
+                        </span>
+                        <button
+                          onClick={() => updateQty(c.item._id, 1)}
+                          className="w-7 h-7 rounded-full border border-white/20 flex items-center justify-center text-sm"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <button
+                        onClick={() => removeFromCart(c.item._id)}
+                        className="text-xs text-red-400 hover:text-red-300"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {/* Cart Summary + Checkout */}
+              <div className="pt-4 border-t border-white/10 mt-4">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-sm text-gray-400">Total</span>
+                  <span className="text-lg font-semibold">
+                    ₹{cartTotal.toFixed(2)}
+                  </span>
+                </div>
+
+                <Button
+                  disabled={cart.length === 0 || checkoutLoading}
+                  onClick={checkout}
+                  className="w-full bg-gradient-to-r from-festival-blue to-festival-orange hover:from-festival-blue-light hover:to-festival-orange text-white rounded-xl py-3 font-semibold flex items-center justify-center gap-2"
+                >
+                  {checkoutLoading ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Processing…
+                    </>
+                  ) : (
+                    <>
+                      Checkout
+                      <span className="text-xs">↗</span>
+                    </>
+                  )}
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
 
 /* ------------------ MerchCard Component ------------------ */
-function MerchCard({ item }: { item: MerchItem }) {
+function MerchCard({
+  item,
+  onAddToCart,
+}: {
+  item: MerchItem;
+  onAddToCart: (item: MerchItem) => void;
+}) {
   const [index, setIndex] = useState(0);
-  const imgs = (item.images && item.images.length ? item.images : (item.imageUrl ? [item.imageUrl] : []));
+  const imgs =
+    item.images && item.images.length
+      ? item.images
+      : item.imageUrl
+      ? [item.imageUrl]
+      : [];
 
-  const next = () => setIndex((prev) => (prev + 1) % imgs.length);
-  const prev = () => setIndex((prev) => (prev - 1 + imgs.length) % imgs.length);
+  const next = () => {
+    if (imgs.length === 0) return;
+    setIndex((prev) => (prev + 1) % imgs.length);
+  };
+
+  const prev = () => {
+    if (imgs.length === 0) return;
+    setIndex((prev) => (prev - 1 + imgs.length) % imgs.length);
+  };
 
   return (
     <motion.div
@@ -150,7 +383,9 @@ function MerchCard({ item }: { item: MerchItem }) {
             )}
           </>
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-gray-500">No Image</div>
+          <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+            No Image
+          </div>
         )}
       </div>
 
@@ -161,13 +396,10 @@ function MerchCard({ item }: { item: MerchItem }) {
             {item.name}
           </h3>
           {item.description && (
-            <p className="text-gray-400 text-sm mb-2">{item.description}</p>
+            <p className="text-gray-400 text-sm mb-2">
+              {item.description}
+            </p>
           )}
-          {/* {item.stock > 0 ? (
-            <p className="text-xs text-gray-500">In stock: {item.stock}</p>
-          ) : (
-            <p className="text-xs text-red-400">Out of stock</p>
-          )} */}
         </div>
 
         <div className="mt-4 flex items-center justify-between">
@@ -177,9 +409,10 @@ function MerchCard({ item }: { item: MerchItem }) {
           <Button
             className="flex items-center gap-2 bg-gradient-to-r from-festival-blue to-festival-orange hover:from-festival-blue-light hover:to-festival-orange text-white rounded-full px-4 py-2 transition-all duration-300"
             disabled={item.stock === 0}
+            onClick={() => onAddToCart(item)}
           >
             <ShoppingBag size={16} />
-            {item.stock === 0 ? "Sold Out" : "Buy Now"}
+            {item.stock === 0 ? "Sold Out" : "Add to Cart"}
           </Button>
         </div>
       </div>

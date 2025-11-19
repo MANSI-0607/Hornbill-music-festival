@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink, Ticket } from 'lucide-react';
+import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink, Ticket, ShoppingBag } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Link, useNavigate } from 'react-router-dom';
 import GalleryModal from './GalleryModal';
@@ -46,16 +46,17 @@ const FeaturedSection = () => {
       border: 'border-festival-orange/30',
       link: 'https://www.ahibi.in/events'
     },
-    {
-      title: 'Hornbill Music Festival',
-      description: 'Explore event highlights, stages, and experiences waiting for you this December.',
-      cta: 'Explore Festival →',
-      variant: 'stage',
-      icon: Users,
-      gradient: 'from-festival-orange/20 to-festival-blue/20',
-      border: 'border-festival-blue/30',
-      link: '/hornbill-music-festival'
-    },
+  {
+  title: 'Hornbill Exclusive Merch',
+  description: 'Shop official Hornbill apparel and collectibles.',
+  cta: 'Shop Now →',
+  variant: 'merch',
+  icon: ShoppingBag, // hype-style icon
+  gradient: 'from-red-500/20 to-festival-blue/20',
+  border: 'border-red-400/30',
+  link: '/merch'
+},
+
     {
       title: 'Live Schedule',
       description: 'Check out the complete festival lineup and plan your experience',

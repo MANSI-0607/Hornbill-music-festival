@@ -10,6 +10,7 @@ import adminRoutes from './routes/adminRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import merchRoutes from './routes/merchRoutes.js';
 
+
 dotenv.config();
 connectDB();
 

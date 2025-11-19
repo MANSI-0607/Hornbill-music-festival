@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { listMerch, createMerch, updateMerch, deleteMerch, requireAdmin } from '../controllers/merchController.js';
+import { listMerch, createMerch, updateMerch, deleteMerch, requireAdmin, createCartSession } from '../controllers/merchController.js';
 import { uploadMerch } from '../middleware/upload.js';
 
 const router = Router();
@@ -28,5 +28,8 @@ router.post('/upload-image', requireAdmin, uploadMerch.single('image'), (req, re
 router.post('/', requireAdmin, createMerch);
 router.put('/:id', requireAdmin, updateMerch);
 router.delete('/:id', requireAdmin, deleteMerch);
+
+router.post("/cart/session", createCartSession);
+ 
 
 export default router;

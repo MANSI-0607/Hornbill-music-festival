@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image, Users,Youtube } from 'lucide-react';
+import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image, Users,Youtube, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 //import logo from '@/assets/logo/hmf-logo.png';
@@ -14,6 +14,7 @@ export function Navigation() {
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon: Youtube, shortName: 'Media' },
+    { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
@@ -24,6 +25,7 @@ export function Navigation() {
     { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon:Youtube, shortName: 'Media' },
+    { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
