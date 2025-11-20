@@ -6,9 +6,9 @@ import morgan from "morgan";
 import connectDB from './config/db.js';
 import routes from './routes/auditionRoute.js';
 import adminRoutes from './routes/adminRoutes.js';
-
 import notificationRoutes from './routes/notificationRoutes.js';
 import merchRoutes from './routes/merchRoutes.js';
+import heroRoutes from './routes/heroRoutes.js';
 
 
 dotenv.config();
@@ -42,6 +42,7 @@ app.use('/api', routes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/merch', merchRoutes);
+app.use('/api/hero', heroRoutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Hornbill Music Festival API running 2" });

@@ -20,6 +20,8 @@ export default function AdminDashboard() {
 
   const goToMerch = () => navigate("/admin/merch");
 
+  const goToHero = () => navigate("/admin/hero");
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
       <div className="container mx-auto px-4 py-8">
@@ -44,6 +46,18 @@ export default function AdminDashboard() {
             <CardContent className="flex items-center justify-between">
               <div className="text-muted-foreground">Add, edit, or remove items shown on the public Merch page.</div>
               <Button onClick={goToMerch}>
+                <PackageOpen className="mr-2 h-4 w-4" /> Open
+              </Button>
+            </CardContent>
+          </Card>
+             <Card>
+            <CardHeader>
+              <CardTitle>Manage Hero Banners</CardTitle>
+              <CardDescription>Add and Edit Hero section banner images</CardDescription>
+            </CardHeader>
+            <CardContent className="flex items-center justify-between">
+              <div className="text-muted-foreground">Add, edit, or remove images in the Hero section of the home page.</div>
+              <Button onClick={goToHero}>
                 <PackageOpen className="mr-2 h-4 w-4" /> Open
               </Button>
             </CardContent>

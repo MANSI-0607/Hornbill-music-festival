@@ -21,6 +21,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Media from "./components/Media";
 import Merch from "./pages/Merch";
 import AdminMerchManage from "./pages/AdminMerchManage";
+import AdminHero from "./pages/AdminHero";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -64,7 +65,16 @@ const App = () => (
         <AdminMerchManage />
       </ProtectedRoute>
     }
+    
   />
+   <Route 
+    path="/admin/hero" 
+    element={
+      <ProtectedRoute>
+        <AdminHero />
+      </ProtectedRoute>
+    }/>
+    
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

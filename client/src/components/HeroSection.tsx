@@ -1,8 +1,8 @@
-
-
 // export default HeroSection;
 import React, { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+
+import { toast } from "sonner";
 
 const HeroSection: React.FC = () => {
   const { elementRef: statsRef, isVisible: statsVisible } =
@@ -10,31 +10,67 @@ const HeroSection: React.FC = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Hero images array - add more images here
-  const heroImages = [
-    {
-      desktop: "/hero.jpg",
-      mobile: "https://res.cloudinary.com/dwznqrjgg/image/upload/v1762779683/HMF_25_Reel_on2m1n.jpg",
-      alt: "Hornbill Music Festival 2025"
-    },
-   
-    {
-      desktop: "/new.png",
-      mobile: "/new2.png",
-      alt: "Image description"
-    },
-  ];
+  const [heroImages, setHeroImages] = useState<Array<{
+    _id: string;
+    desktop: string;
+    mobile: string;
+    alt: string;
+  }>>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
+ useEffect(() => {
+  const load = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(`${API_BASE_URL}/hero`);
+      const data = await res.json();
+      setHeroImages(data);
+    } catch (e) {
+      toast.error('Failed to load hero images');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  load();
+}, []);
+
 
   // Auto-advance carousel every 5 seconds
   useEffect(() => {
-    if (heroImages.length <= 1) return; // Don't auto-advance if only 1 image
+    if (heroImages.length <= 1 || loading) return; // Don't auto-advance if only 1 image or still loading
     
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroImages.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [heroImages.length]);
+  }, [heroImages.length, loading]);
+
+  // Show loading state
+  // if (loading) {
+  //   return (
+  //     <section className="w-full bg-black min-h-[60vh] flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+  //         <p className="mt-4 text-white">Loading hero images...</p>
+  //       </div>
+  //     </section>
+  //   );
+  // }
+
+  // // Show error state
+  // if (error || heroImages.length === 0) {
+  //   return (
+  //     <section className="w-full bg-black min-h-[60vh] flex items-center justify-center">
+  //       <div className="text-center">
+  //         <p className="text-red-500">Failed to load hero images</p>
+  //         <p className="text-gray-400 mt-2">Please try again later</p>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   return (
     <section className="w-full bg-black">
@@ -95,7 +131,7 @@ const HeroSection: React.FC = () => {
         )}
       </div>
 
-      {/* STATS SECTION */}
+        {/* STATS SECTION */}
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div
           ref={statsRef}
