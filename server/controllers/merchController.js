@@ -92,3 +92,39 @@ export const createCartSession = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getCartSession = async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    if (!sessionId) {
+      return res.status(400).json({ message: "Session ID is required" });
+    }
+
+    // Find the session
+    const session = await CartSession.findOne({ sessionId });
+    if (!session) {
+      return res.status(404).json({ message: "Invalid or expired session" });
+    }
+
+    // Populate merch data
+    const detailedItems = await Promise.all(
+      session.items.map(async (item) => {
+        const product = await MerchItem.findById(item.productId);
+        if (!product) return null;
+
+        return {
+          productId: product._id,
+          name: product.name,
+          price: product.price,
+          quantity: item.quantity,
+          image: product.images?.[0] || product.imageUrl || null,
+        };
+      })
+    );
+
+    return res.status(200).json(detailedItems.filter(Boolean));
+  } catch (err) {
+    console.error("Failed to fetch cart session:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
