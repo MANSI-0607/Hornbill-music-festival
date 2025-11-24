@@ -28,6 +28,8 @@ type CartEntry = {
 };
 
 const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
+const AHIBI_BASE_URL = import.meta.env.VITE_AHIBI_CLIENT_BASE_URL || "";
+
 
 export default function Merch() {
 
@@ -41,6 +43,7 @@ export default function Merch() {
   useEffect(() => {
     const fetchMerch = async () => {
       try {
+         
         const res = await fetch(`${API_BASE_URL}/merch`);
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
@@ -121,7 +124,7 @@ export default function Merch() {
         return;
       }
 
-      window.location.href = `https://ahibi.in/HornbillFestival2025/merch?session=${data.sessionId}`;
+      window.location.href = `${AHIBI_BASE_URL}/HornbillFestival2025/merch?session=${data.sessionId}`;
     } catch (err) {
       console.error("Checkout error:", err);
       alert("Checkout failed. Please try again.");
@@ -151,7 +154,7 @@ export default function Merch() {
             loading="eager"
           />
         </div>
-
+       
         {/* Mobile Banner - 9:16 */}
         <div className="md:hidden w-full">
           <img

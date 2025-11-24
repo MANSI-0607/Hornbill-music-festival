@@ -122,7 +122,16 @@ export const getCartSession = async (req, res) => {
       })
     );
 
-    return res.status(200).json(detailedItems.filter(Boolean));
+   return res.status(200).json({
+  success: true,
+  data: {
+    sessionId,
+    items: detailedItems.filter(Boolean),
+    currency: "INR",
+    notes: "",
+  }
+});
+
   } catch (err) {
     console.error("Failed to fetch cart session:", err);
     return res.status(500).json({ message: "Internal server error" });
