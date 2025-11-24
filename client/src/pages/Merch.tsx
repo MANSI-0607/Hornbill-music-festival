@@ -121,7 +121,7 @@ export default function Merch() {
         return;
       }
 
-      window.location.href = `https://ahibi.in/checkout?session=${data.sessionId}`;
+      window.location.href = `https://ahibi.in/HornbillFestival2025/merch?session=${data.sessionId}`;
     } catch (err) {
       console.error("Checkout error:", err);
       alert("Checkout failed. Please try again.");
