@@ -13,7 +13,7 @@ router.post("/login", (req, res) => {
     const token = jwt.sign(
       { email: process.env.ADMIN_EMAIL },
       process.env.JWT_SECRET,
-      { expiresIn: "2h" } // token valid for 2 hours
+      { expiresIn: "24h" } // token valid for 24 hours
     );
 
     return res.json({ token });
