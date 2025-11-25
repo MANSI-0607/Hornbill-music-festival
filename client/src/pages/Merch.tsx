@@ -329,6 +329,7 @@ function MerchCard({
   onAddToCart: (item: MerchItem) => void;
 }) {
   const [index, setIndex] = useState(0);
+
   const imgs =
     item.images && item.images.length
       ? item.images
@@ -346,6 +347,13 @@ function MerchCard({
     setIndex((prev) => (prev - 1 + imgs.length) % imgs.length);
   };
 
+  // Detect swipe direction
+  const handleSwipe = (offsetX: number) => {
+    if (Math.abs(offsetX) < 50) return; // ignore small drags
+    if (offsetX < 0) next(); // swipe left → next image
+    else prev();            // swipe right → previous image
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -354,56 +362,53 @@ function MerchCard({
       transition={{ duration: 0.6 }}
       className="bg-[#0d0d14]/70 border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:border-festival-orange/40 hover:shadow-[0_0_30px_rgba(240,93,41,0.2)] transition-all duration-500 flex flex-col"
     >
-      {/* Image */}
+
+      {/* Image Carousel */}
       <div className="relative w-full aspect-[4/3] overflow-hidden bg-black">
-        {imgs.length > 0 ? (
+
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={index}
+            src={imgs[index]}
+            alt={item.name}
+            className="absolute inset-0 w-full h-full object-contain"
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            transition={{ duration: 0.35 }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={(e, info) => handleSwipe(info.offset.x)}
+          />
+        </AnimatePresence>
+
+        {/* Arrows (only if > 1 image) */}
+        {imgs.length > 1 && (
           <>
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={index}
-                src={imgs[index]}
-                alt={item.name}
-                initial={{ opacity: 0, scale: 1.02 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.35 }}
-                className="absolute inset-0 w-full h-full object-contain"
-              />
-            </AnimatePresence>
-            {imgs.length > 1 && (
-              <>
-                <button
-                  onClick={prev}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-festival-blue/70 rounded-full p-2 backdrop-blur-md transition-colors"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={next}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-festival-blue/70 rounded-full p-2 backdrop-blur-md transition-colors"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </>
-            )}
+            <button
+              onClick={prev}
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-festival-blue/70 rounded-full p-2"
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button
+              onClick={next}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-festival-blue/70 rounded-full p-2"
+            >
+              <ChevronRight size={20} />
+            </button>
           </>
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-gray-500">
-            No Image
-          </div>
         )}
       </div>
 
-      {/* Info */}
+      {/* Info Section */}
       <div className="flex flex-col flex-grow justify-between p-5">
         <div>
           <h3 className="text-xl font-semibold mb-1 text-festival-orange">
             {item.name}
           </h3>
           {item.description && (
-            <p className="text-gray-400 text-sm mb-2">
-              {item.description}
-            </p>
+            <p className="text-gray-400 text-sm mb-2">{item.description}</p>
           )}
         </div>
 
@@ -412,7 +417,7 @@ function MerchCard({
             ₹{item.price.toFixed(2)}
           </span>
           <Button
-            className="flex items-center gap-2 bg-gradient-to-r from-festival-blue to-festival-orange hover:from-festival-blue-light hover:to-festival-orange text-white rounded-full px-4 py-2 transition-all duration-300"
+            className="flex items-center gap-2 bg-gradient-to-r from-festival-blue to-festival-orange text-white rounded-full px-4 py-2"
             disabled={item.stock === 0}
             onClick={() => onAddToCart(item)}
           >
@@ -422,5 +427,5 @@ function MerchCard({
         </div>
       </div>
     </motion.div>
- );
+  );
 }
