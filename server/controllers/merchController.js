@@ -99,12 +99,17 @@ export const getCartSession = async (req, res) => {
     if (!sessionId) {
       return res.status(400).json({ message: "Session ID is required" });
     }
-
+    
+  // Log the query being executed
+    console.log('Querying MongoDB for session...');
     // Find the session
     const session = await CartSession.findOne({ sessionId });
     if (!session) {
       return res.status(404).json({ message: "Invalid or expired session" });
     }
+  
+
+    console.log('Session found:', session ? 'Yes' : 'No');
 
     // Populate merch data
     const detailedItems = await Promise.all(
