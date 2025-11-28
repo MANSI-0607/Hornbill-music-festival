@@ -200,6 +200,7 @@ export default function Merch() {
           )}
         </div>
       </div>
+      <div className="text-center text-gray-400 py-2">For any queries regarding merch contact at: +91 87946 96995</div>
 
       {/* Floating Cart Button */}
       {cartCount > 0 && (
