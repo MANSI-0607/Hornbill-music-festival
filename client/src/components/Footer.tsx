@@ -64,7 +64,7 @@ const Footer = () => {
                 music celebration.
               </p>
               <a
-                href="https://ahibi.in"
+                href="https://ahibi.in/HornbillFestival2025/music-festival"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-festival-blue hover:text-festival-orange transition-colors text-sm font-medium"

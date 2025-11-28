@@ -37,14 +37,14 @@ const FeaturedSection = () => {
   const featuredCards = [
     {
       title: 'Book Tickets',
-      description: 'Tickets will be available soon at Ahibi.in',
-      cta: 'Coming Soon',
+      description: 'Tickets are live at at Ahibi.in',
+      cta: 'Book Now',
       variant: 'festival',
       icon: Ticket,
       // changed pink → festival-blue / festival-orange
       gradient: 'from-festival-blue/20 to-festival-orange/20',
       border: 'border-festival-orange/30',
-      link: 'https://www.ahibi.in/events'
+      link: 'https://ahibi.in/HornbillFestival2025/music-festival'
     },
   {
   title: 'Hornbill Exclusive Merch',

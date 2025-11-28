@@ -91,9 +91,9 @@ export function Navigation() {
                 );
               })}
               
-              <a href="https://ahibi.in/events" target="_blank" rel="noopener noreferrer">
+              <a href="https://ahibi.in/HornbillFestival2025/music-festival" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-festival ml-4">
-                  Tickets Coming Soon
+                  Book Tickets
                 </Button>
               </a>
              
@@ -155,12 +155,12 @@ export function Navigation() {
               
               {/* Call to action button */}
                
-                <a href="https://ahibi.in/events" target="_blank" rel="noopener noreferrer">
+                <a href="https://ahibi.in/HornbillFestival2025/music-festival" target="_blank" rel="noopener noreferrer">
                  <Button 
                    className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
                    onClick={() => setIsOpen(false)}
                  >
-                   Tickets Coming Soon at Ahibi.in
+                   Book Tickets
                  </Button>
                 </a>
               
