@@ -7,6 +7,7 @@ import {
   Loader2,
   X,
   Trash2,
+  Phone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ComingSoon from "@/components/ComingSoon";
@@ -200,7 +201,12 @@ export default function Merch() {
           )}
         </div>
       </div>
-      <div className="text-center text-gray-400 py-2">For any queries regarding merch contact at: +91 87946 96995</div>
+
+
+<div className="text-center flex items-center justify-center gap-2 py-4 text-festival-orange font-semibold text-lg">
+  <Phone size={18} />
+  For any queries regarding merch contact at: +91 87946 96995
+</div>
 
       {/* Floating Cart Button */}
       {cartCount > 0 && (
