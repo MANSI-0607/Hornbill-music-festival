@@ -16,8 +16,9 @@ export const requireAdmin = (req, res, next) => {
 
 export const listMerch = async (req, res) => {
   try {
-    const items = await MerchItem.find({ isActive: true }).sort({ createdAt: -1 });
-    // Ensure consumers always have an images array
+    const items = await MerchItem.find({ isActive: true });
+
+    // Normalize images
     const normalized = items.map((i) => {
       const doc = i.toObject();
       if ((!doc.images || doc.images.length === 0) && doc.imageUrl) {
@@ -25,11 +26,16 @@ export const listMerch = async (req, res) => {
       }
       return doc;
     });
-    res.json(normalized);
+
+    // Reverse order before sending
+    const reversed = normalized.reverse();
+
+    res.json(reversed);
   } catch (err) {
-    res.status(500).json({ message: 'Failed to fetch merchandise' });
+    res.status(500).json({ message: "Failed to fetch merchandise" });
   }
 };
+
 
 export const createMerch = async (req, res) => {
   try {
