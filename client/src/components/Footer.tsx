@@ -173,12 +173,12 @@ const Footer = () => {
             >
               Media
             </Link>
-            {/* <Link
-              to="/artists"
+            <Link
+              to="/merch"
               className="block text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
-              Artists
-            </Link> */}
+              Merch
+            </Link>
             <Link
               to="/about"
               className="block text-muted-foreground hover:text-foreground transition-colors text-sm"

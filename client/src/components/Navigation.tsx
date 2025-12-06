@@ -15,7 +15,7 @@ export function Navigation() {
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon: Youtube, shortName: 'Media' },
     { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
-    // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
+    { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
   ];
@@ -26,7 +26,7 @@ export function Navigation() {
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon:Youtube, shortName: 'Media' },
     { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
-    // { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
+    { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
   ];

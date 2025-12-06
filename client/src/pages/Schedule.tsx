@@ -1,28 +1,66 @@
-import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import ComingSoon from "@/components/ComingSoon";
-
-/* Example 10-day schedule data — replace names/events with real ones */
-const festivalSchedule = Array.from({ length: 10 }).map((_, idx) => {
-  const day = idx + 1;
-  return {
-    id: day,
-    label: `Dec ${day}`,
-    fullLabel: `December ${day}`,
-    events: [
-      { time: "4:00 PM", artist: `Opening Act ${day}` },
-      { time: "6:00 PM", artist: `Stage Headliner ${day}` },
-      { time: "9:30 PM", artist: `Late Night DJ ${day}` },
-    ],
-  };
-});
+import { motion } from "framer-motion";
 
 export default function ScheduleTabs() {
-  return(
-    <div>
-      <ComingSoon/>
+  return (
+    <div className="min-h-screen px-6 py-12 bg-black text-white font-righteous flex flex-col items-center">
+
+      {/* Heading Section */}
+      <div className="flex flex-col items-center mb-10">
+        <motion.h1
+          initial={{ opacity: 0, y: -18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center font-righteous text-4xl md:text-6xl bg-gradient-to-r from-festival-blue to-festival-orange bg-clip-text text-transparent drop-shadow-lg"
+        >
+          Festival Schedule
+        </motion.h1>
+
+        {/* Glow underline */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+          className="w-48 h-1 rounded-full mt-3 bg-gradient-to-r from-festival-blue to-festival-orange shadow-lg"
+        />
+      </div>
+
+      {/* Images Container */}
+      <div className="flex flex-col items-center gap-12 w-full">
+
+        {/* Image 1 */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-4xl"
+        >
+          <img
+            src="/s2.jpeg"
+            alt="Hornbill Schedule Page 1"
+            className="w-full h-auto rounded-2xl shadow-xl hover:shadow-festival-blue/40 hover:scale-[1.01] transition-all duration-300"
+          />
+        </motion.div>
+
+        {/* Image 2 */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="w-full max-w-4xl"
+        >
+          <img
+            src="/s1.jpeg"
+            alt="Hornbill Schedule Page 2"
+            className="w-full h-auto rounded-2xl shadow-xl hover:shadow-festival-orange/40 hover:scale-[1.01] transition-all duration-300"
+          />
+        </motion.div>
+
+      </div>
     </div>
-  )
+  );
+}
+
+
 //   const [active, setActive] = useState(0);
 //   const tabsRef = useRef<HTMLDivElement | null>(null);
 
@@ -176,6 +214,6 @@ export default function ScheduleTabs() {
 //       </div>
 //     </div>
 //   );
-}
+//}
 
 
