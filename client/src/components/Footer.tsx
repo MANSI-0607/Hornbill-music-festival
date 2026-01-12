@@ -54,23 +54,15 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* Book Tickets */}
+            {/* Thank You Message */}
             <div className="bg-gradient-to-r from-festival-blue/10 to-festival-orange/10 p-4 rounded-lg border border-festival-blue/20">
               <h4 className="font-semibold mb-2">
-                Ready to Experience the Festival?
+                See you next year!
               </h4>
               <p className="text-sm text-muted-foreground mb-3">
-                Book your tickets now and secure your spot at Nagaland's premier
-                music celebration.
+                Hornbill Music Festival 2025 was unforgettable thanks to you. 
+                See you next year for more incredible music and culture!
               </p>
-              <a
-                href="https://ahibi.in/HornbillFestival2025/music-festival"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-festival-blue hover:text-festival-orange transition-colors text-sm font-medium"
-              >
-                Book Tickets <ExternalLink className="h-4 w-4" />
-              </a>
             </div>
           </div>
 

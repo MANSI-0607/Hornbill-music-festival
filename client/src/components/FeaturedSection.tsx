@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink, Ticket, ShoppingBag } from 'lucide-react';
+import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Link, useNavigate } from 'react-router-dom';
 import GalleryModal from './GalleryModal';
@@ -36,30 +36,18 @@ const FeaturedSection = () => {
 
   const featuredCards = [
     {
-      title: 'Book Tickets',
-      description: 'Tickets are live at at Ahibi.in',
-      cta: 'Book Now',
+      title: 'Thank You!',
+      description: 'Thank you for making Hornbill Music Festival 2025 unforgettable. See you next year!',
+      cta: 'See You in 2026',
       variant: 'festival',
-      icon: Ticket,
-      // changed pink → festival-blue / festival-orange
+      icon: Music,
       gradient: 'from-festival-blue/20 to-festival-orange/20',
       border: 'border-festival-orange/30',
-      link: 'https://ahibi.in/HornbillFestival2025/music-festival'
+      link: '/'
     },
-  {
-  title: 'Hornbill Exclusive Merch',
-  description: 'Shop official Hornbill apparel and collectibles.',
-  cta: 'Shop Now →',
-  variant: 'merch',
-  icon: ShoppingBag, // hype-style icon
-  gradient: 'from-red-500/20 to-festival-blue/20',
-  border: 'border-red-400/30',
-  link: '/merch'
-},
-
     {
-      title: 'Live Schedule',
-      description: 'Check out the complete festival lineup and plan your experience',
+      title: 'Festival Highlights',
+      description: 'Relive the magic and check out the complete festival lineup',
       cta: 'View Schedule',
       variant: 'tribal',
       icon: Camera,
@@ -409,8 +397,8 @@ const FeaturedSection = () => {
         initialIndex={selectedImageIndex}
       />
 {/* Drum Tao Section */} 
-<div className="mt-12 text-center">
-  {/* Centered Heading */}
+{/* <div className="mt-12 text-center">
+
   <h3 className="font-righteous text-4xl md:text-5xl mb-3">
     <span className="festival-title">Drum Tao Comes to Hornbill!</span>
   </h3>
@@ -418,10 +406,10 @@ const FeaturedSection = () => {
     Prepare to be mesmerized by <strong>DRUM TAO</strong> — the world-famous 
     Japanese drumming ensemble known for their breathtaking blend of rhythm, 
     movement, and martial artistry. 
-  </p>
+  </p> */}
 
  {/* BandMate Promo Video (from Vercel Blob) */}
- <div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
+ {/* <div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
   <video
     src="https://nxpvonrxicnsjd5i.public.blob.vercel-storage.com/Drum%20Tao%20Promo%20Video%20-%20without%20Super.mp4"
     className="w-full h-full object-cover"
@@ -432,7 +420,7 @@ const FeaturedSection = () => {
     Your browser does not support the video tag.
   </video>
  </div>
-</div>
+</div> */}
 
     </section>
     
