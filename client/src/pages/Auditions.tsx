@@ -177,12 +177,7 @@ export default function Auditions() {
             loading="eager"
           />
         </div>
-        {isSubmissionOpen && (
-          <span className="absolute top-3 right-3 sm:top-4 sm:right-4 inline-flex items-center gap-1.5 bg-green-600 text-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-bold shadow-lg animate-pulse">
-            <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-white inline-block" />
-            Live — Auditions 2026
-          </span>
-        )}
+        
       </section>
 
       {/* ── Registration Form ── */}
