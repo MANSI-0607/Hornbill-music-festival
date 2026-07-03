@@ -30,6 +30,12 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   ArrowLeft,
   Trash2,
   Download,
@@ -39,6 +45,15 @@ import {
   Image as ImageIcon,
   CheckSquare,
   Square,
+  Eye,
+  Music2,
+  User,
+  MapPin,
+  Phone,
+  Mail,
+  Link as LinkIcon,
+  CalendarDays,
+  Video,
 } from "lucide-react";
 
 const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
@@ -75,14 +90,14 @@ export default function AdminAuditions() {
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const [bulkDeleteOpen, setBulkDeleteOpen] = useState(false);
-  const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [viewTarget, setViewTarget] = useState<Audition | null>(null);
 
   const token = localStorage.getItem("adminToken");
 
   const fetchAuditions = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/admin/auditions`, {
+      const res = await fetch(`${API_BASE_URL}/admin/auditions`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.status === 401) { navigate("/admin/login"); return; }
@@ -139,7 +154,7 @@ export default function AdminAuditions() {
   };
 
   const deleteOne = async (id: string) => {
-    await fetch(`${API_BASE_URL}/api/admin/auditions/${id}`, {
+    await fetch(`${API_BASE_URL}/admin/auditions/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -150,7 +165,7 @@ export default function AdminAuditions() {
 
   const deleteBulk = async () => {
     const ids = Array.from(selected);
-    await fetch(`${API_BASE_URL}/api/admin/auditions`, {
+    await fetch(`${API_BASE_URL}/admin/auditions`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -164,7 +179,7 @@ export default function AdminAuditions() {
   };
 
   const updateStatus = async (id: string, status: string) => {
-    await fetch(`${API_BASE_URL}/api/admin/auditions/${id}/status`, {
+    await fetch(`${API_BASE_URL}/admin/auditions/${id}/status`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -285,93 +300,234 @@ export default function AdminAuditions() {
               </TableHeader>
               <TableBody>
                 {filtered.map((a) => (
-                  <>
-                    <TableRow
-                      key={a._id}
-                      className={`border-white/10 cursor-pointer transition-colors ${selected.has(a._id) ? "bg-festival-orange/5" : "hover:bg-white/5"}`}
-                      onClick={() => setExpandedRow(expandedRow === a._id ? null : a._id)}
-                    >
-                      <TableCell onClick={(e) => { e.stopPropagation(); toggleOne(a._id); }}>
-                        {selected.has(a._id)
-                          ? <CheckSquare className="h-4 w-4 text-festival-orange" />
-                          : <Square className="h-4 w-4 text-gray-500" />}
-                      </TableCell>
-                      <TableCell>
-                        {a.bandPhotoUrl
-                          ? <img src={a.bandPhotoUrl} alt={a.bandName} className="w-10 h-10 rounded-md object-cover border border-white/10" />
-                          : <div className="w-10 h-10 rounded-md bg-white/5 border border-white/10 flex items-center justify-center"><ImageIcon className="h-4 w-4 text-gray-500" /></div>}
-                      </TableCell>
-                      <TableCell className="font-medium text-white">{a.bandName}</TableCell>
-                      <TableCell className="text-gray-300 text-sm">{a.genre}</TableCell>
-                      <TableCell>
-                        <p className="text-sm text-white">{a.contactPerson}</p>
-                        <p className="text-xs text-gray-400">{a.contactEmail}</p>
-                        <p className="text-xs text-gray-400">{a.contactPhone}</p>
-                      </TableCell>
-                      <TableCell className="text-gray-300 text-sm">{a.cityState}</TableCell>
-                      <TableCell onClick={(e) => e.stopPropagation()}>
-                        <a href={a.auditionVideoUrl} target="_blank" rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300">
-                          <ExternalLink className="h-3 w-3" /> Watch
-                        </a>
-                      </TableCell>
-                      <TableCell onClick={(e) => e.stopPropagation()}>
-                        <Select value={a.status} onValueChange={(v) => updateStatus(a._id, v)}>
-                          <SelectTrigger className={`h-7 text-xs border rounded-full px-2 w-28 ${STATUS_COLORS[a.status]}`}>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="pending">Pending</SelectItem>
-                            <SelectItem value="approved">Approved</SelectItem>
-                            <SelectItem value="rejected">Rejected</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </TableCell>
-                      <TableCell className="text-gray-400 text-xs whitespace-nowrap">
-                        {new Date(a.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
-                      </TableCell>
-                      <TableCell className="text-right" onClick={(e) => e.stopPropagation()}>
+                  <TableRow
+                    key={a._id}
+                    className={`border-white/10 transition-colors ${selected.has(a._id) ? "bg-festival-orange/5" : "hover:bg-white/5"}`}
+                  >
+                    <TableCell onClick={() => toggleOne(a._id)} className="cursor-pointer">
+                      {selected.has(a._id)
+                        ? <CheckSquare className="h-4 w-4 text-festival-orange" />
+                        : <Square className="h-4 w-4 text-gray-500" />}
+                    </TableCell>
+                    <TableCell>
+                      {a.bandPhotoUrl
+                        ? <img src={a.bandPhotoUrl} alt={a.bandName} className="w-10 h-10 rounded-md object-cover border border-white/10" />
+                        : <div className="w-10 h-10 rounded-md bg-white/5 border border-white/10 flex items-center justify-center"><ImageIcon className="h-4 w-4 text-gray-500" /></div>}
+                    </TableCell>
+                    <TableCell className="font-medium text-white">{a.bandName}</TableCell>
+                    <TableCell className="text-gray-300 text-sm">{a.genre}</TableCell>
+                    <TableCell>
+                      <p className="text-sm text-white">{a.contactPerson}</p>
+                      <p className="text-xs text-gray-400">{a.contactEmail}</p>
+                      <p className="text-xs text-gray-400">{a.contactPhone}</p>
+                    </TableCell>
+                    <TableCell className="text-gray-300 text-sm">{a.cityState}</TableCell>
+                    <TableCell>
+                      <a href={a.auditionVideoUrl} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-blue-400 hover:text-blue-300">
+                        <ExternalLink className="h-3 w-3" /> Watch
+                      </a>
+                    </TableCell>
+                    <TableCell onClick={(e) => e.stopPropagation()}>
+                      <Select value={a.status} onValueChange={(v) => updateStatus(a._id, v)}>
+                        <SelectTrigger className={`h-7 text-xs border rounded-full px-2 w-28 ${STATUS_COLORS[a.status]}`}>
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="pending">Pending</SelectItem>
+                          <SelectItem value="approved">Approved</SelectItem>
+                          <SelectItem value="rejected">Rejected</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </TableCell>
+                    <TableCell className="text-gray-400 text-xs whitespace-nowrap">
+                      {new Date(a.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex items-center justify-end gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-blue-400 hover:text-blue-300 hover:bg-blue-900/20"
+                          onClick={() => setViewTarget(a)}
+                          title="View full submission"
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
                         <Button
                           variant="ghost"
                           size="icon"
                           className="h-7 w-7 text-red-400 hover:text-red-300 hover:bg-red-900/20"
                           onClick={() => setDeleteTarget(a._id)}
+                          title="Delete submission"
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
-                      </TableCell>
-                    </TableRow>
-
-                    {/* Expanded detail row */}
-                    {expandedRow === a._id && (
-                      <TableRow key={`${a._id}-detail`} className="border-white/10 bg-white/[0.03]">
-                        <TableCell colSpan={10} className="py-4 px-6">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                            <div>
-                              <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Band Members</p>
-                              <p className="text-gray-200 whitespace-pre-wrap">{a.bandMembers}</p>
-                            </div>
-                            <div>
-                              <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Band Bio</p>
-                              <p className="text-gray-200 whitespace-pre-wrap">{a.bandBio}</p>
-                            </div>
-                            {a.socialLinks && (
-                              <div>
-                                <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Social Links</p>
-                                <p className="text-blue-400 whitespace-pre-wrap">{a.socialLinks}</p>
-                              </div>
-                            )}
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    )}
-                  </>
+                      </div>
+                    </TableCell>
+                  </TableRow>
                 ))}
               </TableBody>
             </Table>
           </div>
         )}
       </div>
+
+      {/* Full submission view modal */}
+      <Dialog open={!!viewTarget} onOpenChange={(open) => !open && setViewTarget(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-zinc-950 border border-white/10 text-white">
+          {viewTarget && (
+            <>
+              <DialogHeader className="pb-2">
+                <div className="flex items-start gap-4">
+                  {viewTarget.bandPhotoUrl ? (
+                    <img
+                      src={viewTarget.bandPhotoUrl}
+                      alt={viewTarget.bandName}
+                      className="w-20 h-20 rounded-xl object-cover border border-white/10 shrink-0"
+                    />
+                  ) : (
+                    <div className="w-20 h-20 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                      <ImageIcon className="h-8 w-8 text-gray-500" />
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <DialogTitle className="text-xl font-bold text-white leading-tight">
+                      {viewTarget.bandName}
+                    </DialogTitle>
+                    <p className="text-sm text-gray-400 mt-0.5">{viewTarget.genre}</p>
+                    <div className="flex items-center gap-2 mt-2 flex-wrap">
+                      <Badge className={`text-xs border ${STATUS_COLORS[viewTarget.status]}`}>
+                        {viewTarget.status.charAt(0).toUpperCase() + viewTarget.status.slice(1)}
+                      </Badge>
+                      <span className="text-xs text-gray-500 flex items-center gap-1">
+                        <CalendarDays className="h-3 w-3" />
+                        {new Date(viewTarget.createdAt).toLocaleDateString("en-IN", { day: "2-digit", month: "long", year: "numeric" })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <div className="mt-4 space-y-5">
+                {/* Contact Info */}
+                <section>
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 border-b border-white/10 pb-1">
+                    Contact Information
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="flex items-start gap-2">
+                      <User className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-500">Contact Person</p>
+                        <p className="text-sm text-white">{viewTarget.contactPerson}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Mail className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-500">Email</p>
+                        <p className="text-sm text-white break-all">{viewTarget.contactEmail}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <Phone className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-500">Phone</p>
+                        <p className="text-sm text-white">{viewTarget.contactPhone}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <MapPin className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-500">City / State</p>
+                        <p className="text-sm text-white">{viewTarget.cityState}</p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Band Details */}
+                <section>
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 border-b border-white/10 pb-1">
+                    Band Details
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-2">
+                      <Music2 className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-500">Band Members</p>
+                        <p className="text-sm text-white whitespace-pre-wrap">{viewTarget.bandMembers}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <div className="h-4 w-4 shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-500">Band Bio</p>
+                        <p className="text-sm text-gray-200 whitespace-pre-wrap leading-relaxed">{viewTarget.bandBio}</p>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* Links */}
+                <section>
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 border-b border-white/10 pb-1">
+                    Links
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-2">
+                      <Video className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="text-xs text-gray-500">Audition Video</p>
+                        <a
+                          href={viewTarget.auditionVideoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-blue-400 hover:text-blue-300 break-all flex items-center gap-1"
+                        >
+                          {viewTarget.auditionVideoUrl}
+                          <ExternalLink className="h-3 w-3 shrink-0" />
+                        </a>
+                      </div>
+                    </div>
+                    {viewTarget.socialLinks && (
+                      <div className="flex items-start gap-2">
+                        <LinkIcon className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
+                        <div>
+                          <p className="text-xs text-gray-500">Social Links</p>
+                          <p className="text-sm text-blue-400 whitespace-pre-wrap break-all">{viewTarget.socialLinks}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </section>
+
+                {/* Status update inline */}
+                <section className="flex items-center justify-between pt-2 border-t border-white/10">
+                  <p className="text-xs text-gray-500">Update status</p>
+                  <Select
+                    value={viewTarget.status}
+                    onValueChange={(v) => {
+                      updateStatus(viewTarget._id, v);
+                      setViewTarget({ ...viewTarget, status: v as Audition["status"] });
+                    }}
+                  >
+                    <SelectTrigger className={`h-8 text-xs border rounded-full px-3 w-36 ${STATUS_COLORS[viewTarget.status]}`}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="approved">Approved</SelectItem>
+                      <SelectItem value="rejected">Rejected</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </section>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Single delete confirm */}
       <AlertDialog open={!!deleteTarget} onOpenChange={() => setDeleteTarget(null)}>
