@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { LogOut, Music, PackageOpen } from "lucide-react";
+import { LogOut, Music, PackageOpen, Mic } from "lucide-react";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -19,8 +19,8 @@ export default function AdminDashboard() {
   };
 
   const goToMerch = () => navigate("/admin/merch");
-
   const goToHero = () => navigate("/admin/hero");
+  const goToAuditions = () => navigate("/admin/auditions");
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
@@ -38,6 +38,18 @@ export default function AdminDashboard() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Audition Submissions</CardTitle>
+              <CardDescription>View, manage and export band audition entries</CardDescription>
+            </CardHeader>
+            <CardContent className="flex items-center justify-between">
+              <div className="text-muted-foreground">Review submissions, update status, delete entries and export to Excel.</div>
+              <Button onClick={goToAuditions}>
+                <Mic className="mr-2 h-4 w-4" /> Open
+              </Button>
+            </CardContent>
+          </Card>
           <Card>
             <CardHeader>
               <CardTitle>Manage Merchandise</CardTitle>

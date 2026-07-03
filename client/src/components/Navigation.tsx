@@ -11,10 +11,11 @@ export function Navigation() {
 
   // Desktop navigation items (original)
   const navigation = [
-    { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
+    //{ name: 'Home', href: '/', icon: Music, shortName: 'Home' },
+    { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon: Youtube, shortName: 'Media' },
-    { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
+    //{ name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
@@ -22,10 +23,11 @@ export function Navigation() {
 
   // Mobile navigation items (includes additional items)
   const mobileNavigation = [
-    { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
+   // { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
+    { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon:Youtube, shortName: 'Media' },
-    { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
+    //{ name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
@@ -91,9 +93,9 @@ export function Navigation() {
                 );
               })}
               
-              <Link to="/">
+              <Link to="/auditions">
                 <Button className="btn-festival ml-4">
-                  See you next year!
+                  Apply for Auditions 2026
                 </Button>
               </Link>
              
@@ -155,12 +157,12 @@ export function Navigation() {
               
               {/* Call to action button */}
                
-                <Link to="/">
+                <Link to="/auditions">
                  <Button 
                    className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
                    onClick={() => setIsOpen(false)}
                  >
-                   See you next year!
+                   Apply for Auditions 2026
                  </Button>
                 </Link>
               

@@ -36,18 +36,18 @@ const FeaturedSection = () => {
 
   const featuredCards = [
     {
-      title: 'Thank You!',
-      description: 'Thank you for making Hornbill Music Festival 2025 unforgettable. See you next year!',
-      cta: 'See You in 2026',
+      title: 'Auditions 2026 Are Live!',
+      description: 'Auditions for Hornbill Music Festival 2026 are now open. Apply today for your chance to perform on Nagaland\'s biggest stage!',
+      cta: 'Apply Now',
       variant: 'festival',
-      icon: Music,
-      gradient: 'from-festival-blue/20 to-festival-orange/20',
-      border: 'border-festival-orange/30',
-      link: '/'
+      icon: Users,
+      gradient: 'from-green-900/30 to-festival-orange/20',
+      border: 'border-green-500/40',
+      link: '/auditions'
     },
     {
       title: 'Festival Highlights',
-      description: 'Relive the magic and check out the complete festival lineup',
+      description: 'Relive the magic of HMF 2025 and check out the complete festival schedule',
       cta: 'View Schedule',
       variant: 'tribal',
       icon: Camera,

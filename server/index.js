@@ -11,7 +11,7 @@ import merchRoutes from './routes/merchRoutes.js';
 import heroRoutes from './routes/heroRoutes.js';
 
 
-dotenv.config();
+dotenv.config({ path: new URL('.env', import.meta.url).pathname });
 connectDB();
 
 const app = express();

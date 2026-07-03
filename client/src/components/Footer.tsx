@@ -47,7 +47,7 @@ const Footer = () => {
                 Festival Dates
               </h4>
               <p className="text-sm text-muted-foreground">
-                December 1-10, 2025
+                December 1-10, 2026
               </p>
               <p className="text-xs text-muted-foreground">
                 Music events: 6:00 PM - 9:00 PM
@@ -57,11 +57,11 @@ const Footer = () => {
             {/* Thank You Message */}
             <div className="bg-gradient-to-r from-festival-blue/10 to-festival-orange/10 p-4 rounded-lg border border-festival-blue/20">
               <h4 className="font-semibold mb-2">
-                See you next year!
+                See you soon!
               </h4>
               <p className="text-sm text-muted-foreground mb-3">
-                Hornbill Music Festival 2025 was unforgettable thanks to you. 
-                See you next year for more incredible music and culture!
+                Hornbill Music Festival 2026 is coming soon. 
+                See you soon for more incredible music and culture!
               </p>
             </div>
           </div>

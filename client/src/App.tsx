@@ -22,6 +22,7 @@ import Media from "./components/Media";
 import Merch from "./pages/Merch";
 import AdminMerchManage from "./pages/AdminMerchManage";
 import AdminHero from "./pages/AdminHero";
+import AdminAuditions from "./pages/AdminAuditions";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -72,6 +73,13 @@ const App = () => (
     element={
       <ProtectedRoute>
         <AdminHero />
+      </ProtectedRoute>
+    }/>
+   <Route
+    path="/admin/auditions"
+    element={
+      <ProtectedRoute>
+        <AdminAuditions />
       </ProtectedRoute>
     }/>
     

@@ -50,11 +50,7 @@ const heroStorage = new CloudinaryStorage({
   params: (req, file) => ({
     folder: "hornbill-hero",
     allowed_formats: ["jpg", "jpeg", "png", "webp"],
-    public_id: `hero-${Date.now()}-${file.originalname}`,
-    transformation: [
-      { quality: "auto:good" },
-      { fetch_format: "auto" }
-    ]
+    public_id: `hero-${Date.now()}-${file.originalname.replace(/\s+/g, "_")}`,
   }),
 });
 
