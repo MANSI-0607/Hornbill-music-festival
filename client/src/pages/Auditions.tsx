@@ -512,7 +512,7 @@ export default function Auditions() {
                         ) : (
                           <>
                             <Mic className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
-                            Submit Audition for HMF 2026
+                            Submit Audition
                           </>
                         )}
                       </Button>
