@@ -62,7 +62,7 @@ const HeroSection: React.FC = () => {
 
           {/* Tagline — bigger on desktop */}
           <p className="text-white/55 text-sm sm:text-lg md:text-xl lg:text-2xl font-light tracking-wide">
-            Auditions 2026 are open —&nbsp;
+            2026 Auditions opening soon —&nbsp;
             <span className="text-white/90 font-normal">your stage awaits.</span>
           </p>
 
@@ -80,7 +80,7 @@ const HeroSection: React.FC = () => {
                 to="/auditions"
                 className="group relative inline-flex items-center gap-3 bg-black/80 hover:bg-black/60 text-white px-8 sm:px-11 lg:px-14 py-3 sm:py-4 text-sm sm:text-base lg:text-lg font-medium tracking-widest uppercase transition-all duration-300"
               >
-                Apply for Auditions
+                Opening soon
                 <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
             </div>
