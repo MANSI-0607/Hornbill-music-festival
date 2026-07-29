@@ -8,25 +8,55 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
+function Rule() {
+  return <hr className="border-none h-px bg-gradient-to-r from-transparent via-white/10 to-transparent my-5" />;
+}
+
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-sm font-semibold uppercase tracking-wider text-orange-400 mb-2 flex items-center gap-2">
-      <span className="inline-block w-1 h-4 rounded-full bg-orange-400/70 shrink-0" />
+    <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-orange-400/80 mb-2">
       {children}
-    </h3>
+    </p>
   );
 }
 
 function BulletList({ items }: { items: React.ReactNode[] }) {
   return (
-    <ul className="space-y-1.5 text-gray-300 text-sm leading-relaxed">
+    <ul className="space-y-2 text-gray-400 text-sm leading-relaxed">
       {items.map((item, i) => (
-        <li key={i} className="flex items-start gap-2">
-          <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400/60 shrink-0" />
+        <li key={i} className="flex items-start gap-3">
+          <span className="mt-[7px] h-[5px] w-[5px] rounded-full bg-orange-400/50 shrink-0" />
           <span>{item}</span>
         </li>
       ))}
     </ul>
+  );
+}
+
+function RoundEntry({
+  number,
+  title,
+  children,
+  last = false,
+}: {
+  number: string;
+  title: string;
+  children: React.ReactNode;
+  last?: boolean;
+}) {
+  return (
+    <div className="flex gap-4">
+      <div className="flex flex-col items-center">
+        <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-orange-500/15 border border-orange-400/30 text-orange-400 text-xs font-bold">
+          {number}
+        </div>
+        {!last && <div className="mt-1 w-px flex-1 bg-gradient-to-b from-orange-400/20 to-transparent" />}
+      </div>
+      <div className="pb-6 flex-1 min-w-0">
+        <p className="text-white text-sm font-semibold mb-2 leading-snug">{title}</p>
+        {children}
+      </div>
+    </div>
   );
 }
 
@@ -39,165 +69,178 @@ export default function TermsDialog() {
         </span>
       </DialogTrigger>
 
-      <DialogContent className="max-w-2xl max-h-[88vh] overflow-y-auto bg-zinc-950 border border-white/10 text-white p-0 rounded-2xl shadow-2xl">
+      <DialogContent className="max-w-xl max-h-[88vh] overflow-y-auto bg-[#0c0c0e] border border-white/8 text-white p-0 rounded-2xl shadow-2xl">
 
-        {/* ── Header Banner ── */}
-        <div className="sticky top-0 z-10 bg-zinc-950/95 backdrop-blur border-b border-white/10 px-6 pt-6 pb-4">
+        {/* Header */}
+        <div className="sticky top-0 z-10 bg-[#0c0c0e]/96 backdrop-blur-md px-7 pt-7 pb-5 border-b border-white/8">
           <DialogHeader>
-            <DialogTitle className="text-lg sm:text-xl font-bold text-white leading-snug">
-              Ticket to Hornbill
-              <span className="block text-orange-400 text-base sm:text-lg font-semibold mt-0.5">
-                India's Biggest Band Battle
-              </span>
+            <DialogTitle className="text-xl font-bold tracking-tight text-white">
+              Ticket to Hornbill – India's Biggest Band Battle
             </DialogTitle>
             <DialogDescription asChild>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 mt-2 text-xs text-gray-400">
-                <span>📅 <strong className="text-gray-300">16–17 October 2026</strong></span>
-                <span>📍 <strong className="text-gray-300">Talkatora Stadium, New Delhi</strong></span>
+              <div className="mt-2 space-y-1.5 text-xs text-gray-500">
+                <p>
+                  <span className="text-gray-400">Event Dates:</span>{" "}
+                  <span className="text-gray-300">16–17 October 2026</span>
+                </p>
+                <p className="text-gray-400 pl-0 sm:pl-1">
+                  (16th October – Nagaland's Culture Showcase)
+                </p>
+                <p className="text-gray-400 pl-0 sm:pl-1">
+                  (17th October – Band Battle)
+                </p>
+                <p className="pt-1">
+                  <span className="text-gray-400">Venue:</span>{" "}
+                  <span className="text-gray-300">Talkatora Stadium, New Delhi</span>
+                </p>
               </div>
             </DialogDescription>
           </DialogHeader>
-
-          {/* Day breakdown pill */}
-          <div className="mt-3 grid grid-cols-2 gap-2 text-xs">
-            <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2">
-              <p className="text-orange-400 font-semibold">16th October</p>
-              <p className="text-gray-400 mt-0.5">Nagaland's Culture Showcase</p>
-            </div>
-            <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2">
-              <p className="text-orange-400 font-semibold">17th October</p>
-              <p className="text-gray-400 mt-0.5">Band Battle</p>
-            </div>
-          </div>
         </div>
 
-        {/* ── Body ── */}
-        <div className="px-6 pb-6 mt-5 space-y-6">
+        <div className="px-7 pb-8 pt-6">
 
-          {/* Round 1 */}
+          {/* Rounds */}
+          <div>
+            <Label>The Journey</Label>
+            <div className="mt-3">
+
+              <RoundEntry number="1" title="Round 1 – Video Submission">
+                <BulletList items={[
+                  <>Bands must submit a live performance video/link on or before <strong className="text-white/80">25th August 2026</strong>.</>,
+                  "A jury will shortlist 10 bands for the final rounds.",
+                ]} />
+              </RoundEntry>
+
+              <RoundEntry number="2" title="Round 2 – Selection Announcement & Live Performance">
+                <BulletList items={[
+                  <>TaFMA will announce the 10 selected bands on <strong className="text-white/80">31st August 2026</strong> via social media and its website.</>,
+                  "Bands must perform live as per the given schedule.",
+                  "No rescheduling of performance slots will be entertained.",
+                  <>Once selected, the Bands must confirm their participation by <strong className="text-white/80">15th September 2026</strong>.</>,
+                  "If any band fails to confirm their participation by 15th September, or subsequently cancels their participation, a wild card entry will be selected to take their place.",
+                ]} />
+              </RoundEntry>
+
+              <RoundEntry number="3" title="Round 3 – Preliminary Live Performance and Grand Finale" last>
+                <p className="text-xs text-orange-400/80 mb-2 font-medium">Date: 17th October 2026</p>
+                <BulletList items={[
+                  "Each band will get 10 minutes for Soundcheck starting from 9 a.m. to 10:45 a.m.",
+                  "Time: 11:00 AM onwards — The 10 bands will perform before the jury at the preliminary round.",
+                  "Time: 5 P.M. onwards — The top 5 finalists will again perform at the Grand Finale before a Live jury.",
+                  "Winners will be crowned and prizes will be awarded on the same evening.",
+                ]} />
+              </RoundEntry>
+
+            </div>
+          </div>
+
+          <Rule />
+
           <section>
-            <SectionHeading>Round 1 – Video Submission</SectionHeading>
+            <Label>Video Submission Guidelines</Label>
             <BulletList items={[
-              <>Bands must submit a live performance video/link on or before <strong className="text-white">25th August 2026</strong>.</>,
-              "A jury will shortlist 10 bands for the final rounds.",
+              "a) All applicants must upload their audition video link in the designated field of the audition form.",
+              "b) The video must be hosted on a publicly accessible platform such as YouTube, Vimeo, or any other online video-sharing platform, ensuring that the link can be opened and viewed without restrictions.",
+              "c) Private or password-protected videos will not be considered unless the access details are provided.",
+              "d) The organizers are not responsible for broken, invalid, or inaccessible links submitted by applicants.",
+              "e) Only videos submitted through a valid link in the audition form will be accepted for evaluation.",
             ]} />
           </section>
 
-          {/* Video Guidelines */}
-          <section>
-            <SectionHeading>Video Submission Guidelines</SectionHeading>
-            <BulletList items={[
-              "All applicants must upload their audition video link in the designated field of the audition form.",
-              "The video must be hosted on a publicly accessible platform such as YouTube, Vimeo, or any other online video-sharing platform, ensuring the link can be opened without restrictions.",
-              "Private or password-protected videos will not be considered unless access details are provided.",
-              "The organizers are not responsible for broken, invalid, or inaccessible links submitted by applicants.",
-              "Only videos submitted through a valid link in the audition form will be accepted for evaluation.",
-            ]} />
-          </section>
+          <Rule />
 
-          {/* Round 2 */}
-          <section>
-            <SectionHeading>Round 2 – Selection Announcement &amp; Live Performance</SectionHeading>
-            <BulletList items={[
-              <>TaFMA will announce the 10 selected bands on <strong className="text-white">31st August 2026</strong> via social media and its website.</>,
-              "Bands must perform live as per the given schedule.",
-              "No rescheduling of performance slots will be entertained.",
-              <>Once selected, bands must confirm their participation by <strong className="text-white">15th September 2026</strong>.</>,
-              "If any band fails to confirm by 15th September, or subsequently cancels, a wild card entry will be selected to take their place.",
-            ]} />
-          </section>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <section>
+              <Label>Performance Guidelines</Label>
+              <BulletList items={[
+                <>
+                  Each band must perform 2 songs:
+                  <ul className="mt-1.5 ml-1 space-y-1 text-gray-500">
+                    <li>o One original and one cover, or</li>
+                    <li>o Two original songs.</li>
+                  </ul>
+                </>,
+                "Cover songs must align with the band's genre.",
+                "All musical genres are welcome.",
+                "Finalists may repeat songs performed in earlier rounds if they wish.",
+                "Backing tracks are permitted but must not include main vocals or primary instruments.",
+              ]} />
+            </section>
+            <section>
+              <Label>Technical Guidelines</Label>
+              <BulletList items={[
+                "No on-stage sound check will be provided during the actual performance.",
+                "Each band will receive 15 minutes, which includes a Line check and the performance.",
+                "In-ear monitors will not be provided.",
+              ]} />
+            </section>
+          </div>
 
-          {/* Round 3 */}
-          <section>
-            <SectionHeading>Round 3 – Preliminary Live Performance &amp; Grand Finale</SectionHeading>
-            <p className="text-xs text-orange-400/80 mb-2 font-medium">Date: 17th October 2026</p>
-            <BulletList items={[
-              <>Each band gets <strong className="text-white">10 minutes for Soundcheck</strong> from 9:00 AM to 10:45 AM.</>,
-              <><strong className="text-white">11:00 AM onwards</strong> — The 10 bands perform before the jury at the preliminary round.</>,
-              <><strong className="text-white">5:00 PM onwards</strong> — The top 5 finalists perform again at the Grand Finale before a live jury.</>,
-              "Winners will be crowned and prizes awarded on the same evening.",
-            ]} />
-          </section>
+          <Rule />
 
-          {/* Performance Guidelines */}
           <section>
-            <SectionHeading>Performance Guidelines</SectionHeading>
-            <BulletList items={[
-              "Each band must perform 2 songs: one original + one cover, or two original songs.",
-              "Cover songs must align with the band's genre.",
-              "All musical genres are welcome.",
-              "Finalists may repeat songs performed in earlier rounds if they wish.",
-              "Backing tracks are permitted but must not include main vocals or primary instruments.",
-            ]} />
-          </section>
-
-          {/* Technical Guidelines */}
-          <section>
-            <SectionHeading>Technical Guidelines</SectionHeading>
-            <BulletList items={[
-              "No on-stage sound check will be provided during the actual performance.",
-              "Each band will receive 15 minutes, which includes a line check and the performance.",
-              "In-ear monitors will not be provided.",
-            ]} />
-          </section>
-
-          {/* Judging */}
-          <section>
-            <SectionHeading>Judging Parameters</SectionHeading>
-            <div className="grid grid-cols-2 gap-2">
-              {["Stage presence & delivery", "Passion & energy", "Articulation & precision", "Creativity & originality"].map((p) => (
-                <div key={p} className="rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-xs text-gray-300">
+            <Label>Judging Parameters</Label>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {[
+                "Stage presence and delivery",
+                "Passion and energy",
+                "Articulation and precision",
+                "Creativity and originality",
+              ].map((p) => (
+                <span key={p} className="text-xs text-gray-400 bg-white/5 rounded-full px-3 py-1">
                   {p}
-                </div>
+                </span>
               ))}
             </div>
           </section>
 
-          {/* Copyright */}
+          <Rule />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <section>
+              <Label>Copyright Disclaimer</Label>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Bands are solely responsible for securing all necessary rights and permissions for the content they perform. The organizers will not be liable for any copyright-related disputes.
+              </p>
+            </section>
+            <section>
+              <Label>Travel &amp; Accommodation</Label>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Bands must arrange and bear the cost of their own travel and accommodation.
+              </p>
+            </section>
+          </div>
+
+          <Rule />
+
           <section>
-            <SectionHeading>Copyright Disclaimer</SectionHeading>
+            <Label>Special Opportunity</Label>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Bands are solely responsible for securing all necessary rights and permissions for the content they perform. The organizers will not be liable for any copyright-related disputes.
+              The Top 3 winning bands will not only receive cash prizes but will also earn the opportunity to perform at the Hornbill Music Festival in December 2026, one of India's most prestigious music festivals with significant audience reach and media exposure.
             </p>
           </section>
 
-          {/* Travel */}
+          <Rule />
+
           <section>
-            <SectionHeading>Travel &amp; Accommodation</SectionHeading>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Bands must arrange and bear the cost of their own travel and accommodation.
-            </p>
-          </section>
-
-          {/* Special Opportunity */}
-          <section className="rounded-xl bg-gradient-to-br from-orange-500/10 to-blue-600/10 border border-orange-500/25 p-4">
-            <p className="text-orange-400 font-semibold text-sm mb-1">✦ Special Opportunity</p>
-            <p className="text-gray-200 text-sm leading-relaxed">
-              The <strong className="text-white">Top 3 winning bands</strong> will receive cash prizes <em>and</em> earn the opportunity to{" "}
-              <span className="text-orange-300 font-semibold">perform at the Hornbill Music Festival in December 2026</span> — one of India's most prestigious music festivals with significant audience reach and media exposure.
-            </p>
-          </section>
-
-          {/* Prize Money */}
-          <section className="rounded-xl bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/25 p-4">
-            <p className="text-yellow-400 font-semibold text-sm mb-3">🏆 Prize Money</p>
-            <div className="grid grid-cols-3 gap-3 text-center mb-4">
-              <div className="rounded-lg bg-white/5 border border-yellow-400/30 p-3">
-                <p className="text-yellow-300 text-lg font-bold">₹10L</p>
-                <p className="text-xs text-gray-400 mt-0.5">🥇 1st Prize</p>
-              </div>
-              <div className="rounded-lg bg-white/5 border border-gray-400/20 p-3">
-                <p className="text-gray-300 text-lg font-bold">₹6L</p>
-                <p className="text-xs text-gray-400 mt-0.5">🥈 2nd Prize</p>
-              </div>
-              <div className="rounded-lg bg-white/5 border border-orange-400/20 p-3">
-                <p className="text-orange-300 text-lg font-bold">₹4L</p>
-                <p className="text-xs text-gray-400 mt-0.5">🥉 3rd Prize</p>
-              </div>
+            <Label>Prize Money</Label>
+            <div className="mt-3 space-y-3">
+              {[
+                { rank: "First Prize", amount: "₹10,00,000", color: "text-yellow-300" },
+                { rank: "Second Prize", amount: "₹6,00,000", color: "text-gray-300" },
+                { rank: "Third Prize", amount: "₹4,00,000", color: "text-orange-300" },
+              ].map(({ rank, amount, color }) => (
+                <div key={rank} className="flex items-center justify-between">
+                  <span className="text-sm text-gray-500">{rank}</span>
+                  <span className={`text-lg font-bold tracking-tight ${color}`}>{amount}</span>
+                </div>
+              ))}
             </div>
-            <div className="text-xs text-gray-400 space-y-1 border-t border-white/10 pt-3">
-              <p> <strong className="text-gray-300">50%</strong> of the prize money will be awarded on 17th October 2026.</p>
-              <p>The remaining <strong className="text-gray-300">50%</strong> will be released after the winners perform at the Hornbill Music Festival.</p>
+            <div className="mt-4 pt-4 border-t border-white/8 text-xs text-gray-500 space-y-1.5">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-orange-400/80 mb-2">Prize Disbursement</p>
+              <p>50% of the prize money will be awarded on 17th October 2026.</p>
+              <p>The remaining 50% will be released after the winners perform at the Hornbill Music Festival.</p>
             </div>
           </section>
 

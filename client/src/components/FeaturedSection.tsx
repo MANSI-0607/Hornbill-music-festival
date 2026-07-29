@@ -36,9 +36,9 @@ const FeaturedSection = () => {
 
   const featuredCards = [
     {
-      title: '2026 Auditions opening soon!',
-      description: 'Auditions for Hornbill Music Festival 2026 are opening soon. Stay tuned for your chance to perform on Nagaland\'s biggest stage!',
-      cta: 'Opening soon',
+      title: 'Ticket to Hornbill is Live!',
+      description: 'India\'s Biggest Band Battle is open for registrations. Submit your audition and earn your chance to perform on Nagaland\'s biggest stage!',
+      cta: 'Register Now',
       variant: 'festival',
       icon: Users,
       gradient: 'from-green-900/30 to-festival-orange/20',

@@ -166,36 +166,36 @@ export default function Auditions() {
 
       {/* ── Banner ── */}
       <section className="relative pt-0 pb-0 px-0">
-        {/* Mobile: 16/9, tablet+: 5/2 */}
-        <div className="w-full aspect-video sm:aspect-[5/2]">
-          <img
-            src="ab.jpg"
-            alt="Ticket to Hornbill - Band Auditions 2026"
-            className="w-full h-full block object-cover object-center"
-            width={1600}
-            height={640}
-            loading="eager"
-          />
+        <div className="w-full">
+          <picture>
+            <source media="(min-width: 768px)" srcSet="/audition_banner.jpeg" />
+            <img
+              src="/audition_banner_mob.jpeg"
+              alt="Ticket to Hornbill - Band Auditions 2026"
+              className="w-full h-auto block object-cover object-center"
+              loading="eager"
+            />
+          </picture>
         </div>
-        
       </section>
 
       {/* ── Registration Form ── */}
-      <section className="py-5 sm:py-8 px-3 sm:px-6 lg:px-8">
+      <section className="py-6 sm:py-10 px-3 sm:px-6 lg:px-8 bg-gradient-to-b from-black via-zinc-950 to-black">
         <div className="max-w-4xl mx-auto">
-          <Card className="festival-card border border-white/10 shadow-2xl">
-            <CardHeader className="border-b border-white/10 pb-4 sm:pb-5 px-4 sm:px-6 pt-4 sm:pt-6">
-              <CardTitle className="text-xl sm:text-2xl md:text-3xl font-righteous text-primary">
+          <Card className="bg-zinc-900/90 border border-white/20 shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_20px_60px_-20px_rgba(0,0,0,0.8)] rounded-2xl overflow-hidden">
+            <CardHeader className="border-b border-white/15 bg-zinc-900/80 pb-4 sm:pb-5 px-4 sm:px-6 pt-5 sm:pt-6">
+              <div className="h-1 w-16 rounded-full bg-gradient-to-r from-[#1e90ff] to-[#ff6b00] mb-3" />
+              <CardTitle className="text-xl sm:text-2xl md:text-3xl font-righteous text-white">
                 Band Auditions 2026
               </CardTitle>
-              <CardDescription className="text-gray-400 text-xs sm:text-sm mt-1">
+              <CardDescription className="text-gray-400 text-xs sm:text-sm mt-1.5 leading-relaxed">
                 {isSubmissionOpen
                   ? 'Submissions are open. All fields marked * are required — your details will be used for evaluation and communication.'
                   : 'Submissions have closed. Thank you for participating!'}
               </CardDescription>
             </CardHeader>
 
-            <CardContent className="pt-5 sm:pt-6 px-4 sm:px-6">
+            <CardContent className="pt-5 sm:pt-7 px-4 sm:px-6 bg-zinc-900/60">
               {!isSubmissionOpen ? (
                 <div className="p-8 text-center">
                   <Clock className="h-12 w-12 text-primary mx-auto mb-4" />
@@ -215,8 +215,8 @@ export default function Auditions() {
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 sm:space-y-8">
 
                     {/* ── Step 1: Terms ── */}
-                    <div className="rounded-xl border border-festival-orange/30 bg-festival-orange/5 p-4 sm:p-5">
-                      <p className="text-xs font-bold text-festival-orange uppercase tracking-widest mb-3 flex items-center gap-1.5">
+                    <div className="rounded-xl border border-orange-400/40 bg-orange-500/[0.07] p-4 sm:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                      <p className="text-xs font-bold text-orange-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
                         <CheckCircle2 className="h-4 w-4 shrink-0" /> Step 1 — Terms &amp; Conditions
                       </p>
                       <p className="text-xs sm:text-sm text-gray-300 mb-4">
@@ -246,9 +246,9 @@ export default function Auditions() {
                     <fieldset disabled={!termsAccepted} className={!termsAccepted ? 'opacity-40 pointer-events-none select-none' : 'space-y-6 sm:space-y-8'}>
 
                       {/* ── Step 2: Band Information ── */}
-                      <div className="space-y-4 sm:space-y-5">
-                        <div className="flex items-center gap-2 sm:gap-3 border-l-4 border-festival-orange pl-3">
-                          <Music2 className="h-4 w-4 sm:h-5 sm:w-5 text-festival-orange shrink-0" />
+                      <div className="space-y-4 sm:space-y-5 rounded-xl border border-white/15 bg-black/30 p-4 sm:p-5">
+                        <div className="flex items-center gap-2 sm:gap-3 border-l-4 border-orange-400 pl-3 pb-1">
+                          <Music2 className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400 shrink-0" />
                           <h3 className="text-lg sm:text-xl font-righteous text-white">
                             Step 2 — Band Information
                           </h3>
@@ -263,7 +263,7 @@ export default function Auditions() {
                               <FormItem>
                                 <FormLabel className="text-white">Band name *</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="e.g., Trance Effect" className="bg-input border-border" {...field} />
+                                  <Input placeholder="e.g., Trance Effect" className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30" {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -277,7 +277,7 @@ export default function Auditions() {
                                 <FormLabel className="text-white">Primary genre *</FormLabel>
                                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                                   <FormControl>
-                                    <SelectTrigger className="bg-input border-border">
+                                    <SelectTrigger className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30">
                                       <SelectValue placeholder="Select a genre" />
                                     </SelectTrigger>
                                   </FormControl>
@@ -300,7 +300,7 @@ export default function Auditions() {
                             Band photo *
                             <span className="text-gray-500 text-xs font-normal">JPG/PNG · max 5 MB · min 1200×800 px</span>
                           </label>
-                          <div className={`border-2 border-dashed rounded-xl transition-colors duration-200 ${bandPhotoUrl ? 'border-green-500/60 bg-green-900/10' : 'border-border bg-input/40 hover:border-festival-orange/50'}`}>
+                          <div className={`border-2 border-dashed rounded-xl transition-colors duration-200 ${bandPhotoUrl ? 'border-green-500/60 bg-green-900/10' : 'border-white/25 bg-zinc-950/60 hover:border-orange-400/50'}`}>
                             <input
                               type="file"
                               accept="image/jpeg,image/jpg,image/png"
@@ -338,7 +338,7 @@ export default function Auditions() {
                               <FormControl>
                                 <Textarea
                                   placeholder="e.g., Imna — Vocal, Kevi — Guitar, Neito — Bass, Meren — Drums"
-                                  className="bg-input border-border min-h-[90px]"
+                                  className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30 min-h-[90px]"
                                   {...field}
                                 />
                               </FormControl>
@@ -359,7 +359,7 @@ export default function Auditions() {
                               <FormControl>
                                 <Textarea
                                   placeholder="Tell us about your band's story, musical style, achievements, and what makes you unique… (50–2000 characters)"
-                                  className="bg-input border-border min-h-[110px]"
+                                  className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30 min-h-[110px]"
                                   {...field}
                                 />
                               </FormControl>
@@ -382,7 +382,7 @@ export default function Auditions() {
                                 Audition video link *
                               </FormLabel>
                               <FormControl>
-                                <Input placeholder="YouTube / Vimeo / Google Drive URL" className="bg-input border-border" {...field} />
+                                <Input placeholder="YouTube / Vimeo / Google Drive URL" className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30" {...field} />
                               </FormControl>
                               <FormDescription className="text-gray-500 text-xs">
                                 Share a live performance video that best represents your band's talent and energy.
@@ -394,9 +394,9 @@ export default function Auditions() {
                       </div>
 
                       {/* ── Step 3: Contact Information ── */}
-                      <div className="space-y-4 sm:space-y-5 mt-6">
-                        <div className="flex items-center gap-2 sm:gap-3 border-l-4 border-festival-orange pl-3">
-                          <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-festival-orange shrink-0" />
+                      <div className="space-y-4 sm:space-y-5 mt-6 rounded-xl border border-white/15 bg-black/30 p-4 sm:p-5">
+                        <div className="flex items-center gap-2 sm:gap-3 border-l-4 border-orange-400 pl-3 pb-1">
+                          <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400 shrink-0" />
                           <h3 className="text-lg sm:text-xl font-righteous text-white">
                             Step 3 — Contact Information
                           </h3>
@@ -411,7 +411,7 @@ export default function Auditions() {
                               <FormItem>
                                 <FormLabel className="text-white">Contact person *</FormLabel>
                                 <FormControl>
-                                  <Input placeholder="Full name" className="bg-input border-border" {...field} />
+                                  <Input placeholder="Full name" className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30" {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -426,7 +426,7 @@ export default function Auditions() {
                                   <MapPin className="h-4 w-4 text-festival-orange" /> City &amp; State *
                                 </FormLabel>
                                 <FormControl>
-                                  <Input placeholder="e.g., Kohima, Nagaland" className="bg-input border-border" {...field} />
+                                  <Input placeholder="e.g., Kohima, Nagaland" className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30" {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -445,7 +445,7 @@ export default function Auditions() {
                                   <Mail className="h-4 w-4 text-festival-orange" /> Contact email *
                                 </FormLabel>
                                 <FormControl>
-                                  <Input type="email" placeholder="name@example.com" className="bg-input border-border" {...field} />
+                                  <Input type="email" placeholder="name@example.com" className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30" {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -460,7 +460,7 @@ export default function Auditions() {
                                   <Phone className="h-4 w-4 text-festival-orange" /> Phone (WhatsApp) *
                                 </FormLabel>
                                 <FormControl>
-                                  <Input placeholder="+91 9XXXXXXXXX" className="bg-input border-border" {...field} />
+                                  <Input placeholder="+91 9XXXXXXXXX" className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30" {...field} />
                                 </FormControl>
                                 <FormMessage />
                               </FormItem>
@@ -480,7 +480,7 @@ export default function Auditions() {
                               <FormControl>
                                 <Textarea
                                   placeholder="Instagram, YouTube, Facebook — paste one link per line"
-                                  className="bg-input border-border min-h-[70px]"
+                                  className="bg-zinc-950/80 border-white/20 text-white placeholder:text-gray-500 focus-visible:border-orange-400/60 focus-visible:ring-orange-400/30 min-h-[70px]"
                                   {...field}
                                 />
                               </FormControl>

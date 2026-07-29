@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import * as XLSX from "xlsx";
 import { Button } from "@/components/ui/button";
@@ -46,7 +46,6 @@ import {
   CheckSquare,
   Square,
   Eye,
-  Music2,
   User,
   MapPin,
   Phone,
@@ -71,8 +70,10 @@ interface Audition {
   socialLinks?: string;
   auditionVideoUrl: string;
   bandPhotoUrl?: string;
+  termsAccepted?: boolean;
   status: "pending" | "approved" | "rejected";
   createdAt: string;
+  updatedAt?: string;
 }
 
 const STATUS_COLORS: Record<string, string> = {
@@ -80,6 +81,30 @@ const STATUS_COLORS: Record<string, string> = {
   approved: "bg-green-500/20 text-green-300 border-green-500/40",
   rejected: "bg-red-500/20 text-red-300 border-red-500/40",
 };
+
+function DetailField({
+  label,
+  value,
+  pre = false,
+  icon,
+}: {
+  label: string;
+  value?: string | null;
+  pre?: boolean;
+  icon?: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-start gap-2">
+      {icon}
+      <div className="min-w-0">
+        <p className="text-xs text-gray-500">{label}</p>
+        <p className={`text-sm text-white break-words ${pre ? "whitespace-pre-wrap leading-relaxed" : ""}`}>
+          {value?.trim() ? value : "Not provided"}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export default function AdminAuditions() {
   const navigate = useNavigate();
@@ -194,21 +219,28 @@ export default function AdminAuditions() {
 
   const exportExcel = () => {
     const rows = (selected.size > 0 ? auditions.filter((a) => selected.has(a._id)) : filtered).map((a) => ({
-      "Band Name": a.bandName,
-      Genre: a.genre,
-      "Band Members": a.bandMembers,
-      "Band Bio": a.bandBio,
-      "Contact Person": a.contactPerson,
-      Email: a.contactEmail,
-      Phone: a.contactPhone,
-      "City / State": a.cityState,
+      "Band Name": a.bandName || "",
+      Genre: a.genre || "",
+      "Band Photo URL": a.bandPhotoUrl || "",
+      "Band Members & Instruments": a.bandMembers || "",
+      "Band Bio": a.bandBio || "",
+      "Audition Video URL": a.auditionVideoUrl || "",
+      "Contact Person": a.contactPerson || "",
+      "City & State": a.cityState || "",
+      "Contact Email": a.contactEmail || "",
+      "Phone (WhatsApp)": a.contactPhone || "",
       "Social Links": a.socialLinks || "",
-      "Audition Video": a.auditionVideoUrl,
-      "Band Photo": a.bandPhotoUrl || "",
-      Status: a.status,
-      "Submitted On": new Date(a.createdAt).toLocaleString(),
+      "Terms Accepted": a.termsAccepted ? "Yes" : "No",
+      Status: a.status || "",
+      "Submitted On": a.createdAt ? new Date(a.createdAt).toLocaleString("en-IN") : "",
     }));
     const ws = XLSX.utils.json_to_sheet(rows);
+    // Widen columns for readability
+    ws["!cols"] = [
+      { wch: 22 }, { wch: 16 }, { wch: 40 }, { wch: 40 }, { wch: 50 },
+      { wch: 40 }, { wch: 20 }, { wch: 22 }, { wch: 28 }, { wch: 18 },
+      { wch: 40 }, { wch: 14 }, { wch: 12 }, { wch: 20 },
+    ];
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Auditions");
     XLSX.writeFile(wb, `HMF_Auditions_${new Date().toISOString().slice(0, 10)}.xlsx`);
@@ -410,97 +442,94 @@ export default function AdminAuditions() {
               </DialogHeader>
 
               <div className="mt-4 space-y-5">
-                {/* Contact Info */}
+                {/* Band Information — mirrors form Step 2 */}
+                <section>
+                  <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 border-b border-white/10 pb-1">
+                    Band Information
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <DetailField label="Band Name" value={viewTarget.bandName} />
+                      <DetailField label="Primary Genre" value={viewTarget.genre} />
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1">Band Photo</p>
+                      {viewTarget.bandPhotoUrl ? (
+                        <div className="space-y-2">
+                          <img
+                            src={viewTarget.bandPhotoUrl}
+                            alt={viewTarget.bandName}
+                            className="w-full max-w-xs rounded-lg object-cover border border-white/10"
+                          />
+                          <a
+                            href={viewTarget.bandPhotoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs text-blue-400 hover:text-blue-300 break-all inline-flex items-center gap-1"
+                          >
+                            {viewTarget.bandPhotoUrl}
+                            <ExternalLink className="h-3 w-3 shrink-0" />
+                          </a>
+                        </div>
+                      ) : (
+                        <p className="text-sm text-gray-500">Not provided</p>
+                      )}
+                    </div>
+                    <DetailField label="Band Members & Instruments" value={viewTarget.bandMembers} pre />
+                    <DetailField label="Short Band Bio" value={viewTarget.bandBio} pre />
+                    <div>
+                      <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
+                        <Video className="h-3 w-3" /> Audition Video Link
+                      </p>
+                      {viewTarget.auditionVideoUrl ? (
+                        <a
+                          href={viewTarget.auditionVideoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm text-blue-400 hover:text-blue-300 break-all inline-flex items-center gap-1"
+                        >
+                          {viewTarget.auditionVideoUrl}
+                          <ExternalLink className="h-3 w-3 shrink-0" />
+                        </a>
+                      ) : (
+                        <p className="text-sm text-gray-500">Not provided</p>
+                      )}
+                    </div>
+                  </div>
+                </section>
+
+                {/* Contact Information — mirrors form Step 3 */}
                 <section>
                   <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 border-b border-white/10 pb-1">
                     Contact Information
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div className="flex items-start gap-2">
-                      <User className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-500">Contact Person</p>
-                        <p className="text-sm text-white">{viewTarget.contactPerson}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Mail className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-500">Email</p>
-                        <p className="text-sm text-white break-all">{viewTarget.contactEmail}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <Phone className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-500">Phone</p>
-                        <p className="text-sm text-white">{viewTarget.contactPhone}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <MapPin className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-500">City / State</p>
-                        <p className="text-sm text-white">{viewTarget.cityState}</p>
-                      </div>
-                    </div>
+                    <DetailField icon={<User className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />} label="Contact Person" value={viewTarget.contactPerson} />
+                    <DetailField icon={<MapPin className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />} label="City & State" value={viewTarget.cityState} />
+                    <DetailField icon={<Mail className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />} label="Contact Email" value={viewTarget.contactEmail} />
+                    <DetailField icon={<Phone className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />} label="Phone (WhatsApp)" value={viewTarget.contactPhone} />
+                  </div>
+                  <div className="mt-3">
+                    <p className="text-xs text-gray-500 mb-1 flex items-center gap-1">
+                      <LinkIcon className="h-3 w-3" /> Social Links
+                    </p>
+                    <p className={`text-sm whitespace-pre-wrap break-all ${viewTarget.socialLinks ? "text-blue-400" : "text-gray-500"}`}>
+                      {viewTarget.socialLinks || "Not provided"}
+                    </p>
                   </div>
                 </section>
 
-                {/* Band Details */}
+                {/* Terms */}
                 <section>
                   <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 border-b border-white/10 pb-1">
-                    Band Details
+                    Terms &amp; Conditions
                   </h3>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-2">
-                      <Music2 className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-500">Band Members</p>
-                        <p className="text-sm text-white whitespace-pre-wrap">{viewTarget.bandMembers}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <div className="h-4 w-4 shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-500">Band Bio</p>
-                        <p className="text-sm text-gray-200 whitespace-pre-wrap leading-relaxed">{viewTarget.bandBio}</p>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-                {/* Links */}
-                <section>
-                  <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-500 mb-3 border-b border-white/10 pb-1">
-                    Links
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex items-start gap-2">
-                      <Video className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-xs text-gray-500">Audition Video</p>
-                        <a
-                          href={viewTarget.auditionVideoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-sm text-blue-400 hover:text-blue-300 break-all flex items-center gap-1"
-                        >
-                          {viewTarget.auditionVideoUrl}
-                          <ExternalLink className="h-3 w-3 shrink-0" />
-                        </a>
-                      </div>
-                    </div>
-                    {viewTarget.socialLinks && (
-                      <div className="flex items-start gap-2">
-                        <LinkIcon className="h-4 w-4 text-gray-500 mt-0.5 shrink-0" />
-                        <div>
-                          <p className="text-xs text-gray-500">Social Links</p>
-                          <p className="text-sm text-blue-400 whitespace-pre-wrap break-all">{viewTarget.socialLinks}</p>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <p className="text-sm text-white">
+                    Terms Accepted:{" "}
+                    <span className={viewTarget.termsAccepted ? "text-green-400" : "text-red-400"}>
+                      {viewTarget.termsAccepted ? "Yes" : "No"}
+                    </span>
+                  </p>
                 </section>
 
                 {/* Status update inline */}

@@ -95,7 +95,7 @@ export function Navigation() {
               
               <Link to="/auditions">
                 <Button className="btn-festival ml-4">
-                  Auditions opening soon
+                  Ticket to Hornbill 
                 </Button>
               </Link>
              
@@ -162,7 +162,7 @@ export function Navigation() {
                    className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
                    onClick={() => setIsOpen(false)}
                  >
-                   Auditions opening soon
+                   Ticket to Hornbill
                  </Button>
                 </Link>
               
