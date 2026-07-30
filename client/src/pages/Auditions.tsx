@@ -164,23 +164,8 @@ export default function Auditions() {
   return (
     <div className="min-h-screen bg-background">
 
-      {/* ── Banner ── */}
-      <section className="relative pt-0 pb-0 px-0">
-        <div className="w-full">
-          <picture>
-            <source media="(min-width: 768px)" srcSet="/audition_banner.jpeg" />
-            <img
-              src="/audition_banner_mob.jpeg"
-              alt="Ticket to Hornbill - Band Auditions 2026"
-              className="w-full h-auto block object-cover object-center"
-              loading="eager"
-            />
-          </picture>
-        </div>
-      </section>
-
       {/* ── Registration Form ── */}
-      <section className="py-6 sm:py-10 px-3 sm:px-6 lg:px-8 bg-gradient-to-b from-black via-zinc-950 to-black">
+      <section className="pt-20 sm:pt-24 pb-6 sm:pb-10 px-3 sm:px-6 lg:px-8 bg-gradient-to-b from-black via-zinc-950 to-black">
         <div className="max-w-4xl mx-auto">
           <Card className="bg-zinc-900/90 border border-white/20 shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_20px_60px_-20px_rgba(0,0,0,0.8)] rounded-2xl overflow-hidden">
             <CardHeader className="border-b border-white/15 bg-zinc-900/80 pb-4 sm:pb-5 px-4 sm:px-6 pt-5 sm:pt-6">
@@ -190,7 +175,7 @@ export default function Auditions() {
               </CardTitle>
               <CardDescription className="text-gray-400 text-xs sm:text-sm mt-1.5 leading-relaxed">
                 {isSubmissionOpen
-                  ? 'Submissions are open. All fields marked * are required — your details will be used for evaluation and communication.'
+                  ? 'Submissions are open. All fields marked * are required. Your details will be used for evaluation and communication.'
                   : 'Submissions have closed. Thank you for participating!'}
               </CardDescription>
             </CardHeader>

@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+// import { Link } from "react-router-dom";
+// import { ArrowRight } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const HeroSection: React.FC = () => {
@@ -10,7 +10,20 @@ const HeroSection: React.FC = () => {
   return (
     <section className="w-full bg-black">
 
-      {/* ── HERO IMAGE + OVERLAY ── */}
+      {/* ── HERO IMAGE (Ticket to Hornbill banners) ── */}
+      <div className="relative w-full overflow-hidden bg-black">
+        <picture>
+          <source media="(min-width: 768px)" srcSet="/audition_banner.jpeg" />
+          <img
+            src="/audition_banner_mob.jpeg"
+            alt="Ticket to Hornbill - Band Auditions 2026"
+            className="w-full h-auto block object-cover object-center"
+            loading="eager"
+          />
+        </picture>
+      </div>
+
+      {/* ── PREVIOUS HERO (commented — restore to use old banner + overlay) ──
       <div className="relative w-full flex items-center justify-center overflow-hidden bg-black">
         <picture className="block w-full h-auto">
           <source media="(min-width:1024px)" srcSet="/new.png" />
@@ -23,27 +36,18 @@ const HeroSection: React.FC = () => {
           />
         </picture>
 
-        {/* Stronger fade so the image steps back and the text owns the space */}
         <div className="absolute inset-0 bg-black/55 pointer-events-none" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
 
-        {/* ── OVERLAY ── */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 sm:px-16 pointer-events-none select-none">
-
-          {/* Eyebrow */}
           <p className="text-[10px] sm:text-xs tracking-[0.35em] uppercase text-white/40 font-medium mb-4 sm:mb-6 lg:mb-8">
             Est. 2000 &nbsp;·&nbsp; Nagaland, India
           </p>
 
-          {/* ── MAIN TITLE — one unified name ── */}
           <h1 className="font-righteous leading-none text-center">
-
-            {/* "HORNBILL" */}
             <span className="block text-[15vw] sm:text-[13vw] md:text-[12vw] lg:text-[11vw] xl:text-[10vw] text-white tracking-tight">
               Hornbill
             </span>
-
-            {/* "MUSIC FESTIVAL" — half the size of Hornbill, same visual family */}
             <span
               className="block text-white/90 tracking-[0.15em] sm:tracking-[0.2em] uppercase"
               style={{ fontSize: "clamp(1.1rem, 6vw, 5.5rem)", marginTop: "0.15em" }}
@@ -54,21 +58,17 @@ const HeroSection: React.FC = () => {
             </span>
           </h1>
 
-          {/* Blue-to-orange gradient rule */}
           <div
             className="w-16 sm:w-24 lg:w-36 h-[2px] my-5 sm:my-7 lg:my-8"
             style={{ background: "linear-gradient(90deg, #1e90ff, #ff6b00)" }}
           />
 
-          {/* Tagline */}
           <p className="text-white/55 text-sm sm:text-lg md:text-xl lg:text-2xl font-light tracking-wide">
             Ticket to Hornbill is&nbsp;
             <span className="text-white/90 font-normal">live — your stage awaits.</span>
           </p>
 
-          {/* CTA — animated gradient border */}
           <div className="mt-7 sm:mt-9 lg:mt-11 pointer-events-auto">
-            {/* Wrapper spins the gradient border */}
             <div className="relative inline-flex p-[2px] rounded-sm"
               style={{
                 background: "linear-gradient(90deg, #1e90ff, #ff6b00, #1e90ff)",
@@ -80,7 +80,7 @@ const HeroSection: React.FC = () => {
                 to="/auditions"
                 className="group relative inline-flex items-center gap-3 bg-black/80 hover:bg-black/60 text-white px-8 sm:px-11 lg:px-14 py-3 sm:py-4 text-sm sm:text-base lg:text-lg font-medium tracking-widest uppercase transition-all duration-300"
               >
-                Ticket to Hornbill 
+                Ticket to Hornbill
                 <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-200" />
               </Link>
             </div>
@@ -92,9 +92,9 @@ const HeroSection: React.FC = () => {
               100% { background-position: 200% center; }
             }
           `}</style>
-
         </div>
       </div>
+      ── END PREVIOUS HERO ── */}
 
       {/* ── STATS ── */}
       <div className="max-w-6xl mx-auto px-4 py-8">
