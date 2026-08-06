@@ -84,7 +84,7 @@ export default function TermsDialog() {
                   <span className="text-gray-300">16–17 October 2026</span>
                 </p>
                 <p className="text-gray-400 pl-0 sm:pl-1">
-                  (16th October – Nagaland's Culture Showcase)
+                  (16th October Nagaland's Culture Showcase)
                 </p>
                 <p className="text-gray-400 pl-0 sm:pl-1">
                   (17th October – Band Battle)
@@ -107,14 +107,14 @@ export default function TermsDialog() {
 
               <RoundEntry number="1" title="Round 1 – Video Submission">
                 <BulletList items={[
-                  <>Bands must submit a live performance video/link on or before <strong className="text-white/80">25th August 2026</strong>.</>,
+                  <>Bands must submit a live performance video/link on or before <strong className="text-white/80">31st August 2026</strong>.</>,
                   "A jury will shortlist 10 bands for the final rounds.",
                 ]} />
               </RoundEntry>
 
               <RoundEntry number="2" title="Round 2 – Selection Announcement & Live Performance">
                 <BulletList items={[
-                  <>TaFMA will announce the 10 selected bands on <strong className="text-white/80">31st August 2026</strong> via social media and its website.</>,
+                  <>TaFMA will announce the 10 selected bands on <strong className="text-white/80">5th September 2026</strong> via social media and its website.</>,
                   "Bands must perform live as per the given schedule.",
                   "No rescheduling of performance slots will be entertained.",
                   <>Once selected, the Bands must confirm their participation by <strong className="text-white/80">15th September 2026</strong>.</>,
