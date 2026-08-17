@@ -62,7 +62,7 @@ export function Navigation() {
             <Link to="/" className="flex items-center space-x-2 z-50 relative">
               {/* <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center"> */}
                <img 
-  src="/hmf-logo.png" 
+  src="/hmf-logo.png?v=20260817" 
   alt="HMF Logo" 
   className="w-12 h-12" 
   loading="lazy" 
