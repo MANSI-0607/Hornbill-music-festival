@@ -16,6 +16,18 @@
       ]
     },
     {
+      "source": "/audition_banner.jpeg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/audition_banner_mob.jpeg",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
       "source": "/:all*(jpg|jpeg|webp|gif|svg)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }

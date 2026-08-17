@@ -13,9 +13,9 @@ const HeroSection: React.FC = () => {
       {/* ── HERO IMAGE (Ticket to Hornbill banners) ── */}
       <div className="relative w-full overflow-hidden bg-black">
         <picture>
-          <source media="(min-width: 768px)" srcSet="/audition_banner.jpeg" />
+          <source media="(min-width: 768px)" srcSet="/audition_banner.jpeg?v=20260817" />
           <img
-            src="/audition_banner_mob.jpeg"
+            src="/audition_banner_mob.jpeg?v=20260817"
             alt="Ticket to Hornbill - Band Auditions 2026"
             className="w-full h-auto block object-cover object-center"
             loading="eager"
