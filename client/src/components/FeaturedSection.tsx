@@ -36,13 +36,13 @@ const FeaturedSection = () => {
 
   const featuredCards = [
     {
-      title: 'Ticket to Hornbill is Live!',
-      description: 'India\'s Biggest Band Battle is open for registrations. Submit your audition and earn your chance to perform on Nagaland\'s biggest stage!',
-      cta: 'Register Now',
+      title: 'Ticket to Hornbill — Auditions Closed',
+      description: 'Video submissions for India\'s Biggest Band Battle are now closed. Thank you to all the bands who applied — shortlisted acts will be contacted soon.',
+      cta: 'Auditions Closed',
       variant: 'festival',
       icon: Users,
-      gradient: 'from-green-900/30 to-festival-orange/20',
-      border: 'border-green-500/40',
+      gradient: 'from-zinc-900/40 to-festival-orange/10',
+      border: 'border-white/20',
       link: '/auditions'
     },
     {

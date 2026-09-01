@@ -159,7 +159,7 @@ export default function Auditions() {
   const bandBioLength = form.watch('bandBio')?.length || 0;
   const bandMembersLength = form.watch('bandMembers')?.length || 0;
   const termsAccepted = form.watch('termsAccepted') || false;
-  const isSubmissionOpen = true;
+  const isSubmissionOpen = false;
 
   return (
     <div className="min-h-screen bg-background">
@@ -184,12 +184,15 @@ export default function Auditions() {
               {!isSubmissionOpen ? (
                 <div className="p-8 text-center">
                   <Clock className="h-12 w-12 text-primary mx-auto mb-4" />
-                  <h2 className="text-2xl md:text-3xl font-righteous text-primary mb-4">Results Announced!</h2>
+                  <h2 className="text-2xl md:text-3xl font-righteous text-primary mb-4">Auditions Closed</h2>
                   <p className="text-lg text-gray-300 mb-4">
-                    Thank you to all the amazing bands who auditioned! 🎶 The submission window is now closed.
+                    Ticket to Hornbill video submissions are now closed. Thank you to every band that applied!
+                  </p>
+                  <p className="text-base text-gray-400 mb-2">
+                    Shortlisted bands will be contacted via email. Stay tuned for updates.
                   </p>
                   <p className="text-xl font-bold text-primary">
-                    See results on Instagram:{' '}
+                    Follow us on Instagram:{' '}
                     <a href="https://www.instagram.com/hornbill_music/" target="_blank" rel="noopener noreferrer" className="underline text-white">
                       @hornbill_music
                     </a>
