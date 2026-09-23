@@ -1,16 +1,117 @@
-import React from "react";
-// import { Link } from "react-router-dom";
-// import { ArrowRight } from "lucide-react";
+import React, { useState, useEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { toast } from "sonner";
+
+interface HeroImage {
+  _id: string;
+  desktop: string;
+  mobile: string;
+  alt: string;
+}
+
+const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
 
 const HeroSection: React.FC = () => {
   const { elementRef: statsRef, isVisible: statsVisible } =
     useScrollAnimation<HTMLDivElement>();
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [heroImages, setHeroImages] = useState<HeroImage[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch hero banners set from Admin Dashboard
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${API_BASE_URL}/hero`);
+        if (!res.ok) throw new Error("Failed to fetch");
+        const data = await res.json();
+        setHeroImages(Array.isArray(data) ? data : []);
+      } catch {
+        toast.error("Failed to load hero images");
+        setHeroImages([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
+  }, []);
+
+  // Auto-advance carousel every 5 seconds
+  useEffect(() => {
+    if (heroImages.length <= 1 || loading) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [heroImages.length, loading]);
+
   return (
     <section className="w-full bg-black">
 
-      {/* ── HERO IMAGE (Ticket to Hornbill banners) ── */}
+      {/* ── HERO CAROUSEL (from Admin / DB) ── */}
+      <div className="relative w-full flex items-center justify-center overflow-hidden bg-black min-h-[40vh]">
+        {loading ? (
+          <div className="py-24 text-center text-white/50 text-sm">Loading…</div>
+        ) : heroImages.length > 0 ? (
+          <>
+            {heroImages.map((image, index) => (
+              <div
+                key={image._id || index}
+                className={`w-full transition-opacity duration-1000 ${
+                  index === currentSlide ? "opacity-100" : "opacity-0 absolute inset-0"
+                }`}
+              >
+                <picture className="block w-full h-auto">
+                  <source media="(min-width:1024px)" srcSet={image.desktop} />
+                  <source media="(max-width:720px)" srcSet={image.mobile} />
+                  <img
+                    src={image.desktop}
+                    alt={image.alt || "Hornbill Music Festival"}
+                    className="w-full h-auto block object-contain md:object-scale-down max-w-none"
+                    style={{ width: "100vw", height: "auto", display: "block" }}
+                  />
+                </picture>
+              </div>
+            ))}
+
+            {heroImages.length > 1 && (
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                {heroImages.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => setCurrentSlide(index)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      index === currentSlide
+                        ? "bg-white w-8"
+                        : "bg-white/50 hover:bg-white/75 w-2"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          /* Fallback if no banners in DB yet */
+          <picture>
+            <source media="(min-width: 768px)" srcSet="/audition_banner.jpeg?v=20260817" />
+            <img
+              src="/audition_banner_mob.jpeg?v=20260817"
+              alt="Hornbill Music Festival"
+              className="w-full h-auto block object-cover object-center"
+              loading="eager"
+            />
+          </picture>
+        )}
+      </div>
+
+      {/* ── PREVIOUS STATIC / OVERLAY HERO (kept for reference) ──
       <div className="relative w-full overflow-hidden bg-black">
         <picture>
           <source media="(min-width: 768px)" srcSet="/audition_banner.jpeg?v=20260817" />
@@ -22,79 +123,7 @@ const HeroSection: React.FC = () => {
           />
         </picture>
       </div>
-
-      {/* ── PREVIOUS HERO (commented — restore to use old banner + overlay) ──
-      <div className="relative w-full flex items-center justify-center overflow-hidden bg-black">
-        <picture className="block w-full h-auto">
-          <source media="(min-width:1024px)" srcSet="/new.png" />
-          <source media="(max-width:720px)" srcSet="/new2.png" />
-          <img
-            src="/new.png"
-            alt="Hero - Hornbill Music Festival"
-            className="w-full h-auto block object-contain md:object-scale-down max-w-none"
-            style={{ width: "100vw", height: "auto", display: "block" }}
-          />
-        </picture>
-
-        <div className="absolute inset-0 bg-black/55 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
-
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 sm:px-16 pointer-events-none select-none">
-          <p className="text-[10px] sm:text-xs tracking-[0.35em] uppercase text-white/40 font-medium mb-4 sm:mb-6 lg:mb-8">
-            Est. 2000 &nbsp;·&nbsp; Nagaland, India
-          </p>
-
-          <h1 className="font-righteous leading-none text-center">
-            <span className="block text-[15vw] sm:text-[13vw] md:text-[12vw] lg:text-[11vw] xl:text-[10vw] text-white tracking-tight">
-              Hornbill
-            </span>
-            <span
-              className="block text-white/90 tracking-[0.15em] sm:tracking-[0.2em] uppercase"
-              style={{ fontSize: "clamp(1.1rem, 6vw, 5.5rem)", marginTop: "0.15em" }}
-            >
-              <span style={{ color: "#1e90ff" }}>Music</span>
-              {" "}
-              <span style={{ color: "#ff6b00" }}>Festival</span>
-            </span>
-          </h1>
-
-          <div
-            className="w-16 sm:w-24 lg:w-36 h-[2px] my-5 sm:my-7 lg:my-8"
-            style={{ background: "linear-gradient(90deg, #1e90ff, #ff6b00)" }}
-          />
-
-          <p className="text-white/55 text-sm sm:text-lg md:text-xl lg:text-2xl font-light tracking-wide">
-            Ticket to Hornbill is&nbsp;
-            <span className="text-white/90 font-normal">live — your stage awaits.</span>
-          </p>
-
-          <div className="mt-7 sm:mt-9 lg:mt-11 pointer-events-auto">
-            <div className="relative inline-flex p-[2px] rounded-sm"
-              style={{
-                background: "linear-gradient(90deg, #1e90ff, #ff6b00, #1e90ff)",
-                backgroundSize: "200% auto",
-                animation: "border-spin 3s linear infinite",
-              }}
-            >
-              <Link
-                to="/auditions"
-                className="group relative inline-flex items-center gap-3 bg-black/80 hover:bg-black/60 text-white px-8 sm:px-11 lg:px-14 py-3 sm:py-4 text-sm sm:text-base lg:text-lg font-medium tracking-widest uppercase transition-all duration-300"
-              >
-                Ticket to Hornbill
-                <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform duration-200" />
-              </Link>
-            </div>
-          </div>
-
-          <style>{`
-            @keyframes border-spin {
-              0%   { background-position: 0% center; }
-              100% { background-position: 200% center; }
-            }
-          `}</style>
-        </div>
-      </div>
-      ── END PREVIOUS HERO ── */}
+      ── END STATIC HERO ── */}
 
       {/* ── STATS ── */}
       <div className="max-w-6xl mx-auto px-4 py-8">
