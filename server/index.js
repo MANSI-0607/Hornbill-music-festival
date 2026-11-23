@@ -42,6 +42,7 @@ app.use('/api', routes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/merch', merchRoutes);
+app.use('/merch', merchRoutes);
 app.use('/api/hero', heroRoutes);
 
 app.get("/", (req, res) => {

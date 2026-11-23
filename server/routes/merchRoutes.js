@@ -1,11 +1,23 @@
 import { Router } from 'express';
-import { listMerch, createMerch, updateMerch, deleteMerch, requireAdmin, createCartSession, getCartSession } from '../controllers/merchController.js';
+import {
+  listMerch,
+  createMerch,
+  updateMerch,
+  deleteMerch,
+  requireAdmin,
+  createCartSession,
+  getCartSession,
+  listCategoryShowcases,
+  saveCategoryShowcase,
+} from '../controllers/merchController.js';
 import { uploadMerch } from '../middleware/upload.js';
 
 const router = Router();
 
 // Public
 router.get('/', listMerch);
+router.get('/categories/showcase', listCategoryShowcases);
+router.post('/categories/showcase', requireAdmin, saveCategoryShowcase);
 
 router.post('/upload-image', requireAdmin, uploadMerch.single('image'), (req, res) => {
   try {
