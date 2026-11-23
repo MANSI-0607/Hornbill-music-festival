@@ -446,3 +446,267 @@ export const saveCategoryShowcase = async (req, res) => {
     return res.status(500).json({ message: 'Failed to save category showcase' });
   }
 };
+
+export const OFFICIAL_CATALOG_ITEMS = [
+  {
+    productCode: 'HMF-RNT',
+    name: 'Classic Round-Neck Tee',
+    category: 'T-Shirts',
+    price: 535,
+    fabric: '100% cotton, bio-washed',
+    weight: '180 GSM',
+    fit: 'Regular, round neck',
+    description: 'Soft, bio-washed cotton with a small chest mark and one big back print.',
+    designs: [
+      { name: 'This Way to Kisama', code: 'KISAMA' },
+      { name: 'Dance Floor', code: 'DANCE' },
+      { name: 'Good Vibes', code: 'VIBES' },
+      { name: "Don't Stop the Music", code: 'STOP' },
+      { name: 'Headliner', code: 'HEADLINER' },
+      { name: 'All Access', code: 'ACCESS' },
+    ],
+    colours: [
+      { name: 'Black', hex: '#111111' },
+      { name: 'White', hex: '#FFFFFF' },
+      { name: 'Navy', hex: '#18233C' },
+      { name: 'Cream', hex: '#F4EEDD' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    hasPackOption: false,
+    packPrice: 0,
+    packLabel: 'Pack of 10',
+    stock: 100,
+    isActive: true,
+  },
+  {
+    productCode: 'HMF-OST',
+    name: 'Oversized Tee',
+    category: 'T-Shirts',
+    price: 585,
+    fabric: '100% cotton, bio-washed',
+    weight: '180 GSM',
+    fit: 'Oversized, drop shoulder',
+    description: 'Drop-shoulder, boxy and roomy: the streetwear cut for the big back print.',
+    designs: [
+      { name: 'This Way to Kisama', code: 'KISAMA' },
+      { name: 'Dance Floor', code: 'DANCE' },
+      { name: 'Good Vibes', code: 'VIBES' },
+      { name: "Don't Stop the Music", code: 'STOP' },
+      { name: 'Headliner', code: 'HEADLINER' },
+      { name: 'All Access', code: 'ACCESS' },
+    ],
+    colours: [
+      { name: 'Black', hex: '#111111' },
+      { name: 'White', hex: '#FFFFFF' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    hasPackOption: false,
+    packPrice: 0,
+    packLabel: 'Pack of 10',
+    stock: 100,
+    isActive: true,
+  },
+  {
+    productCode: 'HMF-HD320',
+    name: 'Pullover Hoodie',
+    category: 'Winterwear',
+    price: 999,
+    fabric: 'Poly-cotton 3-thread fleece',
+    weight: '320 GSM',
+    fit: 'Regular pullover',
+    description: 'Warm 320 GSM fleece with a kangaroo pocket for cold Kisama evenings.',
+    designs: [
+      { name: 'Headliner', code: 'HEADLINER' },
+      { name: 'Main Stage', code: 'STAGE' },
+      { name: "Don't Stop the Music", code: 'STOP' },
+      { name: 'All Access', code: 'ACCESS' },
+    ],
+    colours: [
+      { name: 'Black', hex: '#111111' },
+      { name: 'White', hex: '#FFFFFF' },
+      { name: 'Off-white', hex: '#EDE7D9' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    hasPackOption: false,
+    packPrice: 0,
+    packLabel: 'Pack of 10',
+    stock: 100,
+    isActive: true,
+  },
+  {
+    productCode: 'HMF-SWT',
+    name: 'Crew Sweatshirt',
+    category: 'Winterwear',
+    price: 800,
+    fabric: 'Cotton 3-thread fleece',
+    weight: '320 GSM',
+    fit: 'Regular crew neck',
+    description: 'Soft brushed fleece with ribbed cuffs and hem.',
+    designs: [
+      { name: 'Headliner', code: 'HEADLINER' },
+      { name: 'Main Stage', code: 'STAGE' },
+      { name: "Don't Stop the Music", code: 'STOP' },
+      { name: 'All Access', code: 'ACCESS' },
+    ],
+    colours: [
+      { name: 'Black', hex: '#111111' },
+      { name: 'White', hex: '#FFFFFF' },
+    ],
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    hasPackOption: false,
+    packPrice: 0,
+    packLabel: 'Pack of 10',
+    stock: 100,
+    isActive: true,
+  },
+  {
+    productCode: 'HMF-TOTE',
+    name: 'Tote Bag',
+    category: 'Accessories',
+    price: 370,
+    fabric: 'Cotton canvas (16 × 14 in / 40 × 35 cm)',
+    weight: 'Heavy canvas',
+    fit: 'Long shoulder straps · Front print only',
+    description: 'A sturdy canvas tote for the festival grounds and every day after. 16 × 14 in (40 × 35 cm).',
+    designs: [
+      { name: "Don't Stop the Music", code: 'STOP' },
+      { name: 'Main Stage', code: 'STAGE' },
+      { name: 'This Way to Kisama', code: 'KISAMA' },
+    ],
+    colours: [
+      { name: 'Black', hex: '#111111' },
+      { name: 'Natural', hex: '#E9E3D3' },
+    ],
+    sizes: ['16 × 14 in'],
+    hasPackOption: false,
+    packPrice: 0,
+    packLabel: 'Pack of 10',
+    stock: 100,
+    isActive: true,
+  },
+  {
+    productCode: 'HMF-MUG',
+    name: 'Coffee Mug',
+    category: 'Accessories',
+    price: 420,
+    fabric: 'White ceramic, glossy',
+    weight: 'Glossy ceramic',
+    fit: 'Full colour signboard print · Hand wash',
+    description: 'White ceramic mug with the yellow Hornbill Music Festival signboard.',
+    designs: [
+      { name: 'Hornbill Music Festival signboard', code: 'SIGN' },
+    ],
+    colours: [
+      { name: 'White', hex: '#FFFFFF' },
+    ],
+    sizes: ['Standard'],
+    hasPackOption: false,
+    packPrice: 0,
+    packLabel: 'Pack of 10',
+    stock: 100,
+    isActive: true,
+  },
+  {
+    productCode: 'HMF-BDG',
+    name: 'Round Pin Badge',
+    category: 'Accessories',
+    price: 35,
+    hasPackOption: true,
+    packPrice: 470,
+    packLabel: 'Pack of 10 (One of each 10 designs · Shipping included)',
+    fabric: '58 mm round with safety pin',
+    weight: 'Glossy finish',
+    fit: '58 mm pin badge',
+    description: 'Ten pin badges from the Music Festival artwork. Single (any design): ₹35 (add-on to any order), Pack of 10: ₹470 (one of each of the 10 designs, shipping included).',
+    designs: [
+      { name: 'Dance Floor', code: 'DANCE' },
+      { name: 'Good Vibes', code: 'VIBES' },
+      { name: 'Double Screen', code: 'PAIR' },
+      { name: "Don't Stop the Music", code: 'STOP' },
+      { name: 'This Way to Kisama', code: 'KISAMA' },
+      { name: 'Headliner', code: 'HEADLINER' },
+      { name: 'Main Stage', code: 'STAGE' },
+      { name: 'Fest This Way', code: 'SIGN' },
+      { name: '#HMF', code: 'HEX' },
+      { name: 'The Fun Starts Here', code: 'FUN' },
+    ],
+    colours: [
+      { name: 'Glossy Pin', hex: '#E2E8F0' },
+    ],
+    sizes: ['58 mm'],
+    stock: 200,
+    isActive: true,
+  },
+  {
+    productCode: 'HMF-STK',
+    name: 'Die-cut Sticker',
+    category: 'Accessories',
+    price: 15,
+    hasPackOption: true,
+    packPrice: 270,
+    packLabel: 'Pack of 10 (One of each 10 designs · Shipping included)',
+    fabric: 'Die-cut vinyl up to 3 × 3 in',
+    weight: 'Waterproof vinyl',
+    fit: 'Die-cut to shape with white border',
+    description: 'Every sign from the Music Festival artwork, cut to shape. Single (any design): ₹15 (add-on to any order), Pack of 10: ₹270 (one of each of the 10 designs, shipping included).',
+    designs: [
+      { name: 'Dance Floor', code: 'DANCE' },
+      { name: 'Good Vibes', code: 'VIBES' },
+      { name: 'Double Screen', code: 'PAIR' },
+      { name: "Don't Stop the Music", code: 'STOP' },
+      { name: 'This Way to Kisama', code: 'KISAMA' },
+      { name: 'Headliner', code: 'HEADLINER' },
+      { name: 'Main Stage', code: 'STAGE' },
+      { name: 'Fest This Way', code: 'SIGN' },
+      { name: '#HMF', code: 'HEX' },
+      { name: 'The Fun Starts Here', code: 'FUN' },
+    ],
+    colours: [
+      { name: 'White Border', hex: '#FFFFFF' },
+    ],
+    sizes: ['Up to 3 × 3 in'],
+    stock: 200,
+    isActive: true,
+  },
+];
+
+export const seedOfficialCatalog = async (req, res) => {
+  try {
+    const results = [];
+    for (const item of OFFICIAL_CATALOG_ITEMS) {
+      // Find existing item by productCode or create new
+      const existing = await MerchItem.findOne({ productCode: item.productCode });
+      if (existing) {
+        // Update product specifications and options, preserving existing images and variant images
+        existing.name = item.name;
+        existing.category = item.category;
+        existing.price = item.price;
+        existing.fabric = item.fabric;
+        existing.weight = item.weight;
+        existing.fit = item.fit;
+        existing.description = item.description;
+        existing.designs = item.designs;
+        existing.colours = item.colours;
+        existing.sizes = item.sizes;
+        existing.hasPackOption = item.hasPackOption;
+        existing.packPrice = item.packPrice;
+        existing.packLabel = item.packLabel;
+        existing.isActive = true;
+        await existing.save();
+        results.push(existing);
+      } else {
+        const created = await MerchItem.create(item);
+        results.push(created);
+      }
+    }
+    return res.status(200).json({
+      success: true,
+      message: 'Official Hornbill Music Festival catalogue synced successfully',
+      count: results.length,
+      items: results,
+    });
+  } catch (err) {
+    console.error('Failed to seed official catalogue:', err);
+    return res.status(500).json({ message: 'Failed to seed official catalogue', error: err?.message });
+  }
+};

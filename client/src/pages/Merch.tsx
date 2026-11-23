@@ -93,13 +93,101 @@ const CATEGORIES = ["All", "T-Shirts", "Winterwear", "Accessories"];
 const line = "border-[#ebe6d9]/15";
 const muted = "text-[#ebe6d9]/60";
 
+const SIZE_GUIDES: Record<
+  string,
+  {
+    title: string;
+    specs: string;
+    headers: string[];
+    rows: { size: string; values: string[] }[];
+    note: string;
+  }
+> = {
+  "HMF-RNT": {
+    title: "Classic Round-Neck Tee",
+    specs: "100% bio-washed cotton · 180 GSM · Regular, round neck",
+    headers: ["Size", "Chest (in)", "Length (in)", "Sleeve (in)"],
+    rows: [
+      { size: "S", values: ["38", "26", "8"] },
+      { size: "M", values: ["40", "27", "8.5"] },
+      { size: "L", values: ["42", "28", "9"] },
+      { size: "XL", values: ["44", "29", "9.5"] },
+      { size: "XXL", values: ["46", "30", "10.5"] },
+    ],
+    note: "Garment laid flat. ±0.5–1 in tolerance. Includes GST & free shipping across India.",
+  },
+  "HMF-OST": {
+    title: "Oversized Tee",
+    specs: "100% bio-washed cotton · 180 GSM · Oversized, drop shoulder",
+    headers: ["Size", "Chest (in)", "Length (in)", "Sleeve (in)"],
+    rows: [
+      { size: "S", values: ["42", "27.5", "8.5"] },
+      { size: "M", values: ["44", "28", "9"] },
+      { size: "L", values: ["46", "28.5", "9.5"] },
+      { size: "XL", values: ["48", "29", "10"] },
+      { size: "XXL", values: ["50", "29.5", "10.5"] },
+    ],
+    note: "Drop-shoulder, boxy and roomy streetwear cut for the big back print. Garment laid flat. ±0.5–1 in tolerance.",
+  },
+  "HMF-HD320": {
+    title: "Pullover Hoodie",
+    specs: "Poly-cotton 3-thread fleece · 320 GSM · Kangaroo pocket",
+    headers: ["Size", "Chest (in)", "Length (in)", "Shoulder (in)", "Sleeve (in)"],
+    rows: [
+      { size: "S", values: ["38", "27", "16.5", "23.5"] },
+      { size: "M", values: ["40", "28", "17.5", "24"] },
+      { size: "L", values: ["42", "29", "18.5", "24.5"] },
+      { size: "XL", values: ["44", "30", "19.5", "25"] },
+      { size: "XXL", values: ["46", "31", "20.5", "25.5"] },
+    ],
+    note: "Warm 320 GSM fleece for cold Kisama evenings. Garment laid flat. ±0.5–1 in tolerance.",
+  },
+  "HMF-SWT": {
+    title: "Crew Sweatshirt",
+    specs: "Cotton 3-thread fleece · 320 GSM · Ribbed cuffs & hem",
+    headers: ["Size", "Chest (in)", "Length (in)", "Shoulder (in)", "Sleeve (in)"],
+    rows: [
+      { size: "S", values: ["38", "27", "16.5", "23.5"] },
+      { size: "M", values: ["40", "28", "17.5", "24"] },
+      { size: "L", values: ["42", "29", "18.5", "24.5"] },
+      { size: "XL", values: ["44", "30", "19.5", "25"] },
+      { size: "XXL", values: ["46", "31", "20.5", "25.5"] },
+    ],
+    note: "Soft brushed fleece. Garment laid flat. ±0.5–1 in tolerance.",
+  },
+};
+
+const isCombinationUnavailable = (productCode?: string, designName?: string, colourName?: string) => {
+  if (!productCode || !designName || !colourName) return false;
+  const d = designName.toLowerCase().trim();
+  const c = colourName.toLowerCase().trim();
+  const code = productCode.toUpperCase();
+
+  if (code.includes("RNT")) {
+    if ((d.includes("kisama") || d.includes("headliner")) && (c === "black" || c === "navy")) {
+      return true;
+    }
+  }
+  if (code.includes("OST")) {
+    if ((d.includes("kisama") || d.includes("headliner")) && c === "black") {
+      return true;
+    }
+  }
+  if (code.includes("HD320") || code.includes("SWT")) {
+    if (d.includes("headliner") && c === "black") {
+      return true;
+    }
+  }
+  return false;
+};
+
 export default function Merch() {
   const [merchItems, setMerchItems] = useState<MerchItem[]>([]);
   const [categoryShowcases, setCategoryShowcases] = useState<CategoryShowcase[]>([]);
   const [activeCategory, setActiveCategory] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeSizeChart, setActiveSizeChart] = useState<{ itemName: string; chartUrl: string } | null>(null);
+  const [activeSizeChart, setActiveSizeChart] = useState<{ itemName: string; chartUrl?: string; productCode?: string } | null>(null);
 
   const [cart, setCart] = useState<CartEntry[]>(() => {
     try {
@@ -385,7 +473,9 @@ export default function Merch() {
                       key={item._id}
                       item={item}
                       onAddToCart={addToCart}
-                      onOpenSizeChart={(chartUrl, itemName) => setActiveSizeChart({ chartUrl, itemName })}
+                      onOpenSizeChart={(chartUrl, itemName, productCode) =>
+                        setActiveSizeChart({ chartUrl, itemName, productCode })
+                      }
                     />
                   ))}
                 </div>
@@ -546,53 +636,94 @@ export default function Merch() {
 
       {/* Size chart modal */}
       <AnimatePresence>
-        {activeSizeChart && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/75 flex items-center justify-center p-4 sm:p-6"
-            onClick={() => setActiveSizeChart(null)}
-          >
+        {activeSizeChart && (() => {
+          const code = activeSizeChart.productCode?.toUpperCase() || "";
+          const guideKey = Object.keys(SIZE_GUIDES).find((k) => code.includes(k.replace("HMF-", "")) || code === k) || (code.includes("RNT") ? "HMF-RNT" : "");
+          const guide = guideKey ? SIZE_GUIDES[guideKey] : null;
+
+          return (
             <motion.div
-              initial={{ y: 12, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 12, opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="max-w-3xl w-full bg-[#1b2c23] rounded-sm p-5"
-              onClick={(e) => e.stopPropagation()}
-              role="dialog"
-              aria-label={`Size guide for ${activeSizeChart.itemName}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+              onClick={() => setActiveSizeChart(null)}
             >
-              <div className={`flex items-center justify-between pb-3 mb-4 border-b ${line}`}>
-                <h3 className="font-semibold">Size guide, {activeSizeChart.itemName}</h3>
-                <button onClick={() => setActiveSizeChart(null)} className={`${muted} hover:text-white`} aria-label="Close size guide">
-                  <X size={20} />
-                </button>
-              </div>
+              <motion.div
+                initial={{ y: 12, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 12, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="max-w-2xl w-full bg-[#1b2c23] rounded-lg border border-[#ebe6d9]/20 p-5 sm:p-6 shadow-2xl"
+                onClick={(e) => e.stopPropagation()}
+                role="dialog"
+                aria-label={`Size guide for ${activeSizeChart.itemName}`}
+              >
+                <div className={`flex items-start justify-between pb-3 mb-4 border-b ${line}`}>
+                  <div>
+                    <h3 className="font-semibold text-lg text-white">Size guide · {activeSizeChart.itemName}</h3>
+                    {guide && <p className={`text-xs mt-0.5 ${muted}`}>{guide.specs}</p>}
+                  </div>
+                  <button
+                    onClick={() => setActiveSizeChart(null)}
+                    className={`${muted} hover:text-white p-1 rounded-sm`}
+                    aria-label="Close size guide"
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
 
-              <div className="max-h-[68vh] overflow-auto flex items-center justify-center bg-black/30 rounded-sm p-2">
-                <img
-                  src={activeSizeChart.chartUrl}
-                  alt={`Size chart for ${activeSizeChart.itemName}`}
-                  className="max-w-full max-h-[64vh] object-contain"
-                />
-              </div>
+                {guide && (
+                  <div className="overflow-x-auto rounded border border-[#ebe6d9]/15 bg-black/25 my-3">
+                    <table className="w-full text-left text-xs sm:text-sm">
+                      <thead className="bg-[#13201a]/90 text-[#ebe6d9] border-b border-[#ebe6d9]/15">
+                        <tr>
+                          {guide.headers.map((h, i) => (
+                            <th key={i} className="py-2.5 px-3 font-semibold">{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-[#ebe6d9]/10">
+                        {guide.rows.map((r, ri) => (
+                          <tr key={ri} className="hover:bg-white/5 transition-colors">
+                            <td className="py-2.5 px-3 font-bold text-festival-orange">{r.size}</td>
+                            {r.values.map((v, vi) => (
+                              <td key={vi} className="py-2.5 px-3 text-[#ebe6d9]/85">{v}″</td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
 
-              <div className={`mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${muted}`}>
-                <p>
-                  Measurements are of the garment laid flat, in inches. For a looser, boxy fit, go one size up.
-                </p>
-                <button
-                  onClick={() => window.open(activeSizeChart.chartUrl, "_blank")}
-                  className="text-festival-orange hover:underline shrink-0"
-                >
-                  Open full size
-                </button>
-              </div>
+                {activeSizeChart.chartUrl && (
+                  <div className="max-h-[46vh] overflow-auto flex items-center justify-center bg-black/30 rounded-sm p-2 my-3">
+                    <img
+                      src={activeSizeChart.chartUrl}
+                      alt={`Size chart for ${activeSizeChart.itemName}`}
+                      className="max-w-full max-h-[42vh] object-contain"
+                    />
+                  </div>
+                )}
+
+                <div className={`mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs ${muted}`}>
+                  <p>
+                    {guide?.note || "Measurements are of the garment laid flat in inches. Tolerance ±0.5–1 in."}
+                  </p>
+                  {activeSizeChart.chartUrl && (
+                    <button
+                      onClick={() => window.open(activeSizeChart.chartUrl, "_blank")}
+                      className="text-festival-orange hover:underline shrink-0"
+                    >
+                      Open full image ↗
+                    </button>
+                  )}
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          );
+        })()}
       </AnimatePresence>
     </section>
   );
@@ -606,7 +737,7 @@ function MerchCard({
 }: {
   item: MerchItem;
   onAddToCart: (item: MerchItem, options: CartOptions) => void;
-  onOpenSizeChart: (chartUrl: string, itemName: string) => void;
+  onOpenSizeChart: (chartUrl: string, itemName: string, productCode?: string) => void;
 }) {
   const [index, setIndex] = useState(0);
   const [added, setAdded] = useState(false);
@@ -661,7 +792,7 @@ function MerchCard({
   const currentPrice = showPack && isPack ? item.packPrice! : item.price;
 
   const dynamicSku = useMemo(() => {
-    const parts = [item.productCode || "HBF"];
+    const parts = [item.productCode || "HMF"];
     if (selectedDesign?.code) parts.push(selectedDesign.code);
     else if (selectedDesign?.name) parts.push(selectedDesign.name.replace(/\s+/g, "").toUpperCase().slice(0, 5));
     if (selectedColour?.name) parts.push(selectedColour.name.replace(/\s+/g, "").toUpperCase().slice(0, 4));
@@ -669,6 +800,27 @@ function MerchCard({
     if (item.hasPackOption && isPack) parts.push("PACK10");
     return parts.join("-");
   }, [item.productCode, selectedDesign, selectedColour, selectedSize, isPack, item.hasPackOption]);
+
+  const handleSelectDesign = (d: DesignOption) => {
+    setSelectedDesign(d);
+    if (selectedColour && isCombinationUnavailable(item.productCode, d.name, selectedColour.name)) {
+      const firstAvail = item.colours?.find(
+        (c) => !isCombinationUnavailable(item.productCode, d.name, c.name)
+      );
+      if (firstAvail) {
+        setSelectedColour(firstAvail);
+        toast.info(`"${d.name}" is not available in ${selectedColour.name}. Switched to ${firstAvail.name}.`);
+      }
+    }
+  };
+
+  const handleSelectColour = (col: ColourOption) => {
+    if (isCombinationUnavailable(item.productCode, selectedDesign?.name, col.name)) {
+      toast.error(`"${selectedDesign?.name}" is not available in ${col.name} per official festival catalog.`);
+      return;
+    }
+    setSelectedColour(col);
+  };
 
   const handleAdd = () => {
     if (isSoldOut) return;
@@ -794,7 +946,7 @@ function MerchCard({
                     <button
                       key={d.name}
                       type="button"
-                      onClick={() => setSelectedDesign(d)}
+                      onClick={() => handleSelectDesign(d)}
                       aria-pressed={current}
                       className={`px-3 py-1.5 text-sm rounded-md border transition-colors flex items-center gap-1.5 ${current
                         ? "border-festival-orange bg-festival-orange/10 text-white"
@@ -818,18 +970,28 @@ function MerchCard({
               <div className="flex flex-wrap gap-2.5">
                 {item.colours!.map((col) => {
                   const current = selectedColour?.name === col.name;
+                  const unavailable = isCombinationUnavailable(item.productCode, selectedDesign?.name, col.name);
+
                   return (
                     <button
                       key={col.name}
                       type="button"
-                      onClick={() => setSelectedColour(col)}
-                      title={col.name}
+                      onClick={() => handleSelectColour(col)}
+                      title={unavailable ? `${col.name} (Not available for ${selectedDesign?.name})` : col.name}
                       aria-label={col.name}
                       aria-pressed={current}
-                      className={`w-9 h-9 rounded-full p-1 border-2 transition-colors ${current ? "border-festival-orange" : "border-[#ebe6d9]/20 hover:border-[#ebe6d9]/50"
-                        }`}
+                      className={`w-9 h-9 rounded-full p-1 border-2 transition-all relative ${
+                        unavailable
+                          ? "opacity-30 border-red-500/30 cursor-not-allowed"
+                          : current
+                          ? "border-festival-orange scale-105"
+                          : "border-[#ebe6d9]/20 hover:border-[#ebe6d9]/50"
+                      }`}
                     >
                       <span className="block w-full h-full rounded-full ring-1 ring-black/30" style={{ backgroundColor: col.hex }} />
+                      {unavailable && (
+                        <span className="absolute inset-0 flex items-center justify-center text-[10px] text-red-400 font-bold">✕</span>
+                      )}
                     </button>
                   );
                 })}
@@ -843,15 +1005,13 @@ function MerchCard({
                 <p className={optionLabel}>
                   Size <span className="text-[#ebe6d9] font-medium ml-1">{selectedSize}</span>
                 </p>
-                {item.sizeChartUrl && (
-                  <button
-                    type="button"
-                    onClick={() => onOpenSizeChart(item.sizeChartUrl!, item.name)}
-                    className="text-xs inline-flex items-center gap-1 underline underline-offset-2 text-festival-orange hover:brightness-110"
-                  >
-                    <Ruler size={12} /> Size guide
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={() => onOpenSizeChart(item.sizeChartUrl || "", item.name, item.productCode)}
+                  className="text-xs inline-flex items-center gap-1 underline underline-offset-2 text-festival-orange hover:brightness-110"
+                >
+                  <Ruler size={12} /> Size guide
+                </button>
               </div>
               <div className="grid grid-cols-5 sm:grid-cols-6 gap-2">
                 {item.sizes!.map((size) => {

@@ -9,6 +9,7 @@ import {
   getCartSession,
   listCategoryShowcases,
   saveCategoryShowcase,
+  seedOfficialCatalog,
 } from '../controllers/merchController.js';
 import { uploadMerch } from '../middleware/upload.js';
 
@@ -37,6 +38,7 @@ router.post('/upload-image', requireAdmin, uploadMerch.single('image'), (req, re
 });
 
 // Admin protected CRUD
+router.post('/seed-catalog', requireAdmin, seedOfficialCatalog);
 router.post('/', requireAdmin, createMerch);
 router.put('/:id', requireAdmin, updateMerch);
 router.delete('/:id', requireAdmin, deleteMerch);

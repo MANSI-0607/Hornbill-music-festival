@@ -84,29 +84,32 @@ export type MerchItem = {
 };
 
 // ---------------------------------------------
-// Catalog Quick Presets (From Merchland Catalog)
+// Official Hornbill Music Festival Catalog Presets
 // ---------------------------------------------
 const CATALOG_PRESETS = [
   {
-    label: "Classic Round-Neck Tee (HBF-RNT)",
+    label: "Classic Round-Neck Tee (HMF-RNT)",
     category: "T-Shirts" as const,
     name: "Classic Round-Neck Tee",
-    productCode: "HBF-RNT",
+    productCode: "HMF-RNT",
     price: 535,
     fabric: "100% cotton, bio-washed",
     weight: "180 GSM",
     fit: "Regular, round neck",
     description: "Soft, bio-washed cotton with a small chest mark and one big back print.",
     designs: [
-      { name: "Kisama Lily", code: "LILY" },
-      { name: "Rhododendron Bloom", code: "RHODO" },
-      { name: "Bamboo Grove", code: "BAMBOO" },
+      { name: "This Way to Kisama", code: "KISAMA" },
+      { name: "Dance Floor", code: "DANCE" },
+      { name: "Good Vibes", code: "VIBES" },
+      { name: "Don't Stop the Music", code: "STOP" },
+      { name: "Headliner", code: "HEADLINER" },
+      { name: "All Access", code: "ACCESS" },
     ],
     colours: [
+      { name: "Black", hex: "#111111" },
       { name: "White", hex: "#FFFFFF" },
-      { name: "Black", hex: "#1A1A1A" },
-      { name: "Navy", hex: "#1B2A4A" },
-      { name: "Cream", hex: "#F5EFE0" },
+      { name: "Navy", hex: "#18233C" },
+      { name: "Cream", hex: "#F4EEDD" },
     ],
     sizes: ["S", "M", "L", "XL", "XXL"],
     hasPackOption: false,
@@ -114,23 +117,26 @@ const CATALOG_PRESETS = [
     packLabel: "Pack of 10",
   },
   {
-    label: "Oversized Tee (HBF-OST)",
+    label: "Oversized Tee (HMF-OST)",
     category: "T-Shirts" as const,
     name: "Oversized Tee",
-    productCode: "HBF-OST",
+    productCode: "HMF-OST",
     price: 585,
     fabric: "100% cotton, bio-washed",
     weight: "180 GSM",
     fit: "Oversized, drop shoulder",
     description: "Drop-shoulder, boxy and roomy: the streetwear cut for the big back print.",
     designs: [
-      { name: "Kisama Lily", code: "LILY" },
-      { name: "Rhododendron Bloom", code: "RHODO" },
-      { name: "Bamboo Grove", code: "BAMBOO" },
+      { name: "This Way to Kisama", code: "KISAMA" },
+      { name: "Dance Floor", code: "DANCE" },
+      { name: "Good Vibes", code: "VIBES" },
+      { name: "Don't Stop the Music", code: "STOP" },
+      { name: "Headliner", code: "HEADLINER" },
+      { name: "All Access", code: "ACCESS" },
     ],
     colours: [
+      { name: "Black", hex: "#111111" },
       { name: "White", hex: "#FFFFFF" },
-      { name: "Black", hex: "#1A1A1A" },
     ],
     sizes: ["S", "M", "L", "XL", "XXL"],
     hasPackOption: false,
@@ -138,24 +144,25 @@ const CATALOG_PRESETS = [
     packLabel: "Pack of 10",
   },
   {
-    label: "Pullover Hoodie (HBF-HD320)",
+    label: "Pullover Hoodie (HMF-HD320)",
     category: "Winterwear" as const,
     name: "Pullover Hoodie",
-    productCode: "HBF-HD320",
+    productCode: "HMF-HD320",
     price: 999,
     fabric: "Poly-cotton 3-thread fleece",
     weight: "320 GSM",
     fit: "Regular pullover",
     description: "Warm 320 GSM fleece with a kangaroo pocket for cold Kisama evenings.",
     designs: [
-      { name: "Kisama Lily", code: "LILY" },
-      { name: "Rhododendron Bloom", code: "RHODO" },
-      { name: "Bamboo Grove", code: "BAMBOO" },
+      { name: "Headliner", code: "HEADLINER" },
+      { name: "Main Stage", code: "STAGE" },
+      { name: "Don't Stop the Music", code: "STOP" },
+      { name: "All Access", code: "ACCESS" },
     ],
     colours: [
+      { name: "Black", hex: "#111111" },
       { name: "White", hex: "#FFFFFF" },
-      { name: "Off-white", hex: "#F3EDE2" },
-      { name: "Black", hex: "#1A1A1A" },
+      { name: "Off-white", hex: "#EDE7D9" },
     ],
     sizes: ["S", "M", "L", "XL", "XXL"],
     hasPackOption: false,
@@ -163,23 +170,24 @@ const CATALOG_PRESETS = [
     packLabel: "Pack of 10",
   },
   {
-    label: "Crew Sweatshirt (HBF-SWT)",
+    label: "Crew Sweatshirt (HMF-SWT)",
     category: "Winterwear" as const,
     name: "Crew Sweatshirt",
-    productCode: "HBF-SWT",
+    productCode: "HMF-SWT",
     price: 800,
     fabric: "Cotton 3-thread fleece",
     weight: "320 GSM",
     fit: "Regular crew neck",
     description: "Soft brushed fleece with ribbed cuffs and hem.",
     designs: [
-      { name: "Kisama Lily", code: "LILY" },
-      { name: "Rhododendron Bloom", code: "RHODO" },
-      { name: "Bamboo Grove", code: "BAMBOO" },
+      { name: "Headliner", code: "HEADLINER" },
+      { name: "Main Stage", code: "STAGE" },
+      { name: "Don't Stop the Music", code: "STOP" },
+      { name: "All Access", code: "ACCESS" },
     ],
     colours: [
+      { name: "Black", hex: "#111111" },
       { name: "White", hex: "#FFFFFF" },
-      { name: "Black", hex: "#1A1A1A" },
     ],
     sizes: ["S", "M", "L", "XL", "XXL"],
     hasPackOption: false,
@@ -187,39 +195,40 @@ const CATALOG_PRESETS = [
     packLabel: "Pack of 10",
   },
   {
-    label: "Tote Bag (HBF-TOTE)",
+    label: "Tote Bag (HMF-TOTE)",
     category: "Accessories" as const,
     name: "Tote Bag",
-    productCode: "HBF-TOTE",
+    productCode: "HMF-TOTE",
     price: 370,
-    fabric: "Cotton canvas, 16 × 14 in",
-    weight: "Sturdy canvas",
-    fit: "Long shoulder straps",
-    description: "A sturdy canvas tote for the festival grounds and everyday adventures.",
+    fabric: "Cotton canvas (16 × 14 in / 40 × 35 cm)",
+    weight: "Heavy canvas",
+    fit: "Long shoulder straps · Front print only",
+    description: "A sturdy canvas tote for the festival grounds and every day after. 16 × 14 in (40 × 35 cm).",
     designs: [
-      { name: "Postcard Hornbill", code: "POST" },
-      { name: "Hornbill in Bloom", code: "BLOOM" },
+      { name: "Don't Stop the Music", code: "STOP" },
+      { name: "Main Stage", code: "STAGE" },
+      { name: "This Way to Kisama", code: "KISAMA" },
     ],
     colours: [
-      { name: "Natural", hex: "#E8DFC9" },
-      { name: "Black", hex: "#1A1A1A" },
+      { name: "Black", hex: "#111111" },
+      { name: "Natural", hex: "#E9E3D3" },
     ],
-    sizes: ["One Size"],
+    sizes: ["16 × 14 in"],
     hasPackOption: false,
     packPrice: 0,
     packLabel: "Pack of 10",
   },
   {
-    label: "Coffee Mug (HBF-MUG)",
+    label: "Coffee Mug (HMF-MUG)",
     category: "Accessories" as const,
     name: "Coffee Mug",
-    productCode: "HBF-MUG",
+    productCode: "HMF-MUG",
     price: 420,
     fabric: "White ceramic, glossy",
-    weight: "Full colour print",
-    fit: "Standard 330ml",
-    description: "White ceramic mug with the full Hornbill Festival floral logo.",
-    designs: [{ name: "Hornbill Floral Logo", code: "LOGO" }],
+    weight: "Glossy ceramic",
+    fit: "Full colour signboard print · Hand wash",
+    description: "White ceramic mug with the yellow Hornbill Music Festival signboard.",
+    designs: [{ name: "Hornbill Music Festival signboard", code: "SIGN" }],
     colours: [{ name: "White", hex: "#FFFFFF" }],
     sizes: ["Standard"],
     hasPackOption: false,
@@ -227,78 +236,113 @@ const CATALOG_PRESETS = [
     packLabel: "Pack of 10",
   },
   {
-    label: "Round Pin Badge (HBF-BDG)",
+    label: "Round Pin Badge (HMF-BDG)",
     category: "Accessories" as const,
     name: "Round Pin Badge",
-    productCode: "HBF-BDG",
+    productCode: "HMF-BDG",
     price: 35,
-    fabric: "Glossy finish, safety pin",
-    weight: "58 mm round",
-    fit: "Pin badge",
-    description: "The hornbill stamp, full logo, and festival plants as collectible pin badges.",
+    fabric: "58 mm round with safety pin",
+    weight: "Glossy finish",
+    fit: "58 mm pin badge",
+    description: "Ten pin badges from the Music Festival artwork. Single (any design): ₹35, Pack of 10: ₹470 (one of each of the 10 designs, shipping included).",
     designs: [
-      { name: "Hornbill Stamp", code: "STAMP" },
-      { name: "Hornbill in Bloom", code: "BLOOM" },
-      { name: "Kisama Lily", code: "LILY" },
-      { name: "Rhododendron Bloom", code: "RHODO" },
-      { name: "Wild Orchid", code: "ORCHID" },
-      { name: "Bamboo Grove", code: "BAMBOO" },
-      { name: "Bamboo Shoots", code: "SHOOTS" },
+      { name: "Dance Floor", code: "DANCE" },
+      { name: "Good Vibes", code: "VIBES" },
+      { name: "Double Screen", code: "PAIR" },
+      { name: "Don't Stop the Music", code: "STOP" },
+      { name: "This Way to Kisama", code: "KISAMA" },
+      { name: "Headliner", code: "HEADLINER" },
+      { name: "Main Stage", code: "STAGE" },
+      { name: "Fest This Way", code: "SIGN" },
+      { name: "#HMF", code: "HEX" },
+      { name: "The Fun Starts Here", code: "FUN" },
     ],
-    colours: [{ name: "Standard", hex: "#E0E0E0" }],
+    colours: [{ name: "Glossy Pin", hex: "#E2E8F0" }],
     sizes: ["58 mm"],
     hasPackOption: true,
     packPrice: 470,
-    packLabel: "Pack of 10 (Mixed Designs)",
+    packLabel: "Pack of 10 (One of each 10 designs · Shipping included)",
   },
   {
-    label: "Die-cut Sticker (HBF-STK)",
+    label: "Die-cut Sticker (HMF-STK)",
     category: "Accessories" as const,
     name: "Die-cut Sticker",
-    productCode: "HBF-STK",
+    productCode: "HMF-STK",
     price: 15,
-    fabric: "Die-cut vinyl with white border",
-    weight: "Up to 3 × 3 in",
-    fit: "Die-cut shape",
-    description: "The hornbill stamp, logo and festival plants, precision cut to shape.",
+    fabric: "Die-cut vinyl up to 3 × 3 in",
+    weight: "Waterproof vinyl",
+    fit: "Die-cut to shape with white border",
+    description: "Every sign from the Music Festival artwork, cut to shape. Single (any design): ₹15, Pack of 10: ₹270 (one of each of the 10 designs, shipping included).",
     designs: [
-      { name: "Hornbill Stamp", code: "STAMP" },
-      { name: "Hornbill in Bloom", code: "BLOOM" },
-      { name: "Kisama Lily", code: "LILY" },
-      { name: "Rhododendron Bloom", code: "RHODO" },
-      { name: "Wild Orchid", code: "ORCHID" },
-      { name: "Bamboo Grove", code: "BAMBOO" },
-      { name: "Bamboo Shoots", code: "SHOOTS" },
+      { name: "Dance Floor", code: "DANCE" },
+      { name: "Good Vibes", code: "VIBES" },
+      { name: "Double Screen", code: "PAIR" },
+      { name: "Don't Stop the Music", code: "STOP" },
+      { name: "This Way to Kisama", code: "KISAMA" },
+      { name: "Headliner", code: "HEADLINER" },
+      { name: "Main Stage", code: "STAGE" },
+      { name: "Fest This Way", code: "SIGN" },
+      { name: "#HMF", code: "HEX" },
+      { name: "The Fun Starts Here", code: "FUN" },
     ],
-    colours: [{ name: "Multi", hex: "#F05D29" }],
-    sizes: ["Up to 3 in"],
+    colours: [{ name: "White Border", hex: "#FFFFFF" }],
+    sizes: ["Up to 3 × 3 in"],
     hasPackOption: true,
     packPrice: 270,
-    packLabel: "Pack of 10 (Mixed Designs)",
+    packLabel: "Pack of 10 (One of each 10 designs · Shipping included)",
   },
 ];
 
 const STANDARD_DESIGNS: DesignOption[] = [
-  { name: "Kisama Lily", code: "LILY" },
-  { name: "Rhododendron Bloom", code: "RHODO" },
-  { name: "Bamboo Grove", code: "BAMBOO" },
-  { name: "Hornbill Stamp", code: "STAMP" },
-  { name: "Hornbill in Bloom", code: "BLOOM" },
-  { name: "Wild Orchid", code: "ORCHID" },
-  { name: "Bamboo Shoots", code: "SHOOTS" },
+  { name: "This Way to Kisama", code: "KISAMA" },
+  { name: "Dance Floor", code: "DANCE" },
+  { name: "Good Vibes", code: "VIBES" },
+  { name: "Don't Stop the Music", code: "STOP" },
+  { name: "Headliner", code: "HEADLINER" },
+  { name: "All Access", code: "ACCESS" },
+  { name: "Main Stage", code: "STAGE" },
+  { name: "Double Screen", code: "PAIR" },
+  { name: "Fest This Way", code: "SIGN" },
+  { name: "#HMF", code: "HEX" },
+  { name: "The Fun Starts Here", code: "FUN" },
 ];
 
 const STANDARD_COLOURS: ColourOption[] = [
+  { name: "Black", hex: "#111111" },
   { name: "White", hex: "#FFFFFF" },
-  { name: "Black", hex: "#1A1A1A" },
-  { name: "Navy", hex: "#1B2A4A" },
-  { name: "Cream", hex: "#F5EFE0" },
-  { name: "Off-white", hex: "#F3EDE2" },
-  { name: "Natural", hex: "#E8DFC9" },
+  { name: "Navy", hex: "#18233C" },
+  { name: "Cream", hex: "#F4EEDD" },
+  { name: "Off-white", hex: "#EDE7D9" },
+  { name: "Natural", hex: "#E9E3D3" },
 ];
 
-const STANDARD_SIZES = ["XS", "S", "M", "L", "XL", "XXL", "3XL", "Free Size"];
+const STANDARD_SIZES = ["XS", "S", "M", "L", "XL", "XXL", "3XL", "One Size", "16 × 14 in", "Standard", "58 mm", "Up to 3 × 3 in"];
 const APPAREL_SIZES = ["S", "M", "L", "XL", "XXL"];
+
+// Catalogue combination availability helper
+export const isOfficialCombinationUnavailable = (productCode?: string, designName?: string, colourName?: string) => {
+  if (!productCode || !designName || !colourName) return false;
+  const d = designName.toLowerCase().trim();
+  const c = colourName.toLowerCase().trim();
+  const code = productCode.toUpperCase();
+
+  if (code.includes("RNT")) {
+    if ((d.includes("kisama") || d.includes("headliner")) && (c === "black" || c === "navy")) {
+      return true;
+    }
+  }
+  if (code.includes("OST")) {
+    if ((d.includes("kisama") || d.includes("headliner")) && c === "black") {
+      return true;
+    }
+  }
+  if (code.includes("HD320") || code.includes("SWT")) {
+    if (d.includes("headliner") && c === "black") {
+      return true;
+    }
+  }
+  return false;
+};
 
 const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL || "";
 
@@ -389,6 +433,35 @@ export default function AdminMerchManage() {
       }
     } catch {
       console.error("Failed to fetch category showcases");
+    }
+  };
+
+  const [syncingCatalog, setSyncingCatalog] = useState(false);
+  const handleSyncOfficialCatalog = async () => {
+    if (!token) {
+      toast.error("Admin authentication required");
+      return;
+    }
+    try {
+      setSyncingCatalog(true);
+      const res = await fetch(`${API_BASE_URL}/merch/seed-catalog`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.message || "Sync failed");
+      }
+      const data = await res.json();
+      toast.success(data.message || "Official catalogue synced successfully!");
+      await fetchItems();
+    } catch (err: any) {
+      toast.error(err.message || "Failed to sync official catalogue");
+    } finally {
+      setSyncingCatalog(false);
     }
   };
 
@@ -1074,12 +1147,34 @@ export default function AdminMerchManage() {
 
         {/* Quick Catalog Templates / Presets Bar */}
         <div className="mb-6 p-4 rounded-2xl border bg-muted/30">
-          <div className="flex items-center justify-between mb-2.5">
-            <h3 className="text-sm font-semibold flex items-center gap-1.5 text-foreground">
-              <Sparkles className="w-4 h-4 text-festival-orange" />
-              1-Click Catalog Presets (Hornbill Collection)
-            </h3>
-            <span className="text-xs text-muted-foreground">Click any preset to auto-fill specs, designs & colours</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+            <div>
+              <h3 className="text-sm font-semibold flex items-center gap-1.5 text-foreground">
+                <Sparkles className="w-4 h-4 text-festival-orange" />
+                Official Music Festival Catalog Presets
+              </h3>
+              <span className="text-xs text-muted-foreground">Click any product to auto-fill specs, designs, colours & size charts</span>
+            </div>
+            <Button
+              type="button"
+              variant="default"
+              size="sm"
+              disabled={syncingCatalog}
+              onClick={handleSyncOfficialCatalog}
+              className="bg-festival-orange hover:bg-festival-orange/90 text-white font-medium text-xs shadow-sm self-start sm:self-auto"
+            >
+              {syncingCatalog ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin mr-1.5" />
+                  Syncing All 8 Items...
+                </>
+              ) : (
+                <>
+                  <PackageCheck className="w-3.5 h-3.5 mr-1.5" />
+                  Sync All 8 Official Products to Store
+                </>
+              )}
+            </Button>
           </div>
           <div className="flex flex-wrap gap-2">
             {CATALOG_PRESETS.map((p) => (
@@ -1711,18 +1806,30 @@ export default function AdminMerchManage() {
                                 const vImgs = variant?.images && variant.images.length > 0
                                   ? variant.images
                                   : (variant?.imageUrl ? [variant.imageUrl] : []);
+                                const isUnavailableInCatalog = isOfficialCombinationUnavailable(form.productCode, d.name, c.name);
 
                                 return (
                                   <div
                                     key={`${d.name}-${c.name}`}
-                                    className="border rounded-lg p-2 flex flex-col items-center justify-between gap-1.5 bg-muted/20 hover:border-festival-orange/50 transition-all text-center"
+                                    className={`border rounded-lg p-2 flex flex-col items-center justify-between gap-1.5 transition-all text-center ${
+                                      isUnavailableInCatalog
+                                        ? "bg-amber-500/5 border-amber-500/25"
+                                        : "bg-muted/20 hover:border-festival-orange/50"
+                                    }`}
                                   >
-                                    <div className="flex items-center gap-1 text-[11px] font-medium truncate w-full justify-center">
-                                      <span
-                                        className="w-2.5 h-2.5 rounded-full border flex-shrink-0"
-                                        style={{ backgroundColor: c.hex }}
-                                      />
-                                      <span className="truncate">{c.name}</span>
+                                    <div className="flex flex-col items-center gap-0.5 w-full">
+                                      <div className="flex items-center gap-1 text-[11px] font-medium truncate w-full justify-center">
+                                        <span
+                                          className="w-2.5 h-2.5 rounded-full border flex-shrink-0"
+                                          style={{ backgroundColor: c.hex }}
+                                        />
+                                        <span className="truncate">{c.name}</span>
+                                      </div>
+                                      {isUnavailableInCatalog && (
+                                        <span className="text-[9px] text-amber-600 dark:text-amber-400 font-medium">
+                                          N/A in catalog
+                                        </span>
+                                      )}
                                     </div>
 
                                     {/* Thumbnail Preview */}
