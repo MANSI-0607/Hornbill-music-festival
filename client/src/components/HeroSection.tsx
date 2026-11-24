@@ -62,9 +62,8 @@ const HeroSection: React.FC = () => {
             {heroImages.map((image, index) => (
               <div
                 key={image._id || index}
-                className={`w-full transition-opacity duration-1000 ${
-                  index === currentSlide ? "opacity-100" : "opacity-0 absolute inset-0"
-                }`}
+                className={`w-full transition-opacity duration-1000 ${index === currentSlide ? "opacity-100" : "opacity-0 absolute inset-0"
+                  }`}
               >
                 <picture className="block w-full h-auto">
                   <source media="(min-width:1024px)" srcSet={image.desktop} />
@@ -86,11 +85,10 @@ const HeroSection: React.FC = () => {
                     key={index}
                     type="button"
                     onClick={() => setCurrentSlide(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      index === currentSlide
-                        ? "bg-white w-8"
-                        : "bg-white/50 hover:bg-white/75 w-2"
-                    }`}
+                    className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide
+                      ? "bg-white w-8"
+                      : "bg-white/50 hover:bg-white/75 w-2"
+                      }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
                 ))}
@@ -100,9 +98,9 @@ const HeroSection: React.FC = () => {
         ) : (
           /* Fallback if no banners in DB yet */
           <picture>
-            <source media="(min-width: 768px)" srcSet="/merchbanner.png" />
+            <source media="(min-width: 768px)" srcSet="/merchbanner.jpg" />
             <img
-              src="/mob_merch.png"
+              src="/mob_merch.jpg"
               alt="Hornbill Music Festival Merchandise"
               className="w-full h-auto block object-cover object-center"
               loading="eager"
@@ -129,9 +127,8 @@ const HeroSection: React.FC = () => {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div
           ref={statsRef}
-          className={`grid grid-cols-2 md:grid-cols-4 gap-4 transition-all duration-1000 ${
-            statsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
+          className={`grid grid-cols-2 md:grid-cols-4 gap-4 transition-all duration-1000 ${statsVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            }`}
         >
           <div
             className={`festival-card text-center transition-all duration-700 py-3 ${statsVisible ? "animate-scale-in" : ""}`}

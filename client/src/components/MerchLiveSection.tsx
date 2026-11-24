@@ -23,9 +23,9 @@ export default function MerchLiveSection() {
             <div className="lg:col-span-7 relative group overflow-hidden bg-black/40">
               <Link to="/merch" className="block relative">
                 <picture>
-                  <source media="(min-width: 768px)" srcSet="/merchbanner.png" />
+                  <source media="(min-width: 768px)" srcSet="/merchbanner.jpg" />
                   <img
-                    src="/mob_merch.png"
+                    src="/mob_merch.jpg"
                     alt="Hornbill Festival Official Merchandise"
                     className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
                     loading="lazy"

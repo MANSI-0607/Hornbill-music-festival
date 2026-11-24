@@ -370,35 +370,22 @@ export default function Merch() {
   const showcaseImgs = currentShowcase?.images?.filter(Boolean).slice(0, 3) || [];
 
   return (
-    <section className="min-h-screen bg-[#13201a] text-[#ebe6d9] pb-28">
+    <section className="min-h-screen bg-[#13201a] text-[#ebe6d9] pb-28 pt-16">
       {/* Banner */}
-      <picture>
-        <source media="(min-width: 768px)" srcSet="/merchbanner.png" />
+      <picture className="block w-full">
+        <source media="(min-width: 768px)" srcSet="/merchbanner.jpg" />
         <img
-          src="/mob_merch.png"
+          src="/mob_merch.jpg"
           alt="Hornbill Music Festival merchandise"
-          className="w-full h-auto object-cover max-h-[380px] md:max-h-[480px]"
+          className="w-full h-auto block"
           loading="eager"
         />
       </picture>
 
       <div className="px-4 md:px-10">
         <div className="max-w-7xl mx-auto">
-          {/* Heading */}
-          <header className={`py-12 md:py-16 grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-end border-b ${line}`}>
-            <h1 className="font-righteous text-4xl sm:text-5xl md:text-6xl leading-[1.05]">
-              Hornbill Festival merchandise
-            </h1>
-            <div className={`text-sm leading-relaxed ${muted} max-w-md`}>
-              <p>
-                Official TaFMA drops, printed on bio-washed cotton. Prices include GST and shipping anywhere in
-                India. If the size is wrong, we'll exchange it.
-              </p>
-            </div>
-          </header>
-
           {/* Categories */}
-          <nav className={`flex gap-6 sm:gap-8 overflow-x-auto border-b ${line}`} aria-label="Categories">
+          <nav className={`flex gap-6 sm:gap-8 overflow-x-auto border-b ${line} pt-4`} aria-label="Categories">
             {CATEGORIES.map((cat) => {
               const active = activeCategory === cat;
               return (
@@ -920,8 +907,8 @@ function MerchCard({
                 type="button"
                 onClick={() => setIndex(i)}
                 className={`w-12 h-12 rounded-md overflow-hidden shrink-0 transition-all ${i === index
-                    ? "ring-2 ring-festival-orange scale-105 opacity-100 shadow-md"
-                    : "opacity-45 hover:opacity-85 hover:scale-100"
+                  ? "ring-2 ring-festival-orange scale-105 opacity-100 shadow-md"
+                  : "opacity-45 hover:opacity-85 hover:scale-100"
                   }`}
                 aria-label={`Show photo ${i + 1}`}
                 aria-pressed={i === index}
@@ -986,8 +973,8 @@ function MerchCard({
               onClick={() => setIsMobileExpanded(true)}
               disabled={isSoldOut}
               className={`w-full py-4 text-sm font-semibold rounded-md flex items-center justify-center gap-2 ${isSoldOut
-                  ? "bg-white/10 text-white/40 cursor-not-allowed"
-                  : "bg-festival-orange text-white hover:bg-festival-orange/90 shadow-sm"
+                ? "bg-white/10 text-white/40 cursor-not-allowed"
+                : "bg-festival-orange text-white hover:bg-festival-orange/90 shadow-sm"
                 }`}
             >
               <span>{isSoldOut ? "Sold out" : `Select Options & Buy · ₹${currentPrice.toFixed(2)}`}</span>
