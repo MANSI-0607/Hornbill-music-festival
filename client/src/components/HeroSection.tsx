@@ -100,10 +100,10 @@ const HeroSection: React.FC = () => {
         ) : (
           /* Fallback if no banners in DB yet */
           <picture>
-            <source media="(min-width: 768px)" srcSet="/audition_banner.jpeg?v=20260817" />
+            <source media="(min-width: 768px)" srcSet="/merchbanner.png" />
             <img
-              src="/audition_banner_mob.jpeg?v=20260817"
-              alt="Hornbill Music Festival"
+              src="/mob_merch.png"
+              alt="Hornbill Music Festival Merchandise"
               className="w-full h-auto block object-cover object-center"
               loading="eager"
             />

@@ -12,10 +12,10 @@ export function Navigation() {
   // Desktop navigation items (original)
   const navigation = [
     //{ name: 'Home', href: '/', icon: Music, shortName: 'Home' },
-    { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
+    // { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
+    { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon: Youtube, shortName: 'Media' },
-    { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
@@ -24,10 +24,10 @@ export function Navigation() {
   // Mobile navigation items (includes additional items)
   const mobileNavigation = [
    // { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
-    { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
-    { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
-    { name: 'Media', href: '/media', icon:Youtube, shortName: 'Media' },
+   // { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
     { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
+    { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
+    { name: 'Media', href: '/media', icon: Youtube, shortName: 'Media' },
     { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
     // { name: 'Artists', href: '/artists', icon: Users, shortName: 'Artists' },
     { name: 'About', href: '/about', icon: Info, shortName: 'About' },
@@ -74,14 +74,14 @@ export function Navigation() {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-7">
               {navigation.map((item) => {
                 const Icon = item.icon;
                 return (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`flex items-center space-x-1 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       location.pathname === item.href
                         ? 'bg-festival-orange/20 text-festival-orange border border-festival-orange/30'
                         : 'text-gray-300 hover:text-white hover:bg-gray-800'
@@ -93,9 +93,11 @@ export function Navigation() {
                 );
               })}
               
-              <Link to="/auditions">
-                <Button className="btn-festival ml-4">
-                  Auditions Closed
+              {/* Merch CTA button */}
+              <Link to="/merch">
+                <Button className="btn-festival ml-3 flex items-center gap-2">
+                  <ShoppingBag className="w-4 h-4" />
+                  <span>Merch</span>
                 </Button>
               </Link>
              
@@ -156,16 +158,25 @@ export function Navigation() {
               </div>
               
               {/* Call to action button */}
-               
-                <Link to="/auditions">
-                 <Button 
-                   className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
-                   onClick={() => setIsOpen(false)}
-                 >
-                   Auditions Closed
-                 </Button>
-                </Link>
-              
+              {/* Auditions commented out
+              <Link to="/auditions">
+                <Button 
+                  className="btn-festival w-full py-3 text-base font-semibold rounded-xl"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Auditions Closed
+                </Button>
+              </Link>
+              */}
+              <Link to="/merch">
+                <Button 
+                  className="btn-festival w-full py-3 text-base font-semibold rounded-xl flex items-center justify-center gap-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <ShoppingBag className="w-5 h-5" />
+                  <span>Official Merch</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -173,7 +184,7 @@ export function Navigation() {
 
       {/* Bottom Mobile Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-md border-t border-gray-700/50 z-50">
-        <div className="flex justify-around items-center py-2 px-1 safe-area-inset-bottom">
+        <div className="flex justify-around items-center py-1.5 px-1 safe-area-inset-bottom">
           {navigation.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.href;
@@ -181,14 +192,14 @@ export function Navigation() {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex flex-col items-center justify-center py-2 px-2 rounded-lg min-w-[60px] transition-all duration-200 active:scale-95 ${
+                className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg min-w-[55px] transition-all duration-200 active:scale-95 relative ${
                   isActive
                     ? 'text-festival-orange bg-festival-orange/10'
                     : 'text-gray-400 hover:text-white active:bg-gray-800/50'
                 }`}
               >
-                <Icon className={`w-5 h-5 mb-1 ${isActive ? 'text-festival-orange' : ''}`} />
-                <span className={`text-xs font-medium ${isActive ? 'text-festival-orange' : ''}`}>
+                <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'text-festival-orange' : ''}`} />
+                <span className={`text-[11px] font-medium leading-tight ${isActive ? 'text-festival-orange font-semibold' : ''}`}>
                   {item.shortName}
                 </span>
               </Link>

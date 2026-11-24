@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink } from 'lucide-react';
+import { ArrowRight, Music, Camera, Users, ChevronLeft, ChevronRight, Eye, ExternalLink, ShoppingBag, Sparkles } from 'lucide-react';
 import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 import { Link, useNavigate } from 'react-router-dom';
 import GalleryModal from './GalleryModal';
@@ -35,6 +35,7 @@ const FeaturedSection = () => {
   const minSwipeDistance = 50;
 
   const featuredCards = [
+    /* Auditions commented out per request
     {
       title: 'Ticket to Hornbill — Auditions Closed',
       description: 'Video submissions for India\'s Biggest Band Battle are now closed. Thank you to all the bands who applied — shortlisted acts will be contacted soon.',
@@ -45,15 +46,37 @@ const FeaturedSection = () => {
       border: 'border-white/20',
       link: '/auditions'
     },
+    */
+    {
+      title: 'Official Merch is Live!',
+      description: 'The exclusive Hornbill 2026 collection is here: oversized tees, classic round-neck tees, fleece hoodies, sweatshirts, pins & vinyl stickers with pan-India free delivery.',
+      cta: 'Shop Merch Now',
+      variant: 'festival',
+      icon: ShoppingBag,
+      gradient: 'from-festival-orange/25 via-amber-950/30 to-black',
+      border: 'border-festival-orange/50',
+      badge: 'NOW LIVE',
+      link: '/merch'
+    },
     {
       title: 'Festival Highlights',
-      description: 'Relive the magic of HMF 2025 and check out the complete festival schedule',
+      description: 'Relive the magic of HMF and check out the complete festival schedule, stage line-ups, and special events across Kisama.',
       cta: 'View Schedule',
       variant: 'tribal',
       icon: Camera,
       gradient: 'from-festival-blue/20 to-festival-orange/20',
       border: 'border-festival-blue/30',
       link: '/schedule'
+    },
+    {
+      title: 'Festival Gallery',
+      description: 'Explore live stage performances, artist spotlights, crowd energy, and vibrant moments from the festival.',
+      cta: 'View Gallery',
+      variant: 'tribal',
+      icon: Music,
+      gradient: 'from-purple-900/25 to-festival-blue/20',
+      border: 'border-white/20',
+      link: '/gallery'
     }
   ];
 
@@ -122,7 +145,7 @@ const FeaturedSection = () => {
       gradient: 'from-festival-blue/20 to-festival-orange/20',
       imageUrl: hornbillMusic2
     },
-      {
+    {
       id: 9,
       title: 'Hornbill Music 9',
       description: 'Encore moment with the crowd singing along.',
@@ -154,7 +177,7 @@ const FeaturedSection = () => {
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    
+
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
@@ -175,13 +198,12 @@ const FeaturedSection = () => {
   return (
     <section className="py-4 px-4">
       <div className="container mx-auto max-w-6xl">
-        <div 
+        <div
           ref={headerRef}
-          className={`text-center mb-16 transition-all duration-800 ${
-            headerVisible 
-              ? 'opacity-100 translate-y-0' 
+          className={`text-center mb-16 transition-all duration-800 ${headerVisible
+              ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-10'
-          }`}
+            }`}
         >
           <h2 className="font-righteous text-4xl md:text-5xl mb-4">
             <span className="festival-title">Festival Experience</span>
@@ -191,20 +213,18 @@ const FeaturedSection = () => {
           </p>
         </div>
 
-        <div 
+        <div
           ref={cardsRef}
-          className={`grid md:grid-cols-3 gap-8 mb-16 transition-all duration-1000 ${
-            cardsVisible 
-              ? 'opacity-100 translate-y-0' 
+          className={`grid md:grid-cols-3 gap-8 mb-16 transition-all duration-1000 ${cardsVisible
+              ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-16'
-          }`}
+            }`}
         >
           {featuredCards.map((card, index) => (
-            <Card 
-              key={index} 
-              className={`festival-card ${card.gradient} ${card.border} group cursor-pointer transition-all duration-500 ${
-                cardsVisible ? 'animate-fade-in' : ''
-              }`}
+            <Card
+              key={index}
+              className={`festival-card ${card.gradient} ${card.border} group cursor-pointer transition-all duration-500 ${cardsVisible ? 'animate-fade-in' : ''
+                }`}
               style={{
                 animationDelay: cardsVisible ? `${index * 200}ms` : '0ms'
               }}
@@ -219,18 +239,25 @@ const FeaturedSection = () => {
               <CardContent className="p-8">
                 <div className="flex items-center justify-between mb-6">
                   {/* icon tint -> festival-orange for visibility */}
-                  <card.icon className="text-4xl text-festival-orange" size={48} />
+                  <div className="flex items-center gap-3">
+                    <card.icon className="text-4xl text-festival-orange" size={44} />
+                    {(card as any).badge && (
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-festival-orange text-white animate-pulse shadow-md">
+                        {(card as any).badge}
+                      </span>
+                    )}
+                  </div>
                   <ArrowRight className="text-gray-400 group-hover:text-festival-orange group-hover:translate-x-2 transition-all duration-300" size={24} />
                 </div>
-                
+
                 <h3 className="font-righteous text-2xl mb-4 text-white">
                   {card.title}
                 </h3>
-                
+
                 <p className="text-gray-400 mb-6 leading-relaxed">
                   {card.description}
                 </p>
-                
+
                 <Button className={`btn-${card.variant} w-full`}>
                   {card.cta}
                 </Button>
@@ -239,32 +266,30 @@ const FeaturedSection = () => {
           ))}
         </div>
 
-        <div 
+        <div
           ref={documentaryRef}
-          className={`festival-card transition-all duration-800 ${
-            documentaryVisible 
-              ? 'opacity-100 translate-y-0 scale-100' 
+          className={`festival-card transition-all duration-800 ${documentaryVisible
+              ? 'opacity-100 translate-y-0 scale-100'
               : 'opacity-0 translate-y-12 scale-95'
-          }`}
+            }`}
         >
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className={`transition-all duration-1000 delay-200 ${
-              documentaryVisible 
-                ? 'opacity-100 translate-x-0' 
+            <div className={`transition-all duration-1000 delay-200 ${documentaryVisible
+                ? 'opacity-100 translate-x-0'
                 : 'opacity-0 -translate-x-8'
-            }`}>
+              }`}>
               <h3 className="font-righteous text-3xl mb-4">
                 <span className="festival-title">Hornbill Festival Official Theme Song</span>
               </h3>
               <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-                Experience the spirit of unity and celebration with “Come Together”, 
-                the official song of the Hornbill Festival. Created by Trance Effect, 
-                this anthem captures the energy, culture, and heartbeat of Nagaland’s 
+                Experience the spirit of unity and celebration with “Come Together”,
+                the official song of the Hornbill Festival. Created by Trance Effect,
+                this anthem captures the energy, culture, and heartbeat of Nagaland’s
                 biggest celebration.
               </p>
               <p className="text-gray-400 text-lg mb-6 leading-relaxed">
                 🎵 25 Years of Hornbill – One Song, One Spirit.
-              </p>  
+              </p>
               <a href="https://youtu.be/8-1GZQ2w8kE?si=fJpAyHI2cRjLiF0L" target="_blank" rel="noopener noreferrer">
                 <Button className="btn-festival">
                   <Camera className="mr-2" size={20} />
@@ -272,12 +297,11 @@ const FeaturedSection = () => {
                 </Button>
               </a>
             </div>
-            
-            <div className={`relative transition-all duration-1000 delay-400 ${
-              documentaryVisible 
-                ? 'opacity-100 translate-x-0 scale-100' 
+
+            <div className={`relative transition-all duration-1000 delay-400 ${documentaryVisible
+                ? 'opacity-100 translate-x-0 scale-100'
                 : 'opacity-0 translate-x-8 scale-95'
-            }`}>
+              }`}>
               <div className="aspect-video rounded-2xl overflow-hidden neon-glow-purple">
                 <img
                   src="https://res.cloudinary.com/dwznqrjgg/image/upload/v1757235432/hornbill-bands/1757235406541-comeTogether-min.png.png"
@@ -289,23 +313,21 @@ const FeaturedSection = () => {
           </div>
         </div>
 
-        <div 
+        <div
           ref={galleryRef}
-          className={`mt-16 transition-all duration-800 ${
-            galleryVisible 
-              ? 'opacity-100 translate-y-0' 
+          className={`mt-16 transition-all duration-800 ${galleryVisible
+              ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-16'
-          }`}
+            }`}
         >
           <div className="flex items-center justify-between mb-8">
-            <h3 className={`font-righteous text-2xl md:text-3xl transition-all duration-1000 delay-200 ${
-              galleryVisible 
-                ? 'opacity-100 translate-y-0' 
+            <h3 className={`font-righteous text-2xl md:text-3xl transition-all duration-1000 delay-200 ${galleryVisible
+                ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-8'
-            }`}>
+              }`}>
               <span className="festival-title">Live from the Festival</span>
             </h3>
-            
+
             <div className="flex gap-2">
               <button
                 onClick={() => scrollGallery('left')}
@@ -321,9 +343,9 @@ const FeaturedSection = () => {
               </button>
             </div>
           </div>
-          
+
           <div className="relative overflow-hidden -mx-4 px-4">
-            <div 
+            <div
               id="festival-gallery"
               className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide pb-4 snap-x snap-mandatory touch-pan-x"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
@@ -332,19 +354,18 @@ const FeaturedSection = () => {
               onTouchEnd={onTouchEnd}
             >
               {galleryImages.map((image, index) => (
-                <div 
+                <div
                   key={image.id}
-                  className={`flex-shrink-0 w-72 sm:w-80 h-64 relative rounded-2xl overflow-hidden cursor-pointer group transition-all duration-500 hover:scale-105 snap-start select-none ${
-                    galleryVisible ? 'animate-scale-in' : 'opacity-0 scale-75'
-                  }`}
+                  className={`flex-shrink-0 w-72 sm:w-80 h-64 relative rounded-2xl overflow-hidden cursor-pointer group transition-all duration-500 hover:scale-105 snap-start select-none ${galleryVisible ? 'animate-scale-in' : 'opacity-0 scale-75'
+                    }`}
                   style={{
                     animationDelay: galleryVisible ? `${index * 100}ms` : '0ms'
                   }}
                   onClick={() => openModal(index)}
                 >
-                 {/* Background Image */}
-                  <img 
-                    src={image.imageUrl} 
+                  {/* Background Image */}
+                  <img
+                    src={image.imageUrl}
                     // alt={image.title}
                     className="absolute inset-0 w-full h-full object-cover"
                     loading="lazy"
@@ -353,7 +374,7 @@ const FeaturedSection = () => {
 
                   {/* Dark overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                  
+
                   <div className="absolute inset-0 flex flex-col justify-between p-4 md:p-6">
                     <div className="flex justify-between items-start">
                       <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-medium text-white border border-white/30">
@@ -364,22 +385,22 @@ const FeaturedSection = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="absolute inset-0 border-2 border-transparent group-hover:border-festival-orange/50 rounded-2xl transition-all duration-300" />
                 </div>
               ))}
             </div>
           </div>
-          
+
           <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 mt-8">
-            <Button 
+            <Button
               onClick={() => setIsModalOpen(true)}
               className="btn-festival w-full sm:w-auto"
             >
               <Camera className="mr-2" size={20} />
               Quick View Gallery
             </Button>
-            
+
             <Link to="/gallery" className="w-full sm:w-auto">
               <Button className="btn-festival w-full">
                 <ExternalLink className="mr-2" size={20} />
@@ -396,8 +417,8 @@ const FeaturedSection = () => {
         images={galleryImages}
         initialIndex={selectedImageIndex}
       />
-{/* Drum Tao Section */} 
-{/* <div className="mt-12 text-center">
+      {/* Drum Tao Section */}
+      {/* <div className="mt-12 text-center">
 
   <h3 className="font-righteous text-4xl md:text-5xl mb-3">
     <span className="festival-title">Drum Tao Comes to Hornbill!</span>
@@ -408,8 +429,8 @@ const FeaturedSection = () => {
     movement, and martial artistry. 
   </p> */}
 
- {/* BandMate Promo Video (from Vercel Blob) */}
- {/* <div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
+      {/* BandMate Promo Video (from Vercel Blob) */}
+      {/* <div className="mx-auto w-full md:w-4/5 lg:w-3/4 aspect-video rounded-2xl overflow-hidden neon-glow-purple shadow-lg">
   <video
     src="https://nxpvonrxicnsjd5i.public.blob.vercel-storage.com/Drum%20Tao%20Promo%20Video%20-%20without%20Super.mp4"
     className="w-full h-full object-cover"
@@ -423,7 +444,7 @@ const FeaturedSection = () => {
 </div> */}
 
     </section>
-    
+
   );
 };
 

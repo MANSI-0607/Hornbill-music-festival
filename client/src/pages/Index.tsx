@@ -2,6 +2,7 @@
 import React from 'react';
 import { Navigation } from '@/components/Navigation';
 import HeroSection from '@/components/HeroSection';
+import MerchLiveSection from '@/components/MerchLiveSection';
 import FeaturedSection from '@/components/FeaturedSection';
 import AboutTaFMA from '@/components/AboutTaFMA';
 //import Sponsors from '@/components/Sponsors';
@@ -13,6 +14,7 @@ import Media from '@/components/Media';
 
 const Index = () => {
   const { elementRef: heroRef, isVisible: heroVisible } = useScrollAnimation<HTMLElement>();
+  const { elementRef: merchRef, isVisible: merchVisible } = useScrollAnimation<HTMLElement>();
   const { elementRef: featuredRef, isVisible: featuredVisible } = useScrollAnimation<HTMLElement>();
   const { elementRef: aboutRef, isVisible: aboutVisible } = useScrollAnimation<HTMLElement>();
   const { elementRef: sponsorsRef, isVisible: sponsorsVisible } = useScrollAnimation<HTMLElement>();
@@ -30,6 +32,18 @@ const Index = () => {
           }`}
         >
           <HeroSection />
+        </section>
+
+        {/* Official Merch Live Showcase */}
+        <section 
+          ref={merchRef}
+          className={`transition-all duration-1000 ${
+            merchVisible 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-10'
+          }`}
+        >
+          <MerchLiveSection />
         </section>
         
         <section 
