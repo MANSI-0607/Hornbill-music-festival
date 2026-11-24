@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { LogOut, Music, PackageOpen, Mic } from "lucide-react";
+import { LogOut, Music, PackageOpen, Mic, ShoppingBag } from "lucide-react";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -19,6 +19,7 @@ export default function AdminDashboard() {
   };
 
   const goToMerch = () => navigate("/admin/merch");
+  const goToMerchOrders = () => navigate("/admin/merch-orders");
   const goToHero = () => navigate("/admin/hero");
   const goToAuditions = () => navigate("/admin/auditions");
 
@@ -59,6 +60,21 @@ export default function AdminDashboard() {
               <div className="text-muted-foreground">Add, edit, or remove items shown on the public Merch page.</div>
               <Button onClick={goToMerch}>
                 <PackageOpen className="mr-2 h-4 w-4" /> Open
+              </Button>
+            </CardContent>
+          </Card>
+          <Card className="border-festival-orange/30 bg-gradient-to-br from-card to-festival-orange/5">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <ShoppingBag className="h-5 w-5 text-festival-orange" />
+                Merch Orders & Payments
+              </CardTitle>
+              <CardDescription>View checkouts, customer details & Razorpay payments from AHIBI</CardDescription>
+            </CardHeader>
+            <CardContent className="flex items-center justify-between">
+              <div className="text-muted-foreground">Live orders, shipping addresses, payment status, and CSV export.</div>
+              <Button onClick={goToMerchOrders} className="bg-festival-orange hover:bg-festival-orange/90 text-white">
+                <ShoppingBag className="mr-2 h-4 w-4" /> View Orders
               </Button>
             </CardContent>
           </Card>

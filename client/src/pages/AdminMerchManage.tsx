@@ -1154,7 +1154,10 @@ export default function AdminMerchManage() {
               Upload images for each design & colour combination, configure sizes, and manage store visibility.
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            <Button variant="outline" onClick={() => navigate("/admin/merch-orders")}>
+              <ShoppingBag className="mr-2 h-4 w-4 text-festival-orange" /> View Orders
+            </Button>
             <Button variant="outline" onClick={() => navigate("/admin")}>
               <ArrowLeft className="mr-2 h-4 w-4" /> Back to Dashboard
             </Button>

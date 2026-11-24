@@ -21,6 +21,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Media from "./components/Media";
 import Merch from "./pages/Merch";
 import AdminMerchManage from "./pages/AdminMerchManage";
+import AdminMerchOrders from "./pages/AdminMerchOrders";
 import AdminHero from "./pages/AdminHero";
 import AdminAuditions from "./pages/AdminAuditions";
 const queryClient = new QueryClient();
@@ -66,7 +67,14 @@ const App = () => (
         <AdminMerchManage />
       </ProtectedRoute>
     }
-    
+  />
+  <Route 
+    path="/admin/merch-orders" 
+    element={
+      <ProtectedRoute>
+        <AdminMerchOrders />
+      </ProtectedRoute>
+    }
   />
    <Route 
     path="/admin/hero" 

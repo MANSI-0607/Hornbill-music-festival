@@ -10,6 +10,9 @@ import {
   listCategoryShowcases,
   saveCategoryShowcase,
   seedOfficialCatalog,
+  getAhibiMerchOrders,
+  getAhibiMerchOrderStats,
+  getAhibiMerchOrderById,
 } from '../controllers/merchController.js';
 import { uploadMerch } from '../middleware/upload.js';
 
@@ -42,6 +45,11 @@ router.post('/seed-catalog', requireAdmin, seedOfficialCatalog);
 router.post('/', requireAdmin, createMerch);
 router.put('/:id', requireAdmin, updateMerch);
 router.delete('/:id', requireAdmin, deleteMerch);
+
+// Admin protected AHIBI Merch Orders
+router.get('/orders', requireAdmin, getAhibiMerchOrders);
+router.get('/orders/stats', requireAdmin, getAhibiMerchOrderStats);
+router.get('/orders/:orderId', requireAdmin, getAhibiMerchOrderById);
 
 router.post("/cart/session", createCartSession);
 router.get('/cart/session/:sessionId', getCartSession);
