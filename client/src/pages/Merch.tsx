@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
   ShoppingBag,
   Loader2,
   X,
@@ -38,6 +40,7 @@ export type MerchItem = {
   name: string;
   productCode?: string;
   category?: "T-Shirts" | "Winterwear" | "Accessories" | "General";
+  position?: number;
   description?: string;
   fabric?: string;
   weight?: string;
@@ -320,7 +323,7 @@ export default function Merch() {
       if (!data.sessionId) throw new Error("Checkout session missing");
 
       if (AHIBI_BASE_URL) {
-        window.location.href = `${AHIBI_BASE_URL}/HornbillFestival2025/merch?session=${data.sessionId}`;
+        window.location.href = `${AHIBI_BASE_URL}/HornbillFestival2026/merch?session=${data.sessionId}`;
       } else {
         const orderSummary = cart
           .map(
@@ -354,10 +357,10 @@ export default function Merch() {
     }
   };
 
-  const filteredItems = useMemo(
-    () => (activeCategory === "All" ? merchItems : merchItems.filter((i) => i.category === activeCategory)),
-    [merchItems, activeCategory]
-  );
+  const filteredItems = useMemo(() => {
+    const list = activeCategory === "All" ? merchItems : merchItems.filter((i) => i.category === activeCategory);
+    return [...list].sort((a, b) => (a.position ?? 999) - (b.position ?? 999));
+  }, [merchItems, activeCategory]);
 
   const countFor = (cat: string) =>
     cat === "All" ? merchItems.length : merchItems.filter((i) => i.category === cat).length;
@@ -741,6 +744,17 @@ function MerchCard({
 }) {
   const [index, setIndex] = useState(0);
   const [added, setAdded] = useState(false);
+  const [isMobileExpanded, setIsMobileExpanded] = useState(false);
+  const thumbRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (thumbRef.current) {
+      const activeBtn = thumbRef.current.children[index] as HTMLElement;
+      if (activeBtn) {
+        activeBtn.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+    }
+  }, [index]);
 
   const hasDesigns = Array.isArray(item.designs) && item.designs.length > 0;
   const [selectedDesign, setSelectedDesign] = useState<DesignOption | null>(hasDesigns ? item.designs![0] : null);
@@ -879,181 +893,256 @@ function MerchCard({
 
       {/* Thumbnails */}
       {imgs.length > 1 && (
-        <div className={`flex gap-2 px-4 sm:px-5 py-3 overflow-x-auto border-b ${line} bg-black/20`}>
-          {imgs.map((src, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setIndex(i)}
-              className={`w-12 h-12 rounded-md overflow-hidden shrink-0 transition ${i === index ? "ring-2 ring-festival-orange" : "opacity-50 hover:opacity-100"
-                }`}
-              aria-label={`Show photo ${i + 1}`}
-              aria-pressed={i === index}
-            >
-              <img src={src} alt="" className="w-full h-full object-cover" />
-            </button>
-          ))}
+        <div className={`relative border-b ${line} bg-black/20`}>
+          <div
+            ref={thumbRef}
+            tabIndex={0}
+            role="region"
+            aria-label={`${item.name} image thumbnails`}
+            className="flex gap-2 px-4 sm:px-5 py-2.5 overflow-x-auto no-scrollbar scroll-smooth focus-visible:outline-none"
+          >
+            {imgs.map((src, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndex(i)}
+                className={`w-12 h-12 rounded-md overflow-hidden shrink-0 transition-all ${i === index
+                    ? "ring-2 ring-festival-orange scale-105 opacity-100 shadow-md"
+                    : "opacity-45 hover:opacity-85 hover:scale-100"
+                  }`}
+                aria-label={`Show photo ${i + 1}`}
+                aria-pressed={i === index}
+              >
+                <img src={src} alt="" className="w-full h-full object-cover" />
+              </button>
+            ))}
+          </div>
+          {/* Discreet indicator dots when there are many items (e.g. 10 badges/stickers) */}
+          {imgs.length > 5 && (
+            <div className="flex justify-center pb-2 pt-0.5 gap-1">
+              {imgs.map((_, dotIdx) => (
+                <span
+                  key={dotIdx}
+                  className={`h-1 rounded-full transition-all duration-300 ${dotIdx === index ? "w-3.5 bg-festival-orange" : "w-1 bg-[#ebe6d9]/25"
+                    }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
 
       {/* Body */}
       <div className="flex flex-col flex-grow p-4 sm:p-5">
-        {/* Title */}
+        {/* Title & Mobile Header */}
         <div>
-          <div className="flex items-start justify-between gap-4">
-            <h3 className="text-lg font-semibold leading-snug">{item.name}</h3>
-            <p className="text-lg font-semibold shrink-0">₹{currentPrice.toFixed(2)}</p>
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <h3 className="text-lg font-semibold leading-snug">{item.name}</h3>
+              <p className={`text-xs mt-1 ${muted}`}>{[item.category, specs].filter(Boolean).join(", ")}</p>
+            </div>
+            <div className="text-right shrink-0">
+              <p className="text-lg font-semibold">₹{currentPrice.toFixed(2)}</p>
+              {/* Dropdown toggle button on mobile */}
+              <button
+                type="button"
+                onClick={() => setIsMobileExpanded(!isMobileExpanded)}
+                className="md:hidden mt-1 text-xs text-festival-orange hover:text-festival-orange/80 inline-flex items-center gap-1 font-medium bg-festival-orange/10 px-2.5 py-1 rounded-md border border-festival-orange/25 transition-all"
+                aria-label={isMobileExpanded ? "Hide options" : "Show options"}
+              >
+                <span>{isMobileExpanded ? "Less" : "Options"}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isMobileExpanded ? "rotate-180" : ""}`} />
+              </button>
+            </div>
           </div>
-          <p className={`text-xs mt-1 ${muted}`}>{[item.category, specs].filter(Boolean).join(", ")}</p>
-          {item.description && <p className={`text-sm mt-2 line-clamp-2 ${muted}`}>{item.description}</p>}
-        </div>
-
-        {/* Options */}
-        <div className={`mt-4 pt-4 border-t ${line} space-y-4`}>
-          {showPack && (
-            <div className="space-y-2">
-              <p className={optionLabel}>Buy as</p>
-              <div className={`grid grid-cols-2 rounded-md border ${line} p-0.5 text-sm`}>
-                {[
-                  { label: "Single", sub: `₹${item.price}`, value: false },
-                  { label: item.packLabel || "Pack of 10", sub: `₹${item.packPrice}`, value: true },
-                ].map((o) => (
-                  <button
-                    key={o.label}
-                    type="button"
-                    onClick={() => setIsPack(o.value)}
-                    aria-pressed={isPack === o.value}
-                    className={`py-2 rounded-[5px] transition-colors leading-tight ${isPack === o.value ? "bg-[#ebe6d9] text-[#13201a] font-semibold" : "text-[#ebe6d9]/70 hover:text-white"
-                      }`}
-                  >
-                    {o.label}
-                    <span className="block text-[11px] font-normal opacity-70">{o.sub}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {hasDesigns && (
-            <div className="space-y-2">
-              <p className={optionLabel}>
-                Design <span className="text-[#ebe6d9] font-medium ml-1">{selectedDesign?.name}</span>
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {item.designs!.map((d) => {
-                  const current = selectedDesign?.name === d.name;
-                  return (
-                    <button
-                      key={d.name}
-                      type="button"
-                      onClick={() => handleSelectDesign(d)}
-                      aria-pressed={current}
-                      className={`px-3 py-1.5 text-sm rounded-md border transition-colors flex items-center gap-1.5 ${current
-                        ? "border-festival-orange bg-festival-orange/10 text-white"
-                        : `${line} text-[#ebe6d9]/70 hover:border-[#ebe6d9]/50`
-                        }`}
-                    >
-                      {current && <Check size={13} className="text-festival-orange" />}
-                      {d.name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {hasColours && (
-            <div className="space-y-2">
-              <p className={optionLabel}>
-                Colour <span className="text-[#ebe6d9] font-medium ml-1">{selectedColour?.name}</span>
-              </p>
-              <div className="flex flex-wrap gap-2.5">
-                {item.colours!.map((col) => {
-                  const current = selectedColour?.name === col.name;
-                  const unavailable = isCombinationUnavailable(item.productCode, selectedDesign?.name, col.name);
-
-                  return (
-                    <button
-                      key={col.name}
-                      type="button"
-                      onClick={() => handleSelectColour(col)}
-                      title={unavailable ? `${col.name} (Not available for ${selectedDesign?.name})` : col.name}
-                      aria-label={col.name}
-                      aria-pressed={current}
-                      className={`w-9 h-9 rounded-full p-1 border-2 transition-all relative ${
-                        unavailable
-                          ? "opacity-30 border-red-500/30 cursor-not-allowed"
-                          : current
-                          ? "border-festival-orange scale-105"
-                          : "border-[#ebe6d9]/20 hover:border-[#ebe6d9]/50"
-                      }`}
-                    >
-                      <span className="block w-full h-full rounded-full ring-1 ring-black/30" style={{ backgroundColor: col.hex }} />
-                      {unavailable && (
-                        <span className="absolute inset-0 flex items-center justify-center text-[10px] text-red-400 font-bold">✕</span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {hasSizes && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <p className={optionLabel}>
-                  Size <span className="text-[#ebe6d9] font-medium ml-1">{selectedSize}</span>
-                </p>
-                <button
-                  type="button"
-                  onClick={() => onOpenSizeChart(item.sizeChartUrl || "", item.name, item.productCode)}
-                  className="text-xs inline-flex items-center gap-1 underline underline-offset-2 text-festival-orange hover:brightness-110"
-                >
-                  <Ruler size={12} /> Size guide
-                </button>
-              </div>
-              <div className="grid grid-cols-5 sm:grid-cols-6 gap-2">
-                {item.sizes!.map((size) => {
-                  const current = selectedSize === size;
-                  return (
-                    <button
-                      key={size}
-                      type="button"
-                      onClick={() => setSelectedSize(size)}
-                      aria-pressed={current}
-                      className={`py-2 text-sm rounded-md border transition-colors ${current
-                        ? "border-[#ebe6d9] bg-[#ebe6d9] text-[#13201a] font-semibold"
-                        : `${line} text-[#ebe6d9]/80 hover:border-[#ebe6d9]/50`
-                        }`}
-                    >
-                      {size}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+          {item.description && (
+            <p className={`text-sm mt-2 line-clamp-2 ${muted} ${!isMobileExpanded ? "hidden sm:block" : ""}`}>
+              {item.description}
+            </p>
           )}
         </div>
 
-        {/* Buy */}
-        <div className={`mt-auto pt-5`}>
-          <div className={`pt-4 border-t ${line}`}>
+        {/* Collapsed Mobile CTA Button */}
+        {!isMobileExpanded && (
+          <div className="md:hidden mt-3 pt-3 border-t border-[#ebe6d9]/15">
             <Button
-              onClick={handleAdd}
+              type="button"
+              onClick={() => setIsMobileExpanded(true)}
               disabled={isSoldOut}
-              className={`w-full rounded-md py-6 text-base font-semibold transition-colors ${isSoldOut
-                ? "bg-white/10 text-white/40 cursor-not-allowed"
-                : added
-                  ? "bg-[#ebe6d9] text-[#13201a] hover:bg-[#ebe6d9]"
-                  : "bg-festival-orange hover:bg-festival-orange/90 text-white"
+              className={`w-full py-4 text-sm font-semibold rounded-md flex items-center justify-center gap-2 ${isSoldOut
+                  ? "bg-white/10 text-white/40 cursor-not-allowed"
+                  : "bg-festival-orange text-white hover:bg-festival-orange/90 shadow-sm"
                 }`}
             >
-              {isSoldOut ? "Sold out" : added ? "Added to bag" : `Add to bag · ₹${currentPrice.toFixed(2)}`}
+              <span>{isSoldOut ? "Sold out" : `Select Options & Buy · ₹${currentPrice.toFixed(2)}`}</span>
+              {!isSoldOut && <ChevronDown size={15} />}
             </Button>
-            <p className="text-[11px] text-[#ebe6d9]/45 mt-2.5 text-center">
-              {isSoldOut ? "Out of stock" : "Includes GST, ships in 24 hours"} · {dynamicSku}
+            <p className="text-[11px] text-[#ebe6d9]/50 mt-1.5 text-center truncate">
+              {[selectedDesign?.name, selectedColour?.name, hasSizes ? `Size ${selectedSize}` : ""].filter(Boolean).join(" · ")}
             </p>
+          </div>
+        )}
+
+        {/* Options & Full Buy (always open on desktop, expandable on mobile) */}
+        <div className={`flex-col flex-grow ${isMobileExpanded ? "flex" : "hidden md:flex"}`}>
+          {/* Options */}
+          <div className={`mt-4 pt-4 border-t ${line} space-y-4`}>
+            {showPack && (
+              <div className="space-y-2">
+                <p className={optionLabel}>Buy as</p>
+                <div className={`grid grid-cols-2 rounded-md border ${line} p-0.5 text-sm`}>
+                  {[
+                    { label: "Single", sub: `₹${item.price}`, value: false },
+                    { label: item.packLabel || "Pack of 10", sub: `₹${item.packPrice}`, value: true },
+                  ].map((o) => (
+                    <button
+                      key={o.label}
+                      type="button"
+                      onClick={() => setIsPack(o.value)}
+                      aria-pressed={isPack === o.value}
+                      className={`py-2 rounded-[5px] transition-colors leading-tight ${isPack === o.value ? "bg-[#ebe6d9] text-[#13201a] font-semibold" : "text-[#ebe6d9]/70 hover:text-white"
+                        }`}
+                    >
+                      {o.label}
+                      <span className="block text-[11px] font-normal opacity-70">{o.sub}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {hasDesigns && (
+              <div className="space-y-2">
+                <p className={optionLabel}>
+                  Design <span className="text-[#ebe6d9] font-medium ml-1">{selectedDesign?.name}</span>
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {item.designs!.map((d) => {
+                    const current = selectedDesign?.name === d.name;
+                    return (
+                      <button
+                        key={d.name}
+                        type="button"
+                        onClick={() => handleSelectDesign(d)}
+                        aria-pressed={current}
+                        className={`px-3 py-1.5 text-sm rounded-md border transition-colors flex items-center gap-1.5 ${current
+                          ? "border-festival-orange bg-festival-orange/10 text-white"
+                          : `${line} text-[#ebe6d9]/70 hover:border-[#ebe6d9]/50`
+                          }`}
+                      >
+                        {current && <Check size={13} className="text-festival-orange" />}
+                        {d.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {hasColours && (
+              <div className="space-y-2">
+                <p className={optionLabel}>
+                  Colour <span className="text-[#ebe6d9] font-medium ml-1">{selectedColour?.name}</span>
+                </p>
+                <div className="flex flex-wrap gap-2.5">
+                  {item.colours!.map((col) => {
+                    const current = selectedColour?.name === col.name;
+                    const unavailable = isCombinationUnavailable(item.productCode, selectedDesign?.name, col.name);
+
+                    return (
+                      <button
+                        key={col.name}
+                        type="button"
+                        onClick={() => handleSelectColour(col)}
+                        title={unavailable ? `${col.name} (Not available for ${selectedDesign?.name})` : col.name}
+                        aria-label={col.name}
+                        aria-pressed={current}
+                        className={`w-9 h-9 rounded-full p-1 border-2 transition-all relative ${unavailable
+                          ? "opacity-30 border-red-500/30 cursor-not-allowed"
+                          : current
+                            ? "border-festival-orange scale-105"
+                            : "border-[#ebe6d9]/20 hover:border-[#ebe6d9]/50"
+                          }`}
+                      >
+                        <span className="block w-full h-full rounded-full ring-1 ring-black/30" style={{ backgroundColor: col.hex }} />
+                        {unavailable && (
+                          <span className="absolute inset-0 flex items-center justify-center text-[10px] text-red-400 font-bold">✕</span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {hasSizes && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <p className={optionLabel}>
+                    Size <span className="text-[#ebe6d9] font-medium ml-1">{selectedSize}</span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => onOpenSizeChart(item.sizeChartUrl || "", item.name, item.productCode)}
+                    className="text-xs inline-flex items-center gap-1 underline underline-offset-2 text-festival-orange hover:brightness-110"
+                  >
+                    <Ruler size={12} /> Size guide
+                  </button>
+                </div>
+                <div className="grid grid-cols-5 sm:grid-cols-6 gap-2">
+                  {item.sizes!.map((size) => {
+                    const current = selectedSize === size;
+                    return (
+                      <button
+                        key={size}
+                        type="button"
+                        onClick={() => setSelectedSize(size)}
+                        aria-pressed={current}
+                        className={`py-2 text-sm rounded-md border transition-colors ${current
+                          ? "border-[#ebe6d9] bg-[#ebe6d9] text-[#13201a] font-semibold"
+                          : `${line} text-[#ebe6d9]/80 hover:border-[#ebe6d9]/50`
+                          }`}
+                      >
+                        {size}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Buy */}
+          <div className={`mt-auto pt-5`}>
+            <div className={`pt-4 border-t ${line}`}>
+              <Button
+                onClick={handleAdd}
+                disabled={isSoldOut}
+                className={`w-full rounded-md py-6 text-base font-semibold transition-colors ${isSoldOut
+                  ? "bg-white/10 text-white/40 cursor-not-allowed"
+                  : added
+                    ? "bg-[#ebe6d9] text-[#13201a] hover:bg-[#ebe6d9]"
+                    : "bg-festival-orange hover:bg-festival-orange/90 text-white"
+                  }`}
+              >
+                {isSoldOut ? "Sold out" : added ? "Added to bag" : `Add to bag · ₹${currentPrice.toFixed(2)}`}
+              </Button>
+              <p className="text-[11px] text-[#ebe6d9]/45 mt-2.5 text-center">
+                {isSoldOut ? "Out of stock" : "Includes GST, ships in 24 hours"}
+              </p>
+
+              {/* Mobile Collapse Button */}
+              {isMobileExpanded && (
+                <button
+                  type="button"
+                  onClick={() => setIsMobileExpanded(false)}
+                  className="md:hidden w-full py-2.5 text-xs text-[#ebe6d9]/60 hover:text-white flex items-center justify-center gap-1 mt-2 border-t border-[#ebe6d9]/10 transition-colors"
+                >
+                  <span>Hide options</span>
+                  <ChevronUp size={14} />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

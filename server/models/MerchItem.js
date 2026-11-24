@@ -74,6 +74,7 @@ const MerchItemSchema = new mongoose.Schema(
     variantImages: [VariantImageSchema],
 
     stock: { type: Number, default: 100, min: 0 },
+    position: { type: Number, default: 0, index: true },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }

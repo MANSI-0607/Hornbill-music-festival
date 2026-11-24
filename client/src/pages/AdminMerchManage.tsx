@@ -68,6 +68,7 @@ export type MerchItem = {
   weight?: string;
   fit?: string;
   price: number;
+  position?: number;
   hasPackOption?: boolean;
   packPrice?: number;
   packLabel?: string;
@@ -93,6 +94,7 @@ const CATALOG_PRESETS = [
     name: "Classic Round-Neck Tee",
     productCode: "HMF-RNT",
     price: 535,
+    position: 1,
     fabric: "100% cotton, bio-washed",
     weight: "180 GSM",
     fit: "Regular, round neck",
@@ -122,6 +124,7 @@ const CATALOG_PRESETS = [
     name: "Oversized Tee",
     productCode: "HMF-OST",
     price: 585,
+    position: 2,
     fabric: "100% cotton, bio-washed",
     weight: "180 GSM",
     fit: "Oversized, drop shoulder",
@@ -149,6 +152,7 @@ const CATALOG_PRESETS = [
     name: "Pullover Hoodie",
     productCode: "HMF-HD320",
     price: 999,
+    position: 3,
     fabric: "Poly-cotton 3-thread fleece",
     weight: "320 GSM",
     fit: "Regular pullover",
@@ -175,6 +179,7 @@ const CATALOG_PRESETS = [
     name: "Crew Sweatshirt",
     productCode: "HMF-SWT",
     price: 800,
+    position: 4,
     fabric: "Cotton 3-thread fleece",
     weight: "320 GSM",
     fit: "Regular crew neck",
@@ -200,6 +205,7 @@ const CATALOG_PRESETS = [
     name: "Tote Bag",
     productCode: "HMF-TOTE",
     price: 370,
+    position: 5,
     fabric: "Cotton canvas (16 × 14 in / 40 × 35 cm)",
     weight: "Heavy canvas",
     fit: "Long shoulder straps · Front print only",
@@ -224,6 +230,7 @@ const CATALOG_PRESETS = [
     name: "Coffee Mug",
     productCode: "HMF-MUG",
     price: 420,
+    position: 6,
     fabric: "White ceramic, glossy",
     weight: "Glossy ceramic",
     fit: "Full colour signboard print · Hand wash",
@@ -241,6 +248,7 @@ const CATALOG_PRESETS = [
     name: "Round Pin Badge",
     productCode: "HMF-BDG",
     price: 35,
+    position: 7,
     fabric: "58 mm round with safety pin",
     weight: "Glossy finish",
     fit: "58 mm pin badge",
@@ -269,6 +277,7 @@ const CATALOG_PRESETS = [
     name: "Die-cut Sticker",
     productCode: "HMF-STK",
     price: 15,
+    position: 8,
     fabric: "Die-cut vinyl up to 3 × 3 in",
     weight: "Waterproof vinyl",
     fit: "Die-cut to shape with white border",
@@ -406,6 +415,7 @@ export default function AdminMerchManage() {
     sizeChartUrl: "",
     variantImages: [] as VariantImage[],
     stock: "100",
+    position: "0",
     isActive: true,
   });
 
@@ -487,6 +497,7 @@ export default function AdminMerchManage() {
       productCode: preset.productCode,
       category: preset.category,
       price: String(preset.price),
+      position: String(preset.position ?? 0),
       fabric: preset.fabric,
       weight: preset.weight,
       fit: preset.fit,
@@ -932,6 +943,7 @@ export default function AdminMerchManage() {
 
     const packPriceNum = form.hasPackOption ? parseFloat(form.packPrice) : 0;
     const stockNum = parseInt(form.stock, 10);
+    const positionNum = parseInt(form.position, 10);
 
     try {
       setLoading(true);
@@ -944,6 +956,7 @@ export default function AdminMerchManage() {
         weight: form.weight.trim(),
         fit: form.fit.trim(),
         price: priceNum,
+        position: isNaN(positionNum) ? 0 : positionNum,
         hasPackOption: form.hasPackOption,
         packPrice: isNaN(packPriceNum) ? 0 : packPriceNum,
         packLabel: form.packLabel.trim(),
@@ -991,6 +1004,7 @@ export default function AdminMerchManage() {
         weight: "",
         fit: "",
         price: "",
+        position: "0",
         hasPackOption: false,
         packPrice: "",
         packLabel: "Pack of 10",
@@ -1030,6 +1044,7 @@ export default function AdminMerchManage() {
       weight: item.weight || "",
       fit: item.fit || "",
       price: String(item.price ?? ""),
+      position: String(item.position ?? 0),
       hasPackOption: Boolean(item.hasPackOption),
       packPrice: item.packPrice ? String(item.packPrice) : "",
       packLabel: item.packLabel || "Pack of 10",
@@ -1058,6 +1073,7 @@ export default function AdminMerchManage() {
       weight: "",
       fit: "",
       price: "",
+      position: "0",
       hasPackOption: false,
       packPrice: "",
       packLabel: "Pack of 10",
@@ -1114,10 +1130,13 @@ export default function AdminMerchManage() {
     }
   };
 
-  const filteredItems =
-    filterCategory === "All"
-      ? items
-      : items.filter((i) => i.category === filterCategory);
+  const filteredItems = useMemo(() => {
+    const list =
+      filterCategory === "All"
+        ? items
+        : items.filter((i) => i.category === filterCategory);
+    return [...list].sort((a, b) => (a.position ?? 999) - (b.position ?? 999));
+  }, [items, filterCategory]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/10">
@@ -1453,8 +1472,8 @@ export default function AdminMerchManage() {
                     />
                   </div>
 
-                  {/* Price & Stock */}
-                  <div className="grid grid-cols-2 gap-4">
+                  {/* Price, Stock & Display Order */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <Label htmlFor="price">Base Price (₹) *</Label>
                       <Input
@@ -1480,6 +1499,22 @@ export default function AdminMerchManage() {
                         value={form.stock}
                         onChange={onChange}
                         placeholder="100"
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <Label htmlFor="position">Display Order #</Label>
+                        <span className="text-[10px] text-muted-foreground">1 appears 1st</span>
+                      </div>
+                      <Input
+                        id="position"
+                        name="position"
+                        type="number"
+                        min="0"
+                        value={form.position}
+                        onChange={onChange}
+                        placeholder="1"
                         className="mt-1"
                       />
                     </div>
@@ -2251,11 +2286,18 @@ export default function AdminMerchManage() {
                           <div className="flex-1 min-w-0">
                             <div className="flex items-start justify-between gap-2">
                               <div>
-                                {item.productCode && (
-                                  <span className="text-[10px] font-mono font-bold text-festival-orange uppercase tracking-wider block">
-                                    {item.productCode}
-                                  </span>
-                                )}
+                                <div className="flex items-center gap-1.5 mb-0.5">
+                                  {typeof item.position === "number" && (
+                                    <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-festival-orange/15 text-festival-orange border border-festival-orange/30 font-mono">
+                                      #{item.position}
+                                    </span>
+                                  )}
+                                  {item.productCode && (
+                                    <span className="text-[10px] font-mono font-bold text-festival-orange uppercase tracking-wider">
+                                      {item.productCode}
+                                    </span>
+                                  )}
+                                </div>
                                 <h4 className="font-semibold text-base truncate">{item.name}</h4>
                               </div>
 

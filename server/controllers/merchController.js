@@ -23,7 +23,7 @@ export const requireAdmin = (req, res, next) => {
 export const listMerch = async (req, res) => {
   try {
     const filter = req.query.all === 'true' ? {} : { isActive: true };
-    const items = await MerchItem.find(filter).sort({ createdAt: -1 });
+    const items = await MerchItem.find(filter).sort({ position: 1, createdAt: -1 });
 
     const normalized = items.map((i) => {
       const doc = i.toObject();
@@ -71,6 +71,7 @@ export const listMerch = async (req, res) => {
       if (typeof doc.hasPackOption !== 'boolean') doc.hasPackOption = false;
       if (typeof doc.packPrice !== 'number') doc.packPrice = 0;
       if (!doc.packLabel) doc.packLabel = 'Pack of 10';
+      if (typeof doc.position !== 'number') doc.position = 0;
 
       return doc;
     });
@@ -104,6 +105,7 @@ export const createMerch = async (req, res) => {
       sizes = [],
       sizeChartUrl = '',
       stock = 100,
+      position = 0,
       isActive = true
     } = req.body || {};
 
@@ -178,6 +180,7 @@ export const createMerch = async (req, res) => {
       sizes: sizesArr,
       sizeChartUrl: typeof sizeChartUrl === 'string' ? sizeChartUrl.trim() : '',
       stock: Number(stock || 0),
+      position: Number(position) || 0,
       isActive: Boolean(isActive)
     });
 
@@ -201,6 +204,7 @@ export const updateMerch = async (req, res) => {
     if (update.weight !== undefined) update.weight = String(update.weight).trim();
     if (update.fit !== undefined) update.fit = String(update.fit).trim();
     if (update.price !== undefined) update.price = Number(update.price);
+    if (update.position !== undefined) update.position = Number(update.position) || 0;
     if (update.hasPackOption !== undefined) update.hasPackOption = Boolean(update.hasPackOption);
     if (update.packPrice !== undefined) update.packPrice = Number(update.packPrice);
     if (update.packLabel !== undefined) update.packLabel = String(update.packLabel).trim();
@@ -452,6 +456,7 @@ export const OFFICIAL_CATALOG_ITEMS = [
     productCode: 'HMF-RNT',
     name: 'Classic Round-Neck Tee',
     category: 'T-Shirts',
+    position: 1,
     price: 535,
     fabric: '100% cotton, bio-washed',
     weight: '180 GSM',
@@ -482,6 +487,7 @@ export const OFFICIAL_CATALOG_ITEMS = [
     productCode: 'HMF-OST',
     name: 'Oversized Tee',
     category: 'T-Shirts',
+    position: 2,
     price: 585,
     fabric: '100% cotton, bio-washed',
     weight: '180 GSM',
@@ -510,6 +516,7 @@ export const OFFICIAL_CATALOG_ITEMS = [
     productCode: 'HMF-HD320',
     name: 'Pullover Hoodie',
     category: 'Winterwear',
+    position: 3,
     price: 999,
     fabric: 'Poly-cotton 3-thread fleece',
     weight: '320 GSM',
@@ -537,6 +544,7 @@ export const OFFICIAL_CATALOG_ITEMS = [
     productCode: 'HMF-SWT',
     name: 'Crew Sweatshirt',
     category: 'Winterwear',
+    position: 4,
     price: 800,
     fabric: 'Cotton 3-thread fleece',
     weight: '320 GSM',
@@ -563,6 +571,7 @@ export const OFFICIAL_CATALOG_ITEMS = [
     productCode: 'HMF-TOTE',
     name: 'Tote Bag',
     category: 'Accessories',
+    position: 5,
     price: 370,
     fabric: 'Cotton canvas (16 × 14 in / 40 × 35 cm)',
     weight: 'Heavy canvas',
@@ -588,6 +597,7 @@ export const OFFICIAL_CATALOG_ITEMS = [
     productCode: 'HMF-MUG',
     name: 'Coffee Mug',
     category: 'Accessories',
+    position: 6,
     price: 420,
     fabric: 'White ceramic, glossy',
     weight: 'Glossy ceramic',
@@ -610,6 +620,7 @@ export const OFFICIAL_CATALOG_ITEMS = [
     productCode: 'HMF-BDG',
     name: 'Round Pin Badge',
     category: 'Accessories',
+    position: 7,
     price: 35,
     hasPackOption: true,
     packPrice: 470,
@@ -641,6 +652,7 @@ export const OFFICIAL_CATALOG_ITEMS = [
     productCode: 'HMF-STK',
     name: 'Die-cut Sticker',
     category: 'Accessories',
+    position: 8,
     price: 15,
     hasPackOption: true,
     packPrice: 270,
@@ -691,6 +703,7 @@ export const seedOfficialCatalog = async (req, res) => {
         existing.hasPackOption = item.hasPackOption;
         existing.packPrice = item.packPrice;
         existing.packLabel = item.packLabel;
+        existing.position = item.position;
         existing.isActive = true;
         await existing.save();
         results.push(existing);
