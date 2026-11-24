@@ -197,7 +197,7 @@ export default function OrderTracking() {
                 Try Again
               </Button>
               <a
-                href="https://wa.me/918794696995?text=Hi%2C%20I%20need%20help%20tracking%20my%20Hornbill%20Festival%20merchandise%20order."
+                href="https://wa.me/917003195644?text=Hi%2C%20I%20need%20help%20tracking%20my%20Hornbill%20Festival%20merchandise%20order."
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
@@ -288,11 +288,10 @@ export default function OrderTracking() {
                       return (
                         <div key={step.key} className="flex flex-col items-center text-center max-w-[80px] sm:max-w-[120px]">
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 border-2 ${
-                              isCompleted
-                                ? "bg-festival-orange border-festival-orange text-white shadow-lg shadow-festival-orange/30"
-                                : "bg-[#14231b] border-white/20 text-[#ebe6d9]/40"
-                            } ${isCurrent ? "ring-4 ring-festival-orange/20 scale-110" : ""}`}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 border-2 ${isCompleted
+                              ? "bg-festival-orange border-festival-orange text-white shadow-lg shadow-festival-orange/30"
+                              : "bg-[#14231b] border-white/20 text-[#ebe6d9]/40"
+                              } ${isCurrent ? "ring-4 ring-festival-orange/20 scale-110" : ""}`}
                           >
                             {isCompleted ? (
                               <Check className="w-4 h-4 stroke-[3]" />
@@ -301,13 +300,12 @@ export default function OrderTracking() {
                             )}
                           </div>
                           <span
-                            className={`text-xs mt-2.5 font-medium leading-tight ${
-                              isCurrent
-                                ? "text-festival-orange font-bold"
-                                : isCompleted
+                            className={`text-xs mt-2.5 font-medium leading-tight ${isCurrent
+                              ? "text-festival-orange font-bold"
+                              : isCompleted
                                 ? "text-white"
                                 : "text-[#ebe6d9]/40"
-                            }`}
+                              }`}
                           >
                             {step.label}
                           </span>
@@ -336,13 +334,12 @@ export default function OrderTracking() {
                 </div>
 
                 <Badge
-                  className={`text-xs font-semibold px-3 py-1 uppercase tracking-wider ${
-                    order.shippingStatus === "delivered"
-                      ? "bg-green-500/20 text-green-400 border border-green-500/40"
-                      : order.shippingStatus === "shipped" || order.shippingStatus === "out_for_delivery"
+                  className={`text-xs font-semibold px-3 py-1 uppercase tracking-wider ${order.shippingStatus === "delivered"
+                    ? "bg-green-500/20 text-green-400 border border-green-500/40"
+                    : order.shippingStatus === "shipped" || order.shippingStatus === "out_for_delivery"
                       ? "bg-blue-500/20 text-blue-400 border border-blue-500/40"
                       : "bg-amber-500/20 text-amber-400 border border-amber-500/40"
-                  }`}
+                    }`}
                 >
                   {order.shippingStatus.replace(/_/g, " ")}
                 </Badge>
@@ -441,7 +438,7 @@ export default function OrderTracking() {
                 </div>
 
                 <a
-                  href={`https://wa.me/918794696995?text=Hi%2C%20I%20have%20an%20inquiry%20regarding%20my%20Hornbill%20Festival%20merchandise%20order%20%23${order._id.slice(-6).toUpperCase()}`}
+                  href={`https://wa.me/917003195644?text=Hi%2C%20I%20have%20an%20inquiry%20regarding%20my%20Hornbill%20Festival%20merchandise%20order%20%23${order._id.slice(-6).toUpperCase()}`}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-green-600/20 text-green-400 border border-green-500/30 hover:bg-green-600/30 text-xs font-semibold transition"

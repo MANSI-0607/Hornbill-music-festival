@@ -727,13 +727,15 @@ export const seedOfficialCatalog = async (req, res) => {
 const fetchFromAhibi = async (pathWithQuery, options = {}) => {
   const baseUrls = [
     process.env.AHIBI_API_BASE_URL,
-    'http://localhost:5000',
+    ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:5000'] : []),
     'https://ahibi.in',
-    'https://api.ahibi.in',
   ].filter(Boolean).map((u) => u.replace(/\/+$/, ''));
 
+  const uniqueBaseUrls = [...new Set(baseUrls)];
   let lastError = null;
-  for (const base of baseUrls) {
+  let lastStatus = null;
+
+  for (const base of uniqueBaseUrls) {
     try {
       const url = `${base}/api/hornbill-merch${pathWithQuery}`;
       const res = await fetch(url, {
@@ -749,13 +751,20 @@ const fetchFromAhibi = async (pathWithQuery, options = {}) => {
         return { ok: true, data };
       }
       const errData = await res.json().catch(() => ({}));
-      lastError = errData.message || `AHIBI error: ${res.status}`;
+      lastStatus = res.status;
+      lastError = errData.message || `AHIBI returned ${res.status} (${url})`;
+      // If AHIBI responded with a valid JSON 404/400 (e.g. Order not found), no need to overwrite with connection errors
+      if (errData && typeof errData.success === 'boolean') {
+        break;
+      }
     } catch (err) {
-      lastError = err?.message || 'Connection failed';
+      if (!lastStatus) {
+        lastError = err?.message || 'Connection failed';
+      }
     }
   }
 
-  return { ok: false, error: lastError || 'AHIBI endpoint not found' };
+  return { ok: false, status: lastStatus || 502, error: lastError || 'AHIBI endpoint not found' };
 };
 
 export const getAhibiMerchOrders = async (req, res) => {
