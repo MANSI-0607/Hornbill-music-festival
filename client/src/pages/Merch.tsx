@@ -504,16 +504,28 @@ export default function Merch() {
       </div>
 
       {/* Floating bag button */}
-      {cartCount > 0 && (
-        <button
-          onClick={() => setCartOpen(true)}
-          className="fixed bottom-20 md:bottom-8 right-6 z-40 bg-festival-orange text-white pl-4 pr-5 py-3 rounded-sm shadow-lg font-semibold flex items-center gap-2 hover:brightness-110 active:translate-y-px transition"
-          aria-label={`Open bag, ${cartCount} items`}
-        >
-          <ShoppingBag size={18} />
-          Bag ({cartCount})
-        </button>
-      )}
+      <AnimatePresence>
+        {cartCount > 0 && (
+          <motion.button
+            initial={{ scale: 0.85, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.85, opacity: 0, y: 20 }}
+            transition={{ type: "spring", stiffness: 350, damping: 25 }}
+            onClick={() => setCartOpen(true)}
+            className="fixed bottom-6 right-4 sm:right-6 md:bottom-8 md:right-8 z-40 bg-festival-orange text-white pl-4 pr-5 py-3 rounded-full shadow-2xl ring-2 ring-black/40 font-semibold flex items-center gap-3 hover:brightness-110 active:scale-95 transition-all"
+            aria-label={`Open bag, ${cartCount} items`}
+          >
+            <div className="relative flex items-center justify-center">
+              <ShoppingBag size={19} className="stroke-[2.2]" />
+              <span className="absolute -top-1.5 -right-2 bg-[#13201a] text-festival-orange text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center border border-festival-orange/40">
+                {cartCount}
+              </span>
+            </div>
+            <span className="text-sm font-bold">Bag</span>
+            <span className="text-xs bg-black/25 px-2 py-0.5 rounded-full font-medium">₹{cartTotal.toFixed(0)}</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Cart drawer */}
       <AnimatePresence>
@@ -899,7 +911,8 @@ function MerchCard({
             tabIndex={0}
             role="region"
             aria-label={`${item.name} image thumbnails`}
-            className="flex gap-2 px-4 sm:px-5 py-2.5 overflow-x-auto no-scrollbar scroll-smooth focus-visible:outline-none"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+            className="flex gap-2 px-4 sm:px-5 py-2.5 overflow-x-auto no-scrollbar scroll-smooth focus-visible:outline-none [&::-webkit-scrollbar]:hidden"
           >
             {imgs.map((src, i) => (
               <button
@@ -919,12 +932,15 @@ function MerchCard({
           </div>
           {/* Discreet indicator dots when there are many items (e.g. 10 badges/stickers) */}
           {imgs.length > 5 && (
-            <div className="flex justify-center pb-2 pt-0.5 gap-1">
+            <div className="flex justify-center pb-2 pt-0.5 gap-1.5">
               {imgs.map((_, dotIdx) => (
-                <span
+                <button
                   key={dotIdx}
-                  className={`h-1 rounded-full transition-all duration-300 ${dotIdx === index ? "w-3.5 bg-festival-orange" : "w-1 bg-[#ebe6d9]/25"
+                  type="button"
+                  onClick={() => setIndex(dotIdx)}
+                  className={`h-1.5 rounded-full transition-all duration-300 focus-visible:outline-none ${dotIdx === index ? "w-4 bg-festival-orange" : "w-1.5 bg-[#ebe6d9]/25 hover:bg-[#ebe6d9]/50"
                     }`}
+                  aria-label={`Go to photo ${dotIdx + 1}`}
                 />
               ))}
             </div>

@@ -127,21 +127,37 @@ export default function AdminMerchOrders() {
       if (statusFilter !== "all") params.append("status", statusFilter);
       if (searchTerm.trim()) params.append("search", searchTerm.trim());
 
-      const res = await fetch(`${API_BASE_URL}/merch/orders?${params.toString()}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const candidateUrls = [
+        `${API_BASE_URL}/merch/orders?${params.toString()}`,
+        `http://localhost:5000/api/hornbill-merch/orders?${params.toString()}`,
+        `https://ahibi.in/api/hornbill-merch/orders?${params.toString()}`,
+        `https://api.ahibi.in/api/hornbill-merch/orders?${params.toString()}`,
+      ];
 
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        throw new Error(data.message || "Failed to load orders from AHIBI");
+      let orderList: MerchOrder[] | null = null;
+      let lastErrMsg = "Failed to load orders from AHIBI";
+
+      for (const url of candidateUrls) {
+        try {
+          const res = await fetch(url, {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          });
+          if (res.ok) {
+            const payload = await res.json();
+            orderList = payload?.data?.orders || payload?.orders || [];
+            break;
+          }
+        } catch {
+          // try next candidate
+        }
       }
 
-      const payload = await res.json();
-      const orderList = payload?.data?.orders || payload?.orders || [];
-      setOrders(orderList);
-      if (isManualRefresh) toast.success("Orders refreshed from AHIBI");
+      if (orderList !== null) {
+        setOrders(orderList);
+        if (isManualRefresh) toast.success("Orders refreshed from AHIBI");
+      } else {
+        throw new Error(lastErrMsg);
+      }
     } catch (err: any) {
       console.error("Orders fetch error:", err);
       setError(err?.message || "Failed to connect to AHIBI merch orders service");
@@ -153,14 +169,28 @@ export default function AdminMerchOrders() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/merch/orders/stats`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (res.ok) {
-        const payload = await res.json();
-        setStats(payload.data || null);
+      const candidateUrls = [
+        `${API_BASE_URL}/merch/orders/stats`,
+        `http://localhost:5000/api/hornbill-merch/orders/stats`,
+        `https://ahibi.in/api/hornbill-merch/orders/stats`,
+        `https://api.ahibi.in/api/hornbill-merch/orders/stats`,
+      ];
+
+      for (const url of candidateUrls) {
+        try {
+          const res = await fetch(url, {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          });
+          if (res.ok) {
+            const payload = await res.json();
+            if (payload?.data) {
+              setStats(payload.data);
+              break;
+            }
+          }
+        } catch {
+          // try next candidate
+        }
       }
     } catch (err) {
       console.error("Stats fetch error:", err);

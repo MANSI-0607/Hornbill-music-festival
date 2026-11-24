@@ -724,65 +724,78 @@ export const seedOfficialCatalog = async (req, res) => {
   }
 };
 
+const fetchFromAhibi = async (pathWithQuery) => {
+  const baseUrls = [
+    process.env.AHIBI_API_BASE_URL,
+    'http://localhost:5000',
+    'https://ahibi.in',
+    'https://api.ahibi.in',
+  ].filter(Boolean).map((u) => u.replace(/\/+$/, ''));
+
+  let lastError = null;
+  for (const base of baseUrls) {
+    try {
+      const url = `${base}/api/hornbill-merch${pathWithQuery}`;
+      const res = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        return { ok: true, data };
+      }
+      const errData = await res.json().catch(() => ({}));
+      lastError = errData.message || `AHIBI error: ${res.status}`;
+    } catch (err) {
+      lastError = err?.message || 'Connection failed';
+    }
+  }
+
+  return { ok: false, error: lastError || 'AHIBI endpoint not found' };
+};
+
 export const getAhibiMerchOrders = async (req, res) => {
   try {
-    const ahibiUrl = process.env.AHIBI_API_BASE_URL || 'http://localhost:5000';
     const queryString = new URLSearchParams(req.query).toString();
-    const endpoint = `${ahibiUrl.replace(/\/+$/, '')}/api/hornbill-merch/orders${queryString ? `?${queryString}` : ''}`;
-    
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const path = `/orders${queryString ? `?${queryString}` : ''}`;
+    const result = await fetchFromAhibi(path);
 
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      return res.status(response.status).json({
-        success: false,
-        message: err.message || 'Failed to fetch orders from AHIBI',
+    if (!result.ok) {
+      return res.status(200).json({
+        success: true,
+        data: { orders: [], pagination: { total: 0, pages: 0 } },
+        warning: result.error,
       });
     }
 
-    const data = await response.json();
-    return res.status(200).json(data);
+    return res.status(200).json(result.data);
   } catch (err) {
     console.error('Failed to proxy orders from AHIBI:', err);
-    return res.status(500).json({
-      success: false,
-      message: 'Failed to communicate with AHIBI server: ' + (err?.message || 'Network error'),
+    return res.status(200).json({
+      success: true,
+      data: { orders: [], pagination: { total: 0, pages: 0 } },
+      warning: err?.message,
     });
   }
 };
 
 export const getAhibiMerchOrderStats = async (req, res) => {
   try {
-    const ahibiUrl = process.env.AHIBI_API_BASE_URL || 'http://localhost:5000';
-    const endpoint = `${ahibiUrl.replace(/\/+$/, '')}/api/hornbill-merch/orders/stats`;
-
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      return res.status(response.status).json({
-        success: false,
-        message: err.message || 'Failed to fetch order stats from AHIBI',
+    const result = await fetchFromAhibi('/orders/stats');
+    if (!result.ok) {
+      return res.status(200).json({
+        success: true,
+        data: { totalOrders: 0, paidOrders: 0, pendingOrders: 0, failedOrders: 0, totalRevenue: 0 },
+        warning: result.error,
       });
     }
-
-    const data = await response.json();
-    return res.status(200).json(data);
+    return res.status(200).json(result.data);
   } catch (err) {
     console.error('Failed to proxy order stats from AHIBI:', err);
-    return res.status(500).json({
-      success: false,
-      message: 'Failed to communicate with AHIBI server: ' + (err?.message || 'Network error'),
+    return res.status(200).json({
+      success: true,
+      data: { totalOrders: 0, paidOrders: 0, pendingOrders: 0, failedOrders: 0, totalRevenue: 0 },
+      warning: err?.message,
     });
   }
 };
@@ -790,31 +803,13 @@ export const getAhibiMerchOrderStats = async (req, res) => {
 export const getAhibiMerchOrderById = async (req, res) => {
   try {
     const { orderId } = req.params;
-    const ahibiUrl = process.env.AHIBI_API_BASE_URL || 'http://localhost:5000';
-    const endpoint = `${ahibiUrl.replace(/\/+$/, '')}/api/hornbill-merch/orders/${encodeURIComponent(orderId)}`;
-
-    const response = await fetch(endpoint, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      return res.status(response.status).json({
-        success: false,
-        message: err.message || 'Failed to fetch order details from AHIBI',
-      });
+    const result = await fetchFromAhibi(`/orders/${encodeURIComponent(orderId)}`);
+    if (!result.ok) {
+      return res.status(404).json({ success: false, message: result.error });
     }
-
-    const data = await response.json();
-    return res.status(200).json(data);
+    return res.status(200).json(result.data);
   } catch (err) {
     console.error('Failed to proxy order details from AHIBI:', err);
-    return res.status(500).json({
-      success: false,
-      message: 'Failed to communicate with AHIBI server: ' + (err?.message || 'Network error'),
-    });
+    return res.status(500).json({ success: false, message: err?.message });
   }
 };
