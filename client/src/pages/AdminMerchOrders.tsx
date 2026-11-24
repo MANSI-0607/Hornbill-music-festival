@@ -43,6 +43,8 @@ import {
   AlertTriangle,
   Copy,
   Check,
+  Calendar,
+  Filter,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -116,6 +118,52 @@ export default function AdminMerchOrders() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedOrder, setSelectedOrder] = useState<MerchOrder | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  // Default check to show orders made from 24 Nov 2026 onwards
+  const [filterFromNov24, setFilterFromNov24] = useState<boolean>(true);
+
+  const isFromNov24 = (createdAt?: string) => {
+    if (!createdAt) return false;
+    const d = new Date(createdAt);
+    if (isNaN(d.getTime())) return false;
+    try {
+      // Check in Indian Standard Time (Asia/Kolkata)
+      const istStr = d.toLocaleString("en-US", { timeZone: "Asia/Kolkata" });
+      const istDate = new Date(istStr);
+      const year = istDate.getFullYear();
+      const month = istDate.getMonth(); // 10 is November (0-indexed)
+      const day = istDate.getDate();
+      if (year > 2026) return true;
+      if (year === 2026) {
+        if (month > 10) return true;
+        if (month === 10 && day >= 24) return true;
+      }
+      return false;
+    } catch {
+      // Fallback: 2026-11-23 18:30 UTC is 2026-11-24 00:00 IST
+      return d.getTime() >= new Date("2026-11-23T18:30:00Z").getTime();
+    }
+  };
+
+  const displayedOrders = useMemo(() => {
+    if (!filterFromNov24) return orders;
+    return orders.filter((o) => isFromNov24(o.createdAt));
+  }, [orders, filterFromNov24]);
+
+  const dynamicStats = useMemo(() => {
+    if (!filterFromNov24 && stats) return stats;
+    const paid = displayedOrders.filter((o) => o.status === "paid");
+    const pending = displayedOrders.filter((o) => o.status === "pending" || o.status === "created");
+    const failed = displayedOrders.filter((o) => o.status === "failed" || o.status === "cancelled");
+    const revenue = paid.reduce((sum, o) => sum + (o.total || 0), 0);
+    return {
+      totalOrders: displayedOrders.length,
+      paidOrders: paid.length,
+      pendingOrders: pending.length,
+      failedOrders: failed.length,
+      totalRevenue: revenue,
+    };
+  }, [displayedOrders, filterFromNov24, stats]);
 
   const fetchOrders = async (isManualRefresh = false) => {
     try {
@@ -215,7 +263,7 @@ export default function AdminMerchOrders() {
   };
 
   const exportCSV = () => {
-    if (!orders.length) {
+    if (!displayedOrders.length) {
       toast.error("No orders to export");
       return;
     }
@@ -238,7 +286,7 @@ export default function AdminMerchOrders() {
       "Country",
     ];
 
-    const rows = orders.map((o) => [
+    const rows = displayedOrders.map((o) => [
       `"${o._id}"`,
       `"${new Date(o.createdAt).toLocaleString("en-IN")}"`,
       `"${(o.shippingAddress?.fullName || o.user?.name || "Guest").replace(/"/g, '""')}"`,
@@ -268,7 +316,7 @@ export default function AdminMerchOrders() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    toast.success(`Exported ${orders.length} orders to CSV`);
+    toast.success(`Exported ${displayedOrders.length} orders to CSV`);
   };
 
   const statusBadge = (status: string) => {
@@ -340,7 +388,7 @@ export default function AdminMerchOrders() {
           <Card className="border shadow-sm">
             <CardHeader className="pb-2">
               <CardDescription className="text-xs">Total Orders</CardDescription>
-              <CardTitle className="text-2xl font-bold">{stats?.totalOrders ?? orders.length}</CardTitle>
+              <CardTitle className="text-2xl font-bold">{dynamicStats.totalOrders}</CardTitle>
             </CardHeader>
           </Card>
 
@@ -350,7 +398,7 @@ export default function AdminMerchOrders() {
                 <CheckCircle2 className="w-3.5 h-3.5" /> Paid Orders
               </CardDescription>
               <CardTitle className="text-2xl font-bold text-green-600">
-                {stats?.paidOrders ?? orders.filter((o) => o.status === "paid").length}
+                {dynamicStats.paidOrders}
               </CardTitle>
             </CardHeader>
           </Card>
@@ -361,7 +409,7 @@ export default function AdminMerchOrders() {
                 <Clock className="w-3.5 h-3.5" /> Pending Checkouts
               </CardDescription>
               <CardTitle className="text-2xl font-bold text-amber-600">
-                {stats?.pendingOrders ?? orders.filter((o) => o.status === "pending" || o.status === "created").length}
+                {dynamicStats.pendingOrders}
               </CardTitle>
             </CardHeader>
           </Card>
@@ -372,7 +420,7 @@ export default function AdminMerchOrders() {
                 <AlertTriangle className="w-3.5 h-3.5" /> Failed / Cancelled
               </CardDescription>
               <CardTitle className="text-2xl font-bold text-red-600">
-                {stats?.failedOrders ?? orders.filter((o) => o.status === "failed" || o.status === "cancelled").length}
+                {dynamicStats.failedOrders}
               </CardTitle>
             </CardHeader>
           </Card>
@@ -381,7 +429,7 @@ export default function AdminMerchOrders() {
             <CardHeader className="pb-2">
               <CardDescription className="text-xs text-festival-orange font-medium">Total Paid Revenue</CardDescription>
               <CardTitle className="text-2xl font-bold text-festival-orange">
-                ₹{((stats?.totalRevenue ?? orders.filter((o) => o.status === "paid").reduce((s, o) => s + (o.total || 0), 0)) || 0).toLocaleString("en-IN")}
+                ₹{dynamicStats.totalRevenue.toLocaleString("en-IN")}
               </CardTitle>
             </CardHeader>
           </Card>
@@ -389,7 +437,7 @@ export default function AdminMerchOrders() {
 
         {/* Filters & Search */}
         <Card className="mb-6 shadow-sm">
-          <CardContent className="pt-6">
+          <CardContent className="pt-6 space-y-4">
             <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
               {/* Status Tabs */}
               <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0">
@@ -441,6 +489,38 @@ export default function AdminMerchOrders() {
                 )}
               </form>
             </div>
+
+            {/* Date Filter Checkbox & Quick Info */}
+            <div className="pt-3 border-t flex flex-wrap items-center justify-between gap-3 text-xs">
+              <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  id="nov24Filter"
+                  checked={filterFromNov24}
+                  onChange={(e) => setFilterFromNov24(e.target.checked)}
+                  className="w-4 h-4 rounded text-festival-orange accent-festival-orange cursor-pointer"
+                />
+                <span className="font-medium text-foreground flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5 text-festival-orange" />
+                  Show only orders made from 24 Nov 2026 onwards
+                </span>
+                <Badge
+                  variant="outline"
+                  className={
+                    filterFromNov24
+                      ? "text-[10px] py-0 px-1.5 text-festival-orange border-festival-orange/40 bg-festival-orange/10"
+                      : "text-[10px] py-0 px-1.5 text-muted-foreground"
+                  }
+                >
+                  {filterFromNov24 ? "Default Active" : "Showing All Dates"}
+                </Badge>
+              </label>
+
+              <div className="text-muted-foreground">
+                Showing <strong className="text-foreground">{displayedOrders.length}</strong> of{" "}
+                <strong className="text-foreground">{orders.length}</strong> total orders
+              </div>
+            </div>
           </CardContent>
         </Card>
 
@@ -451,7 +531,12 @@ export default function AdminMerchOrders() {
               <div>
                 <CardTitle className="text-xl">Orders List</CardTitle>
                 <CardDescription>
-                  Showing {orders.length} order{orders.length === 1 ? "" : "s"}
+                  Showing {displayedOrders.length} order{displayedOrders.length === 1 ? "" : "s"}
+                  {filterFromNov24 && orders.length !== displayedOrders.length && (
+                    <span className="text-muted-foreground ml-1">
+                      (filtered from {orders.length} total across all dates)
+                    </span>
+                  )}
                 </CardDescription>
               </div>
             </div>
@@ -471,15 +556,27 @@ export default function AdminMerchOrders() {
                   Retry
                 </Button>
               </div>
-            ) : orders.length === 0 ? (
+            ) : displayedOrders.length === 0 ? (
               <div className="py-16 flex flex-col items-center justify-center text-center text-muted-foreground">
                 <ShoppingBag className="h-12 w-12 mb-3 opacity-30" />
                 <p className="font-semibold text-foreground">No merchandise orders found</p>
-                <p className="text-xs mt-1">
-                  {statusFilter !== "all" || searchTerm
+                <p className="text-xs mt-1 max-w-sm">
+                  {orders.length > 0 && filterFromNov24
+                    ? "No orders found from 24 Nov 2026 onwards. Uncheck the 24 Nov filter above to view earlier orders."
+                    : statusFilter !== "all" || searchTerm
                     ? "Try clearing filters or search criteria."
                     : "When customers complete checkout on AHIBI, orders will appear here automatically."}
                 </p>
+                {orders.length > 0 && filterFromNov24 && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setFilterFromNov24(false)}
+                    className="mt-3 text-xs"
+                  >
+                    View all {orders.length} orders across all dates
+                  </Button>
+                )}
               </div>
             ) : (
               <div className="overflow-x-auto rounded-lg border">
@@ -495,7 +592,7 @@ export default function AdminMerchOrders() {
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {orders.map((order) => {
+                    {displayedOrders.map((order) => {
                       const customerName = order.shippingAddress?.fullName || order.user?.name || "Customer";
                       const customerPhone = order.shippingAddress?.phone || order.user?.phone || "";
                       const customerCity = order.shippingAddress?.city || "";
