@@ -728,7 +728,7 @@ const fetchFromAhibi = async (pathWithQuery, options = {}) => {
   const baseUrls = [
     process.env.AHIBI_API_BASE_URL,
     ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:5000'] : []),
-    'https://ahibi.in',
+    'https://www.ahibi.in',
   ].filter(Boolean).map((u) => u.replace(/\/+$/, ''));
 
   const uniqueBaseUrls = [...new Set(baseUrls)];
