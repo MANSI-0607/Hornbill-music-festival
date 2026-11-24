@@ -140,11 +140,12 @@ export default function OrderTracking() {
   };
 
   const currentStepIndex = getStepIndex(order?.shippingStatus);
+  const resolvedOrderId = String(order?.orderId || order?._id || orderId || "");
 
   const shareViaWhatsApp = () => {
     if (!order) return;
     const url = window.location.href;
-    const msg = `Hornbill Festival Merch Order Tracking\nOrder #${order._id.slice(-6).toUpperCase()}\nStatus: ${(order.shippingStatus || "confirmed").replace(/_/g, " ").toUpperCase()}\n\nTrack package here: ${url}`;
+    const msg = `Hornbill Festival Merch Order Tracking\nOrder #${resolvedOrderId.slice(-6).toUpperCase()}\nStatus: ${(order.shippingStatus || "confirmed").replace(/_/g, " ").toUpperCase()}\n\nTrack package here: ${url}`;
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
@@ -226,7 +227,7 @@ export default function OrderTracking() {
                     </span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-extrabold text-white mt-2 font-righteous">
-                    Order #{order._id.slice(-6).toUpperCase()}
+                    Order #{resolvedOrderId.slice(-6).toUpperCase()}
                   </h1>
                   <p className="text-xs text-[#ebe6d9]/70 mt-1">
                     Placed on{" "}
@@ -438,7 +439,7 @@ export default function OrderTracking() {
                 </div>
 
                 <a
-                  href={`https://wa.me/917003195644?text=Hi%2C%20I%20have%20an%20inquiry%20regarding%20my%20Hornbill%20Festival%20merchandise%20order%20%23${order._id.slice(-6).toUpperCase()}`}
+                  href={`https://wa.me/917003195644?text=Hi%2C%20I%20have%20an%20inquiry%20regarding%20my%20Hornbill%20Festival%20merchandise%20order%20%23${resolvedOrderId.slice(-6).toUpperCase()}`}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-green-600/20 text-green-400 border border-green-500/30 hover:bg-green-600/30 text-xs font-semibold transition"
