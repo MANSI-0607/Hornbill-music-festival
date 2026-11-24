@@ -13,6 +13,8 @@ import {
   getAhibiMerchOrders,
   getAhibiMerchOrderStats,
   getAhibiMerchOrderById,
+  getAhibiOrderTracking,
+  updateAhibiOrderTracking,
 } from '../controllers/merchController.js';
 import { uploadMerch } from '../middleware/upload.js';
 
@@ -46,10 +48,14 @@ router.post('/', requireAdmin, createMerch);
 router.put('/:id', requireAdmin, updateMerch);
 router.delete('/:id', requireAdmin, deleteMerch);
 
-// Admin protected AHIBI Merch Orders
+// Admin protected AHIBI Merch Orders & Tracking
 router.get('/orders', requireAdmin, getAhibiMerchOrders);
 router.get('/orders/stats', requireAdmin, getAhibiMerchOrderStats);
 router.get('/orders/:orderId', requireAdmin, getAhibiMerchOrderById);
+router.put('/orders/:orderId/tracking', requireAdmin, updateAhibiOrderTracking);
+
+// Public Order Tracking
+router.get('/track/:orderId', getAhibiOrderTracking);
 
 router.post("/cart/session", createCartSession);
 router.get('/cart/session/:sessionId', getCartSession);

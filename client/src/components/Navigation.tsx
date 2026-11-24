@@ -9,11 +9,10 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  // Desktop navigation items (original)
+  // Desktop navigation items (Merch is the primary CTA button on right, so omitted here to avoid duplication)
   const navigation = [
     //{ name: 'Home', href: '/', icon: Music, shortName: 'Home' },
     // { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
-    { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon: Youtube, shortName: 'Media' },
     { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
@@ -185,7 +184,7 @@ export function Navigation() {
       {/* Bottom Mobile Navigation */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-md border-t border-gray-700/50 z-50">
         <div className="flex justify-around items-center py-1.5 px-1 safe-area-inset-bottom">
-          {navigation.map((item) => {
+          {mobileNavigation.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.href;
             return (

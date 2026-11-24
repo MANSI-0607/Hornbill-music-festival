@@ -724,7 +724,7 @@ export const seedOfficialCatalog = async (req, res) => {
   }
 };
 
-const fetchFromAhibi = async (pathWithQuery) => {
+const fetchFromAhibi = async (pathWithQuery, options = {}) => {
   const baseUrls = [
     process.env.AHIBI_API_BASE_URL,
     'http://localhost:5000',
@@ -737,8 +737,12 @@ const fetchFromAhibi = async (pathWithQuery) => {
     try {
       const url = `${base}/api/hornbill-merch${pathWithQuery}`;
       const res = await fetch(url, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        method: options.method || 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(options.headers || {})
+        },
+        body: options.body ? JSON.stringify(options.body) : undefined,
       });
       if (res.ok) {
         const data = await res.json();
@@ -811,5 +815,36 @@ export const getAhibiMerchOrderById = async (req, res) => {
   } catch (err) {
     console.error('Failed to proxy order details from AHIBI:', err);
     return res.status(500).json({ success: false, message: err?.message });
+  }
+};
+
+export const getAhibiOrderTracking = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const result = await fetchFromAhibi(`/track/${encodeURIComponent(orderId)}`);
+    if (!result.ok) {
+      return res.status(404).json({ success: false, message: result.error || 'Tracking details not found' });
+    }
+    return res.status(200).json(result.data);
+  } catch (err) {
+    console.error('Failed to proxy order tracking from AHIBI:', err);
+    return res.status(500).json({ success: false, message: err?.message || 'Server error' });
+  }
+};
+
+export const updateAhibiOrderTracking = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const result = await fetchFromAhibi(`/orders/${encodeURIComponent(orderId)}/tracking`, {
+      method: 'PUT',
+      body: req.body,
+    });
+    if (!result.ok) {
+      return res.status(400).json({ success: false, message: result.error || 'Failed to update tracking' });
+    }
+    return res.status(200).json(result.data);
+  } catch (err) {
+    console.error('Failed to proxy order tracking update to AHIBI:', err);
+    return res.status(500).json({ success: false, message: err?.message || 'Server error' });
   }
 };
