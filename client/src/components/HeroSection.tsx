@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Ticket, ExternalLink } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { toast } from "sonner";
 
@@ -122,6 +124,32 @@ const HeroSection: React.FC = () => {
         </picture>
       </div>
       ── END STATIC HERO ── */}
+
+      {/* ── BOOK TICKETS CTA (below banner) ── */}
+      <div className="max-w-6xl mx-auto px-4 pt-8 pb-2">
+        <div className="rounded-2xl border border-festival-orange/30 bg-gradient-to-r from-[#1b2c23]/70 via-black/80 to-[#1b2c23]/70 backdrop-blur-md p-5 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+          <div className="text-center sm:text-left">
+            <h2 className="font-righteous text-xl sm:text-2xl text-white">
+              Hornbill Music Festival <span className="text-festival-orange">2026</span>
+            </h2>
+            <p className="text-gray-300 text-sm sm:text-base mt-1">
+              Book your tickets now for 10 days of music, culture, and live performances.
+            </p>
+          </div>
+          <a
+            href="https://www.ahibi.in/hornbill-festival-2026"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto shrink-0"
+          >
+            <Button className="btn-festival w-full sm:w-auto px-6 py-5 text-base font-semibold rounded-xl flex items-center justify-center gap-2">
+              <Ticket className="w-5 h-5" />
+              <span>Book Tickets</span>
+              <ExternalLink className="w-4 h-4" />
+            </Button>
+          </a>
+        </div>
+      </div>
 
       {/* ── STATS ── */}
       <div className="max-w-6xl mx-auto px-4 py-8">

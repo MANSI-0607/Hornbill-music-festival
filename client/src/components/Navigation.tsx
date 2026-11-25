@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image, Users,Youtube, ShoppingBag } from 'lucide-react';
+import { Menu, X, Music, Mic, Info, Mountain, Calendar, Image, Users, Youtube, ShoppingBag, Ticket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 //import logo from '@/assets/logo/hmf-logo.png';
@@ -9,10 +9,11 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  // Desktop navigation items (Merch is the primary CTA button on right, so omitted here to avoid duplication)
+  // Desktop navigation items (Book Tickets is the primary CTA button on right)
   const navigation = [
     //{ name: 'Home', href: '/', icon: Music, shortName: 'Home' },
     // { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
+    { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon: Youtube, shortName: 'Media' },
     { name: 'Schedule', href: '/schedule', icon: Calendar, shortName: 'Schedule' },
@@ -22,8 +23,8 @@ export function Navigation() {
 
   // Mobile navigation items (includes additional items)
   const mobileNavigation = [
-   // { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
-   // { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
+    // { name: 'Home', href: '/', icon: Music, shortName: 'Home' },
+    // { name: 'Auditions', href: '/auditions', icon: Mic, shortName: 'Auditions' },
     { name: 'Merch', href: '/merch', icon: ShoppingBag, shortName: 'Merch' },
     { name: 'Gallery', href: '/gallery', icon: Image, shortName: 'Gallery' },
     { name: 'Media', href: '/media', icon: Youtube, shortName: 'Media' },
@@ -44,7 +45,7 @@ export function Navigation() {
     } else {
       document.body.style.overflow = 'unset';
     }
-    
+
     // Cleanup on unmount
     return () => {
       document.body.style.overflow = 'unset';
@@ -60,13 +61,13 @@ export function Navigation() {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 z-50 relative">
               {/* <div className="w-8 h-8 bg-gradient-to-r from-pink-500 to-purple-600 rounded-lg flex items-center justify-center"> */}
-               <img 
-  src="/hmf-logo.png?v=20260817" 
-  alt="HMF Logo" 
-  className="w-12 h-12" 
-  loading="lazy" 
-  decoding="async"
-/>
+              <img
+                src="/hmf-logo.png?v=20260817"
+                alt="HMF Logo"
+                className="w-12 h-12"
+                loading="lazy"
+                decoding="async"
+              />
 
               {/* </div> */}
               <span className="text-xl font-righteous text-white">Hornbill Music Festival</span>
@@ -80,26 +81,29 @@ export function Navigation() {
                   <Link
                     key={item.name}
                     to={item.href}
-                    className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                      location.pathname === item.href
+                    className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${location.pathname === item.href
                         ? 'bg-festival-orange/20 text-festival-orange border border-festival-orange/30'
                         : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                    }`}
+                      }`}
                   >
                     <Icon className="w-4 h-4" />
                     <span>{item.name}</span>
                   </Link>
                 );
               })}
-              
-              {/* Merch CTA button */}
-              <Link to="/merch">
+
+              {/* Book Tickets CTA button */}
+              <a
+                href="https://www.ahibi.in/hornbill-festival-2026"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Button className="btn-festival ml-3 flex items-center gap-2">
-                  <ShoppingBag className="w-4 h-4" />
-                  <span>Merch</span>
+                  <Ticket className="w-4 h-4" />
+                  <span>Book Tickets</span>
                 </Button>
-              </Link>
-             
+              </a>
+
             </div>
 
             {/* Mobile menu button */}
@@ -116,21 +120,19 @@ export function Navigation() {
         </div>
 
         {/* Modern Mobile Menu Overlay */}
-        <div className={`md:hidden fixed inset-0 top-16 z-40 transition-all duration-300 ease-in-out ${
-          isOpen 
-            ? 'opacity-100 visible' 
+        <div className={`md:hidden fixed inset-0 top-16 z-40 transition-all duration-300 ease-in-out ${isOpen
+            ? 'opacity-100 visible'
             : 'opacity-0 invisible pointer-events-none'
-        }`}>
+          }`}>
           {/* Dark backdrop */}
-          <div 
+          <div
             className="absolute inset-0 bg-black/80 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
-          
+
           {/* Modern menu panel */}
-          <div className={`absolute top-0 left-0 right-0 bg-black/95 backdrop-blur-md border-b border-gray-700/50 transition-transform duration-300 ease-out ${
-            isOpen ? 'translate-y-0' : '-translate-y-full'
-          }`}>
+          <div className={`absolute top-0 left-0 right-0 bg-black/95 backdrop-blur-md border-b border-gray-700/50 transition-transform duration-300 ease-out ${isOpen ? 'translate-y-0' : '-translate-y-full'
+            }`}>
             <div className="px-6 py-6">
               {/* Navigation items in rows */}
               <div className="space-y-2 mb-6">
@@ -141,11 +143,10 @@ export function Navigation() {
                       key={item.name}
                       to={item.href}
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 active:scale-95 ${
-                        location.pathname === item.href
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 active:scale-95 ${location.pathname === item.href
                           ? 'bg-festival-orange/20 text-festival-orange border border-festival-orange/30'
                           : 'bg-gray-800/50 text-gray-300 hover:text-white hover:bg-gray-800/80 border border-gray-700/50'
-                      }`}
+                        }`}
                     >
                       <Icon className="w-4 h-4" />
                       <span className="text-sm font-medium">
@@ -155,7 +156,7 @@ export function Navigation() {
                   );
                 })}
               </div>
-              
+
               {/* Call to action button */}
               {/* Auditions commented out
               <Link to="/auditions">
@@ -167,15 +168,19 @@ export function Navigation() {
                 </Button>
               </Link>
               */}
-              <Link to="/merch">
-                <Button 
+              <a
+                href="https://www.ahibi.in/hornbill-festival-2026"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setIsOpen(false)}
+              >
+                <Button
                   className="btn-festival w-full py-3 text-base font-semibold rounded-xl flex items-center justify-center gap-2"
-                  onClick={() => setIsOpen(false)}
                 >
-                  <ShoppingBag className="w-5 h-5" />
-                  <span>Official Merch</span>
+                  <Ticket className="w-5 h-5" />
+                  <span>Book Tickets</span>
                 </Button>
-              </Link>
+              </a>
             </div>
           </div>
         </div>
@@ -191,11 +196,10 @@ export function Navigation() {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg min-w-[55px] transition-all duration-200 active:scale-95 relative ${
-                  isActive
+                className={`flex flex-col items-center justify-center py-1.5 px-2 rounded-lg min-w-[55px] transition-all duration-200 active:scale-95 relative ${isActive
                     ? 'text-festival-orange bg-festival-orange/10'
                     : 'text-gray-400 hover:text-white active:bg-gray-800/50'
-                }`}
+                  }`}
               >
                 <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'text-festival-orange' : ''}`} />
                 <span className={`text-[11px] font-medium leading-tight ${isActive ? 'text-festival-orange font-semibold' : ''}`}>
